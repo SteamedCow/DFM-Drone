@@ -22,9 +22,7 @@ public class ExampleCommander
     
     public void takeOffAndLand(long hoverTime) {
         drone.getCommandManager().takeOff();
-//        drone.getCommandManager().up(1);
         drone.getCommandManager().waitFor(hoverTime);
         drone.getCommandManager().landing();
-//        drone.stop();
     }
 }

@@ -1,8 +1,6 @@
 package dfmDrone.examples;
 
-import de.yadrone.apps.tutorial.TutorialCommander;
 import de.yadrone.base.IARDrone;
-import de.yadrone.base.command.LEDAnimation;
 
 /**
  * ExampleHover
@@ -24,13 +22,6 @@ public class ExampleHover
             commander.animateLEDs();
         
         commander.takeOffAndLand(hoverTime);
-        
-//        if(ledAnimation)
-//            drone.getCommandManager().setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, 10);
-//        
-//        drone.getCommandManager().takeOff();
-//        drone.getCommandManager().waitFor(hoverTime);
-//        drone.getCommandManager().landing();
         System.out.println("--- Hover Example Complete ---");
     }
 }
