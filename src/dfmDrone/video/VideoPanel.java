@@ -2,6 +2,8 @@ package dfmDrone.video;
 
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.VideoChannel;
+import dfmDrone.data.Config;
+import georegression.struct.shapes.EllipseRotated_F64;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -9,6 +11,9 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import navigation.tools.DistanceMeaure;
+import navigation.tools.Navigator;
+import whiteBalance.tools.Measure;
 
 /**
  * VideoPanel
@@ -18,10 +23,21 @@ import javax.swing.SwingUtilities;
 public class VideoPanel extends JPanel
 {
     private BufferedImage image = null;
+    private final Navigator nav;
+    private Measure ms;
+    private final DistanceMeaure dm;
+    
+    private EllipseRotated_F64 portal;
+    private double distance;
     
     public VideoPanel(IARDrone drone) {
         setSize((int) (640*1.5), (int) (360*1.5));
         setBackground(Color.WHITE);
+        
+        //Setup Navigators
+        System.out.println("\n---- Setup Camera Switch Listener ---");
+        nav = new Navigator();
+        dm = new DistanceMeaure();
         
         //Setup Camera Switch Listener
         System.out.println("\n---- Setup Camera Switch Listener ---");
@@ -36,6 +52,7 @@ public class VideoPanel extends JPanel
         System.out.println("\n---- Setup Image Listener ---");
         drone.getVideoManager().addImageListener((BufferedImage newImage) -> {
             image = newImage;
+            
             SwingUtilities.invokeLater(() -> {
                 repaint();
             });
@@ -44,7 +61,19 @@ public class VideoPanel extends JPanel
     
     @Override
     public void paint(Graphics g) {
-        if (image != null)
+        portal = null;
+        if(image != null) {
+            ms = new Measure(image);
+            try {
+                portal = ms.findMaxEllipse(true);
+                if(portal != null) {
+                    nav.flyToPortal(portal, image, true);
+                    distance = DistanceMeaure.getDistanceToObject(image.getHeight(), (portal.a * 2 + portal.b * 2) / 2, Config.portalHeight, 1.6404040404040405);
+                    MenuPanel.updateDistanceDisplay(distance);
+                }
+            } catch (Exception e) { }
+            
             g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        }
     }
 }

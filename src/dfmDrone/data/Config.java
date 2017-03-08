@@ -13,4 +13,6 @@ public class Config
     public static int maxAltitude = 2;
     public static int vidFPS = 15;
     public static VideoCodec vidCodec = VideoCodec.H264_360P;
+    
+    public static double portalHeight = 75; //in mm
 }

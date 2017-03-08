@@ -1,6 +1,7 @@
 package dfmDrone.video;
 
 import de.yadrone.base.IARDrone;
+import de.yadrone.base.navdata.BatteryListener;
 import dfmDrone.examples.Commander;
 import java.awt.Color;
 
@@ -19,6 +20,18 @@ public class MenuPanel extends javax.swing.JPanel
         this.cmd = new Commander(drone, drone.getCommandManager());
         
         jpVideo.add(new VideoPanel(drone));
+        
+        //Setup Battery Listener
+        System.out.println("\n---- Setup Battery Listener ---");
+        drone.getNavDataManager().addBatteryListener(new BatteryListener() {
+            @Override
+            public void batteryLevelChanged(int i) {
+                jlBattery.setText("Battery: " + (100 - i) + "%");
+            }
+
+            @Override
+            public void voltageChanged(int i) { }
+        });
     }
     
     @SuppressWarnings("unchecked")
@@ -55,8 +68,12 @@ public class MenuPanel extends javax.swing.JPanel
         );
         jpVideoLayout.setVerticalGroup(
             jpVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
+            .addGap(0, 229, Short.MAX_VALUE)
         );
+
+        jlBattery.setText("Battery:");
+
+        jlDistance.setText("Distance: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -71,6 +88,10 @@ public class MenuPanel extends javax.swing.JPanel
                 .addComponent(jlStatus)
                 .addContainerGap(205, Short.MAX_VALUE))
             .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jlBattery)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlDistance))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +102,11 @@ public class MenuPanel extends javax.swing.JPanel
                     .addComponent(jbStartStop)
                     .addComponent(jlStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlBattery)
+                    .addComponent(jlDistance)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -121,9 +146,25 @@ public class MenuPanel extends javax.swing.JPanel
         cmd.kill();
     }//GEN-LAST:event_jbKillActionPerformed
     
+    protected static void updateDistanceDisplay(double distance) {
+        StringBuilder sb = new StringBuilder("Distance: ");
+        if(distance > 1000000)
+            sb.append(String.format("%.000f", distance / 1000000)).append(" km");
+        else if(distance > 1000)
+            sb.append(String.format("%.00f", distance / 1000)).append(" m");
+        else if(distance > 10)
+            sb.append(String.format("%.00f", distance / 10)).append(" cm");
+        else
+            sb.append(String.format("%.0f", distance)).append(" mm");
+        
+        jlDistance.setText(sb.toString());
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;
+    private static final javax.swing.JLabel jlBattery = new javax.swing.JLabel();
+    private static final javax.swing.JLabel jlDistance = new javax.swing.JLabel();
     private javax.swing.JLabel jlStatus;
     private javax.swing.JPanel jpVideo;
     // End of variables declaration//GEN-END:variables

@@ -32,7 +32,7 @@ public class VideoListener extends JFrame
         System.out.println("Add buttons to gui");
         setContentPane(new MenuPanel(drone));
         
-        setSize(800, 500);
+        setSize(1200, 600);
         setVisible(true);
     }
 }
