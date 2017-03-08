@@ -17,9 +17,9 @@ public class ExampleHover
     
     public void start(long hoverTime, boolean ledAnimation) {
         System.out.println("\n--- Starting Hover Example ---");
-        ExampleCommander commander = new ExampleCommander(drone);
+        Commander commander = new Commander(drone, drone.getCommandManager());
         if(ledAnimation)
-            commander.animateLEDs();
+            commander.animateLEDs(10000);
         
         commander.takeOffAndLand(hoverTime);
         System.out.println("--- Hover Example Complete ---");

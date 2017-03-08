@@ -7,7 +7,6 @@ import de.yadrone.base.navdata.AttitudeListener;
 import de.yadrone.base.navdata.NavDataManager;
 import de.yadrone.base.video.xuggler.XugglerDecoder;
 import dfmDrone.data.Config;
-import dfmDrone.examples.ExampleHover;
 import dfmDrone.video.VideoListener;
 
 /**
@@ -24,9 +23,6 @@ public class DFMDrone
         System.out.println("\n---- Setup Drone ---");
         try {
             drone = new ARDrone(Config.droneAddress, new XugglerDecoder());
-            drone.setMaxAltitude(Config.maxAltitude);
-            drone.getCommandManager().setVideoCodecFps(Config.vidFPS);
-            drone.getCommandManager().setVideoCodec(Config.vidCodec);
             drone.start();
             
             //Setup Error Listener
@@ -35,6 +31,12 @@ public class DFMDrone
                 System.err.println("[ERROR LISTENER]: " + e.getMessage());
                 e.printStackTrace();
             });
+            
+            //Set Configurations
+            System.out.println("\n---- Set Configurations ---");
+            drone.setMaxAltitude(Config.maxAltitude);
+            drone.getCommandManager().setVideoCodecFps(Config.vidFPS);
+            drone.getCommandManager().setVideoCodec(Config.vidCodec);
             
             //Setup Attitude Listener
             System.out.println("\n---- Setup Attitude Listener ---");
@@ -58,9 +60,9 @@ public class DFMDrone
             VideoListener videoListener = new VideoListener(drone);
             
             //Start Flight Example
-            System.out.println("\n---- Start Flight Example ---");
-            ExampleHover hoverEaxmple = new ExampleHover(drone);
-            hoverEaxmple.start(10000, false);
+//            System.out.println("\n---- Start Flight Example ---");
+//            ExampleHover hoverEaxmple = new ExampleHover(drone);
+//            hoverEaxmple.start(10000, false);
         }
         catch (Exception e) {
             e.printStackTrace();
