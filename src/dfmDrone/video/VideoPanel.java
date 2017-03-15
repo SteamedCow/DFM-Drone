@@ -63,7 +63,7 @@ public class VideoPanel extends JPanel
     public void paint(Graphics g) {
         portal = null;
         if(image != null) {
-            ms = new Measure(image);
+            ms = new Measure(image, false);
             try {
                 portal = ms.findMaxEllipse(true);
                 if(portal != null) {

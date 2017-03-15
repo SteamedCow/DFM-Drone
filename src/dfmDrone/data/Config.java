@@ -14,5 +14,5 @@ public class Config
     public static int vidFPS = 15;
     public static VideoCodec vidCodec = VideoCodec.H264_360P;
     
-    public static double portalHeight = 75; //in mm
+    public static double portalHeight = 900; //in mm
 }
