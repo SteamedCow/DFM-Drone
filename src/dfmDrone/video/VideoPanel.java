@@ -1,5 +1,11 @@
 package dfmDrone.video;
 
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.VideoChannel;
 import dfmDrone.data.Config;
@@ -29,7 +35,8 @@ public class VideoPanel extends JPanel
     
     private EllipseRotated_F64 portal;
     private double distance;
-    
+    Result result = null;
+
     public VideoPanel(IARDrone drone) {
         setSize((int) (640*1.5), (int) (360*1.5));
         setBackground(Color.WHITE);
@@ -61,11 +68,18 @@ public class VideoPanel extends JPanel
     
     @Override
     public void paint(Graphics g) {
+  
         portal = null;
         if(image != null) {
             ms = new Measure(image, false);
+                   LuminanceSource source = new BufferedImageLuminanceSource(image);
+        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
             try {
                 portal = ms.findMaxEllipse(true);
+                result = new MultiFormatReader().decode(bitmap);
+                if (result!=null){
+            System.out.println(result.getText());
+        }
                 if(portal != null) {
                     nav.flyToPortal(portal, image, true);
                     distance = DistanceMeaure.getDistanceToObject(image.getHeight(), (portal.a * 2 + portal.b * 2) / 2, Config.portalHeight, 1.6404040404040405);
