@@ -71,11 +71,11 @@ public class VideoPanel extends JPanel
   
         portal = null;
         if(image != null) {
-            ms = new Measure(image, false);
+            ms = new Measure(image);
                    LuminanceSource source = new BufferedImageLuminanceSource(image);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
             try {
-                portal = ms.findMaxEllipse(true);
+                portal = ms.findMaxEllipse(true, 0.17);
                 result = new MultiFormatReader().decode(bitmap);
                 if (result!=null){
             System.out.println(result.getText());
