@@ -4,6 +4,8 @@ import de.yadrone.base.IARDrone;
 import de.yadrone.base.navdata.BatteryListener;
 import dfmDrone.examples.Commander;
 import java.awt.Color;
+import whiteBalance.exceptions.DetectionException;
+import whiteBalance.tools.Calibrator;
 
 /**
  * MenuPanel
@@ -13,13 +15,16 @@ import java.awt.Color;
 public class MenuPanel extends javax.swing.JPanel
 {
     private static boolean running = false;
+    protected static Integer[] colorOffset = null;
     private final Commander cmd;
+    private VideoPanel video;
     
     public MenuPanel(IARDrone drone) {
         initComponents();
         this.cmd = new Commander(drone, drone.getCommandManager());
+        this.video = new VideoPanel(drone);
         
-        jpVideo.add(new VideoPanel(drone));
+        jpVideo.add(this.video);
         
         //Setup Battery Listener
         System.out.println("\n---- Setup Battery Listener ---");
@@ -42,6 +47,7 @@ public class MenuPanel extends javax.swing.JPanel
         jbKill = new javax.swing.JButton();
         jlStatus = new javax.swing.JLabel();
         jpVideo = new javax.swing.JPanel();
+        jbWB = new javax.swing.JButton();
 
         jbStartStop.setText("Start");
         jbStartStop.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +81,13 @@ public class MenuPanel extends javax.swing.JPanel
 
         jlDistance.setText("Distance: ");
 
+        jbWB.setText("White Balance");
+        jbWB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbWBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,8 +98,10 @@ public class MenuPanel extends javax.swing.JPanel
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbStartStop)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbWB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlStatus)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
             .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jlBattery)
@@ -100,7 +115,8 @@ public class MenuPanel extends javax.swing.JPanel
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbKill)
                     .addComponent(jbStartStop)
-                    .addComponent(jlStatus))
+                    .addComponent(jlStatus)
+                    .addComponent(jbWB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -145,6 +161,15 @@ public class MenuPanel extends javax.swing.JPanel
     private void jbKillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbKillActionPerformed
         cmd.kill();
     }//GEN-LAST:event_jbKillActionPerformed
+
+    private void jbWBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbWBActionPerformed
+        try {
+            Calibrator calib = new Calibrator(video.image, true);
+            colorOffset = calib.calibrate(3);
+        } catch (DetectionException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jbWBActionPerformed
     
     protected static void updateDistanceDisplay(double distance) {
         StringBuilder sb = new StringBuilder("Distance: ");
@@ -163,6 +188,7 @@ public class MenuPanel extends javax.swing.JPanel
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;
+    private javax.swing.JButton jbWB;
     private static final javax.swing.JLabel jlBattery = new javax.swing.JLabel();
     private static final javax.swing.JLabel jlDistance = new javax.swing.JLabel();
     private javax.swing.JLabel jlStatus;

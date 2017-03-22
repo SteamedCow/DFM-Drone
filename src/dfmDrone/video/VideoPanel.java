@@ -19,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import navigation.tools.DistanceMeaure;
 import navigation.tools.Navigator;
+import whiteBalance.tools.Calibrator;
 import whiteBalance.tools.Measure;
+import whiteBalance.tools.WhiteBalance;
 
 /**
  * VideoPanel
@@ -28,7 +30,7 @@ import whiteBalance.tools.Measure;
  */
 public class VideoPanel extends JPanel
 {
-    private BufferedImage image = null;
+    protected BufferedImage image = null;
     private final Navigator nav;
     private Measure ms;
     private final DistanceMeaure dm;
@@ -68,14 +70,19 @@ public class VideoPanel extends JPanel
     
     @Override
     public void paint(Graphics g) {
-  
         portal = null;
         if(image != null) {
+            if(MenuPanel.colorOffset != null) {
+                WhiteBalance wb = new WhiteBalance(MenuPanel.colorOffset[0], MenuPanel.colorOffset[1], MenuPanel.colorOffset[2]);
+                Calibrator calib = new Calibrator(image, true);
+                wb.colorImage(calib.getImage());
+            }
+            
             ms = new Measure(image);
-                   LuminanceSource source = new BufferedImageLuminanceSource(image);
-        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
             try {
-                portal = ms.findMaxEllipse(true, 0.17);
+                portal = ms.findMaxEllipse(true, 0.18);
                 result = new MultiFormatReader().decode(bitmap);
                 if (result!=null){
             System.out.println(result.getText());

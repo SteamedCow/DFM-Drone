@@ -22,8 +22,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jbStartStop" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jbWB" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jlStatus" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="205" max="32767" attributes="0"/>
+              <EmptySpace pref="98" max="32767" attributes="0"/>
           </Group>
           <Component id="jpVideo" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
@@ -41,6 +43,7 @@
                   <Component id="jbKill" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbStartStop" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbWB" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jpVideo" max="32767" attributes="0"/>
@@ -108,6 +111,14 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="26"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbWB">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="White Balance"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbWBActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
