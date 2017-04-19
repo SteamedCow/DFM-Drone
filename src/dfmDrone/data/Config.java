@@ -12,7 +12,7 @@ public class Config
     public static String droneAddress = "192.168.1.1";
     public static int maxAltitude = 2;
     public static int vidFPS = 15;
-    public static VideoCodec vidCodec = VideoCodec.H264_360P;
+    public static VideoCodec vidCodec = VideoCodec.H264_720P;
     
     public static double portalHeight = 900; //in mm
 }

@@ -165,7 +165,7 @@ public class MenuPanel extends javax.swing.JPanel
     private void jbWBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbWBActionPerformed
         try {
             Calibrator calib = new Calibrator(video.image, true);
-            colorOffset = calib.calibrate(3);
+            colorOffset = calib.calibrate(3, 3, 3);
         } catch (DetectionException e) {
             e.printStackTrace();
         }
