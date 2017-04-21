@@ -35,29 +35,8 @@ public class fitEllipseExample {
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat sourceImg = new Mat();
-		sourceImg = Imgcodecs.imread("portaler.png");
-		Mat grayScaleImg = new Mat();
-		Mat hsvImg=new Mat();
-		Imgproc.cvtColor(sourceImg, hsvImg, Imgproc.COLOR_BGR2HSV);
-		Mat lower_hue_range = new Mat();
-		Mat upper_hue_range = new Mat();
-		Core.inRange(hsvImg, new Scalar(0,70,100), new Scalar(10,255,255), lower_hue_range);
-		Core.inRange(hsvImg, new Scalar(160,60,100), new Scalar(179,255,255), upper_hue_range);
-		Mat red_hue_image = new Mat();
-		Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
-	
-		//Imgproc.cvtColor(hsvImg, grayScaleImg, Imgproc.COLOR_BGR2GRAY);
-		Mat Binarized= new Mat();
-		Imgproc.threshold(grayScaleImg,Binarized, 55,255, Imgproc.THRESH_BINARY_INV); // would set everything &gt;= 123 to 255
-		Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
-		Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1,1));
-		
-		Imgproc.blur(red_hue_image, red_hue_image, new Size(7,7));
-//Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
-//Imgproc.dilate(Binarized, Binarized, dilateElement);
-
-	
-		sourceImg =findAndDrawEllipse(red_hue_image, sourceImg);
+		sourceImg = Imgcodecs.imread("Drone.png");
+		sourceImg =findAndDrawEllipse( sourceImg);
 
 		 
 		JFrame frame = new JFrame("Picture");
@@ -86,13 +65,28 @@ public class fitEllipseExample {
 
 	}
 
-	private static Mat findAndDrawEllipse(Mat maskedImage, Mat frame) {
+	private static Mat findAndDrawEllipse(Mat sourceImg) {
+		Mat grayScaleImg = new Mat();
+		Mat hsvImg=new Mat();
+		Imgproc.cvtColor(sourceImg, hsvImg, Imgproc.COLOR_BGR2HSV);
+		Mat lower_hue_range = new Mat();
+		Mat upper_hue_range = new Mat();
+		Core.inRange(hsvImg, new Scalar(0,100,45), new Scalar(15,255,255), lower_hue_range);
+		Core.inRange(hsvImg, new Scalar(160,100,45), new Scalar(180,255,255), upper_hue_range);
+		Mat red_hue_image = new Mat();
+		Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
+		Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
+		Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10,10));
+		
+		Imgproc.blur(red_hue_image, red_hue_image, new Size(11,11));
+//Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
+//Imgproc.dilate(Binarized, Binarized, dilateElement);
 		// init
 		List<MatOfPoint> contours = new ArrayList<>();
 		Mat hierarchy = new Mat();
 
 		// find contours
-		Imgproc.findContours(maskedImage, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+		Imgproc.findContours(red_hue_image, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 		System.out.println("After findcontours");
 		// if any contour exist...
 		if (hierarchy.size().height > 0 && hierarchy.size().width > 0) {
@@ -110,8 +104,10 @@ public class fitEllipseExample {
 		 RotatedRect rotatedrect = null;
 	    for (int i=0; i<contours.size(); i++)
 	    {
-	        //Convert contours(i) from MatOfPoint to MatOfPoint2f
-	        contour2f = new MatOfPoint2f( contours.get(i).toArray() );
+	    	 //Convert contours(i) from MatOfPoint to MatOfPoint2f
+	    	if(contour2f==null)contour2f = new MatOfPoint2f( contours.get(i).toArray() );
+	    	if(contours.get(i).size().area()>contour2f.size().area())
+	    	contour2f = new MatOfPoint2f( contours.get(i).toArray() );
 	        //Processing on mMOP2f1 which is in type MatOfPoint2f
 	    }
 	    try{
@@ -131,8 +127,8 @@ public class fitEllipseExample {
 
 	         // draw enclosing rectangle (all same color, but you could use variable i to make them unique)
 	        
-	        Imgproc.rectangle(frame, rect.tl(), rect.br(), new Scalar(255, 0, 0),1, 8,0); 
-	        Imgproc.ellipse(frame,rotatedrect,new Scalar(255, 192,203),4,8);
+	        Imgproc.rectangle(sourceImg, rect.tl(), rect.br(), new Scalar(255, 0, 0),1, 8,0); 
+	        Imgproc.ellipse(sourceImg,rotatedrect,new Scalar(255, 192,203),4,8);
 	        
 	    }
 	    catch(CvException e){
@@ -144,7 +140,7 @@ public class fitEllipseExample {
 	
 	
 
-		return frame;
+		return sourceImg;
 	
 }
 }

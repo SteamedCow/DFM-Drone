@@ -1,5 +1,7 @@
 package dfmDrone;
 
+import org.opencv.core.Core;
+
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.exception.ARDroneException;
@@ -17,6 +19,7 @@ import dfmDrone.video.VideoListener;
 public class DFMDrone 
 {
     public static void main(String[] args) {
+    	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         IARDrone  drone;
         
         //Setup Drone
