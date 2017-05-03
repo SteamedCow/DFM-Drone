@@ -144,11 +144,14 @@ public class MenuPanel extends javax.swing.JPanel
         }
         else {
             try {
-//                cmd.takeOff();
-                cmd.animateLEDs(10);
+                cmd.takeOff();
+                
+//                cmd.animateLEDs(10);
                 running = true;
                 jlStatus.setText("Status: Flying");
                 jbStartStop.setText("Stop");
+                Thread.sleep(7000);
+                cmd.scan();
             } 
             catch (Exception e) {
                 e.printStackTrace();

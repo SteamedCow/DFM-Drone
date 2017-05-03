@@ -36,6 +36,10 @@ public class Commander
         Drone.flying = true;
         dCmd.takeOff();
         dCmd.hover();
+        
+    }
+    public void scan(){
+    	dCmd.spinLeft(15);
     }
     
     public boolean land() {
@@ -50,7 +54,7 @@ public class Commander
             success = false;
         }
         finally {
-            dCmd.stop();
+         //   dCmd.stop();
             Drone.flying = false;
         }
         return success;
