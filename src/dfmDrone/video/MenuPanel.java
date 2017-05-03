@@ -88,6 +88,8 @@ public class MenuPanel extends javax.swing.JPanel
             }
         });
 
+        jlNav.setText("Tilt: Roll: Rotate:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,12 +103,14 @@ public class MenuPanel extends javax.swing.JPanel
                 .addComponent(jbWB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlStatus)
-                .addContainerGap(98, Short.MAX_VALUE))
-            .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(305, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jlBattery)
+                .addGap(18, 18, 18)
+                .addComponent(jlNav)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlDistance))
+            .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +126,8 @@ public class MenuPanel extends javax.swing.JPanel
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlBattery)
-                    .addComponent(jlDistance)))
+                    .addComponent(jlDistance)
+                    .addComponent(jlNav)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,12 +193,24 @@ public class MenuPanel extends javax.swing.JPanel
         jlDistance.setText(sb.toString());
     }
     
+    public static void updateNavigationDisplay(double tilt, double roll, double spin) {
+        if(jlNav != null) {
+            StringBuilder sb = new StringBuilder("Tilt: ");
+            sb.append((int) tilt);
+            sb.append(", Roll: ").append((int) roll);
+            sb.append(", Spin: ").append((int) spin);
+            
+            jlNav.setText(sb.toString());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;
     private javax.swing.JButton jbWB;
     private static final javax.swing.JLabel jlBattery = new javax.swing.JLabel();
     private static final javax.swing.JLabel jlDistance = new javax.swing.JLabel();
+    private static final javax.swing.JLabel jlNav = new javax.swing.JLabel();
     private javax.swing.JLabel jlStatus;
     private javax.swing.JPanel jpVideo;
     // End of variables declaration//GEN-END:variables

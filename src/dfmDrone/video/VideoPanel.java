@@ -1,10 +1,14 @@
 package dfmDrone.video;
 
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
 import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.VideoChannel;
 import dfmDrone.data.Config;
-import georegression.struct.shapes.EllipseRotated_F64;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -31,7 +36,6 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import navigation.tools.DistanceMeaure;
-import navigation.tools.Navigator;
 import whiteBalance.tools.Calibrator;
 import whiteBalance.tools.WhiteBalance;
 
@@ -97,16 +101,14 @@ public class VideoPanel extends JPanel {
             Mat sourceImg = findAndDrawEllipse(bufferedImageToMat(image));
             Img2show = (BufferedImage) toBufferedImage(sourceImg);
             
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+            try {
+                result = new MultiFormatReader().decode(bitmap);
+                if (result!=null)
+                    System.out.println(result.getText() + ": " + new Date().getSeconds());
+            } catch (Exception e) { }
             
-//            ms = new Measure(image); LuminanceSource source = new
-//            BufferedImageLuminanceSource(image); BinaryBitmap bitmap = new
-//            BinaryBitmap(new HybridBinarizer(source)); try { portal =
-//            ms.findMaxEllipse(true, 0.18); result = new
-//            MultiFormatReader().decode(bitmap); if (result!=null){
-//            System.out.println(result.getText()); } if(portal != null) {
-//            nav.flyToPortal(portal, image, true); 
-//            MenuPanel.updateDistanceDisplay(distance); } } catch (Exception
-//            e) { }
             g.drawImage(Img2show, 0, 0, getWidth(), getHeight(), null);
         }
     }
@@ -120,8 +122,8 @@ public class VideoPanel extends JPanel {
         Core.inRange(hsvImg, new Scalar(160, 100, 45), new Scalar(180, 255, 255), upper_hue_range);
         Mat red_hue_image = new Mat();
         Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
-        Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
-        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2, 2));
+//        Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
+//        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2, 2));
         
         Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9));
         // Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
@@ -133,26 +135,18 @@ public class VideoPanel extends JPanel {
         // find contours
         Imgproc.findContours(red_hue_image, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
         // if any contour exist...
-        if (hierarchy.size().height > 0 && hierarchy.size().width > 0) {
-            // for each contour, display it in blue
-            for (int idx = 0; idx >= 0; idx = (int) hierarchy.get(0, idx)[0]) {
-                
-                // Imgproc.drawContours(frame, contours, idx, new Scalar(250, 0,
-                // 0), 3);
-                
-            }
-        }
         MatOfPoint2f approxCurve = new MatOfPoint2f();
         
         // For each contour found
         MatOfPoint2f contour2fbest = null;
         RotatedRect rotatedrect;
         RotatedRect rotatedrectbest = null;
+        double aspect;
         for (MatOfPoint contour : contours) {
             // Convert contours(i) from MatOfPoint to MatOfPoint2f
             if (contour.toArray().length > 5) {
                 rotatedrect = Imgproc.fitEllipse(new MatOfPoint2f(contour.toArray()));
-                double aspect = rotatedrect.boundingRect().height / rotatedrect.boundingRect().width;
+                aspect = rotatedrect.boundingRect().height / rotatedrect.boundingRect().width;
                 if (aspect > 0.9 && aspect < 1.8 && rotatedrect.boundingRect().area() > 20000 &&rotatedrect.boundingRect().area()<300000) {
                     if (rotatedrectbest == null) {
                         rotatedrectbest = rotatedrect;
@@ -166,8 +160,6 @@ public class VideoPanel extends JPanel {
         }
         try {
             if (contour2fbest != null && rotatedrectbest != null) {
-                
-                
                 double approxDistance = Imgproc.arcLength(contour2fbest, true) * 0.02;
                 Imgproc.approxPolyDP(contour2fbest, approxCurve, approxDistance, true);
                 
@@ -183,10 +175,10 @@ public class VideoPanel extends JPanel {
                 Imgproc.ellipse(sourceImg, rotatedrectbest, new Scalar(255, 192, 203), 4, 8);
                 
                 //Compute and show distance to portal
-                distance = DistanceMeaure.getDistanceToObject(image.getHeight(), rect.height, Config.portalHeight, 1.61806);//1.6404040404040405
+                distance = DistanceMeaure.getDistanceToObject(image.getHeight(), rect.height, Config.portalHeight, Config.camConst);
                 MenuPanel.updateDistanceDisplay(distance);
             }
-        } 
+        }
         catch (CvException e) {
             System.out.println("Ingen ellipse fundet: " + e);
         }

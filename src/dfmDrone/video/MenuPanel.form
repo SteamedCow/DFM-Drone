@@ -25,14 +25,16 @@
               <Component id="jbWB" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jlStatus" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="98" max="32767" attributes="0"/>
+              <EmptySpace pref="305" max="32767" attributes="0"/>
           </Group>
-          <Component id="jpVideo" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <Component id="jlBattery" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jlNav" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jlDistance" min="-2" max="-2" attributes="0"/>
           </Group>
+          <Component id="jpVideo" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -51,6 +53,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jlBattery" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlDistance" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlNav" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -119,6 +122,14 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbWBActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jlNav">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tilt: Roll: Rotate:"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="26"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
