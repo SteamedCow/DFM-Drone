@@ -11,7 +11,6 @@ import de.yadrone.base.video.xuggler.XugglerDecoder;
 import dfmDrone.data.Config;
 import dfmDrone.video.MenuPanel;
 import dfmDrone.video.VideoListener;
-import java.net.SocketTimeoutException;
 
 /**
  * DFMDrone
@@ -50,7 +49,6 @@ public class DFMDrone
                 @Override
                 public void attitudeUpdated(float pitch, float roll, float yaw) {
                     MenuPanel.updateNavigationDisplay(pitch, roll, yaw);
-//                    System.out.println("Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
                 }
                 
                 @Override

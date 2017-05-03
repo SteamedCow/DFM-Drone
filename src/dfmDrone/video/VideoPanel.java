@@ -9,11 +9,14 @@ import com.google.zxing.common.HybridBinarizer;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.VideoChannel;
 import dfmDrone.data.Config;
+import dfmDrone.examples.Commander;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.util.ArrayList;
@@ -46,23 +49,20 @@ import whiteBalance.tools.WhiteBalance;
  * @version 08-03-2017
  */
 public class VideoPanel extends JPanel {
+    public static boolean moving = false;
     
     protected BufferedImage image = null;
     protected BufferedImage Img2show = null;
-//    private final Navigator nav;
-//    private final DistanceMeaure dm;
     
-//    private EllipseRotated_F64 portal;
     private double distance;
-    Result result = null;
+    private Result result = null;
+    
+    private final Commander cmd;
     
     public VideoPanel(IARDrone drone) {
+        cmd = new Commander(drone, drone.getCommandManager());
         setSize((int) (640 * 1.5), (int) (360 * 1.5));
         setBackground(Color.WHITE);
-        
-        // Setup Navigators
-//        nav = new Navigator();
-//        dm = new DistanceMeaure();
         
         // Setup Camera Switch Listener
         System.out.println("\n---- Setup Camera Switch Listener ---");
@@ -86,30 +86,31 @@ public class VideoPanel extends JPanel {
     
     @Override
     synchronized public void paint(Graphics g) {
-//        portal = null;
-        
         if (image != null) {
-            
-            if (MenuPanel.colorOffset != null) {
-                WhiteBalance wb = new WhiteBalance(MenuPanel.colorOffset[0], MenuPanel.colorOffset[1],
-                        MenuPanel.colorOffset[2]);
-                Calibrator calib = new Calibrator(image, true);
-                wb.colorImage(calib.getImage());
+            if(!moving) {
+                if (MenuPanel.colorOffset != null) {
+                    WhiteBalance wb = new WhiteBalance(MenuPanel.colorOffset[0], MenuPanel.colorOffset[1],
+                            MenuPanel.colorOffset[2]);
+                    Calibrator calib = new Calibrator(image, true);
+                    wb.colorImage(calib.getImage());
+                    
+                }
                 
+                Mat sourceImg = findAndDrawEllipse(bufferedImageToMat(image));
+                Img2show = (BufferedImage) toBufferedImage(sourceImg);
+                
+                LuminanceSource source = new BufferedImageLuminanceSource(image);
+                BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+                try {
+                    result = new MultiFormatReader().decode(bitmap);
+                    if (result!=null)
+                        System.out.println(result.getText() + ": " + new Date().getSeconds());
+                } catch (Exception e) { }
+                
+                g.drawImage(Img2show, 0, 0, getWidth(), getHeight(), null);
             }
-            
-            Mat sourceImg = findAndDrawEllipse(bufferedImageToMat(image));
-            Img2show = (BufferedImage) toBufferedImage(sourceImg);
-            
-            LuminanceSource source = new BufferedImageLuminanceSource(image);
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-            try {
-                result = new MultiFormatReader().decode(bitmap);
-                if (result!=null)
-                    System.out.println(result.getText() + ": " + new Date().getSeconds());
-            } catch (Exception e) { }
-            
-            g.drawImage(Img2show, 0, 0, getWidth(), getHeight(), null);
+            else
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         }
     }
     
@@ -175,14 +176,38 @@ public class VideoPanel extends JPanel {
                 Imgproc.ellipse(sourceImg, rotatedrectbest, new Scalar(255, 192, 203), 4, 8);
                 
                 //Compute and show distance to portal
-                distance = DistanceMeaure.getDistanceToObject(image.getHeight(), rect.height, Config.portalHeight, Config.camConst);
+                distance = DistanceMeaure.getDistanceToObject(sourceImg.height(), rect.height, Config.portalHeight, Config.camConst);
                 MenuPanel.updateDistanceDisplay(distance);
+                
+//                centerVertical(rect.y, sourceImg.height());
             }
         }
         catch (CvException e) {
             System.out.println("Ingen ellipse fundet: " + e);
         }
         return sourceImg;
+    }
+    
+    public void centerVertical(double objCenterY, double imageHeight) {
+        moving = true;
+        double centerHeight = imageHeight/2;
+        
+        if(objCenterY - centerHeight > 10 || objCenterY - centerHeight < -10) {
+            if(objCenterY > centerHeight) {
+                System.out.println("up");
+                cmd.moveVertical(-50);
+            }
+            else {
+                System.out.println("down");
+                cmd.moveVertical(50);
+            }
+        }
+        moving = false;
+    }
+    
+    public void ortogonalPlacement(Point2D center, Dimension dim, double distance) {
+        double aspect = dim.height / dim.width;
+        //TODO
     }
     
     public static Mat bufferedImageToMat(BufferedImage bi) {

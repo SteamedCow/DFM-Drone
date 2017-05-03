@@ -25,7 +25,9 @@
               <Component id="jbWB" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jlStatus" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="305" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jlLastCmd" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="225" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <Component id="jlBattery" min="-2" max="-2" attributes="0"/>
@@ -46,6 +48,7 @@
                   <Component id="jbStartStop" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbWB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlLastCmd" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jpVideo" max="32767" attributes="0"/>
@@ -126,6 +129,14 @@
     <Component class="javax.swing.JLabel" name="jlNav">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tilt: Roll: Rotate:"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="26"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jlLastCmd">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Last Command:"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="26"/>

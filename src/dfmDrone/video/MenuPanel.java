@@ -17,7 +17,7 @@ public class MenuPanel extends javax.swing.JPanel
     private static boolean running = false;
     protected static Integer[] colorOffset = null;
     private final Commander cmd;
-    private VideoPanel video;
+    private final VideoPanel video;
     
     public MenuPanel(IARDrone drone) {
         initComponents();
@@ -90,6 +90,8 @@ public class MenuPanel extends javax.swing.JPanel
 
         jlNav.setText("Tilt: Roll: Rotate:");
 
+        jlLastCmd.setText("Last Command:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,7 +105,9 @@ public class MenuPanel extends javax.swing.JPanel
                 .addComponent(jbWB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlStatus)
-                .addContainerGap(305, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlLastCmd)
+                .addContainerGap(225, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jlBattery)
                 .addGap(18, 18, 18)
@@ -120,7 +124,8 @@ public class MenuPanel extends javax.swing.JPanel
                     .addComponent(jbKill)
                     .addComponent(jbStartStop)
                     .addComponent(jlStatus)
-                    .addComponent(jbWB))
+                    .addComponent(jbWB)
+                    .addComponent(jlLastCmd))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -149,14 +154,14 @@ public class MenuPanel extends javax.swing.JPanel
         }
         else {
             try {
+//                cmd.animateLEDs(10);
                 cmd.takeOff();
                 
-//                cmd.animateLEDs(10);
                 running = true;
                 jlStatus.setText("Status: Flying");
                 jbStartStop.setText("Stop");
-                Thread.sleep(7000);
-                cmd.scan();
+//                Thread.sleep(7000);
+//                cmd.scan();
             } 
             catch (Exception e) {
                 e.printStackTrace();
@@ -204,12 +209,18 @@ public class MenuPanel extends javax.swing.JPanel
         }
     }
     
+    public static void updateLastCMDDisplay(String cmd) {
+        if(jlLastCmd != null)
+            jlLastCmd.setText("Last Command: " + cmd);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;
     private javax.swing.JButton jbWB;
     private static final javax.swing.JLabel jlBattery = new javax.swing.JLabel();
     private static final javax.swing.JLabel jlDistance = new javax.swing.JLabel();
+    private static final javax.swing.JLabel jlLastCmd = new javax.swing.JLabel();
     private static final javax.swing.JLabel jlNav = new javax.swing.JLabel();
     private javax.swing.JLabel jlStatus;
     private javax.swing.JPanel jpVideo;
