@@ -177,11 +177,11 @@ public class MenuPanel extends javax.swing.JPanel
     protected static void updateDistanceDisplay(double distance) {
         StringBuilder sb = new StringBuilder("Distance: ");
         if(distance > 1000000)
-            sb.append(String.format("%.000f", distance / 1000000)).append(" km");
+            sb.append(String.format("%.2f", distance / 1000000)).append(" km");
         else if(distance > 1000)
-            sb.append(String.format("%.00f", distance / 1000)).append(" m");
+            sb.append(String.format("%.2f", distance / 1000)).append(" m");
         else if(distance > 10)
-            sb.append(String.format("%.00f", distance / 10)).append(" cm");
+            sb.append(String.format("%.1f", distance / 10)).append(" cm");
         else
             sb.append(String.format("%.0f", distance)).append(" mm");
         
