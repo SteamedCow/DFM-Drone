@@ -1,10 +1,9 @@
-package dfmDrone.examples;
+package dfmDrone.utils;
 
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
 import de.yadrone.base.command.LEDAnimation;
-import dfmDrone.data.Drone;
-import dfmDrone.video.MenuPanel;
+import dfmDrone.gui.GUIController;
 
 /**
  * Commander
@@ -15,29 +14,39 @@ public class Commander
 {
     private final IARDrone drone;
     private final CommandManager dCmd;
+    private final GUIController controller;
     
-    public Commander(IARDrone drone, CommandManager commandManager) {
-        this.drone = drone;
-        this.dCmd = commandManager;
+    public Commander(GUIController controller) {
+        this.controller = controller;
+        drone = this.controller.getDrone();
+        dCmd = drone.getCommandManager();
     }
     
+//    public Commander(IARDrone drone, CommandManager commandManager) {
+//        this.drone = drone;
+//        this.dCmd = commandManager;
+//    }
+    
     public void animateLEDs(int duration) {
-        MenuPanel.updateLastCMDDisplay("LEDS");
+        controller.updateLastCMDDisplay("LEDS");
         dCmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, duration);
     }
     
     public void takeOffAndLand(long hoverTime) {
-        MenuPanel.updateLastCMDDisplay("TAKE OFF AND LAND");
-        Drone.flying = true;
+        controller.updateLastCMDDisplay("TAKE OFF AND LAND");
+//        Drone.flying = true;
+        controller.flying = true;
         dCmd.takeOff();
         dCmd.waitFor(hoverTime);
         dCmd.landing();
-        Drone.flying = false;
+//        Drone.flying = false;
+        controller.flying = false;
     }
     
     public void takeOff() {
-        MenuPanel.updateLastCMDDisplay("TAKE OFF");
-        Drone.flying = true;
+        controller.updateLastCMDDisplay("TAKE OFF");
+//        Drone.flying = true;
+        controller.flying = true;
         dCmd.takeOff();
         dCmd.hover();
         
@@ -51,12 +60,12 @@ public class Commander
     }
     
     public void scan(){
-        MenuPanel.updateLastCMDDisplay("SCAN");
+        controller.updateLastCMDDisplay("SCAN");
     	dCmd.spinLeft(15);
     }
     
     public void moveVertical(int val) {
-        MenuPanel.updateLastCMDDisplay("MOVE VERTICAL " + val);
+        controller.updateLastCMDDisplay("MOVE VERTICAL " + val);
         if(val > 0)
             dCmd.up(val);
         else
@@ -70,7 +79,7 @@ public class Commander
     }
     
     public boolean land() {
-        MenuPanel.updateLastCMDDisplay("LAND");
+        controller.updateLastCMDDisplay("LAND");
         boolean success = false;
         try {
             dCmd.landing();
@@ -83,14 +92,16 @@ public class Commander
         }
         finally {
          //   dCmd.stop();
-            Drone.flying = false;
+//            Drone.flying = false;
+            controller.flying = false;
         }
         return success;
     }
     
     public void kill() {
         dCmd.emergency();
-        Drone.flying = false;
-        MenuPanel.updateLastCMDDisplay("KILL");
+//        Drone.flying = false;
+        controller.flying = false;
+        controller.updateLastCMDDisplay("KILL");
     }
 }

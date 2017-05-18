@@ -1,9 +1,8 @@
-package dfmDrone.video;
+package dfmDrone.gui;
 
-import de.yadrone.base.IARDrone;
 import de.yadrone.base.navdata.BatteryListener;
-import dfmDrone.examples.Commander;
 import java.awt.Color;
+import javax.swing.JPanel;
 import whiteBalance.exceptions.DetectionException;
 import whiteBalance.tools.Calibrator;
 
@@ -14,29 +13,23 @@ import whiteBalance.tools.Calibrator;
  */
 public class MenuPanel extends javax.swing.JPanel
 {
+    private final GUIController controller;
     private static boolean running = false;
     protected static Integer[] colorOffset = null;
-    private final Commander cmd;
-    private final VideoPanel video;
     
-    public MenuPanel(IARDrone drone) {
+    public MenuPanel(GUIController controller) {
+        this.controller = controller;
         initComponents();
-        this.cmd = new Commander(drone, drone.getCommandManager());
-        this.video = new VideoPanel(drone);
-        
-        jpVideo.add(this.video);
-        
+    }
+    
+    protected void addVideoPanel(JPanel video) {
+        jpVideo.add(video);
+    }
+    
+    protected void addBatteryListener(BatteryListener batteryListener) {
         //Setup Battery Listener
         System.out.println("\n---- Setup Battery Listener ---");
-        drone.getNavDataManager().addBatteryListener(new BatteryListener() {
-            @Override
-            public void batteryLevelChanged(int i) {
-                jlBattery.setText("Battery: " + (100 - i) + "%");
-            }
-
-            @Override
-            public void voltageChanged(int i) { }
-        });
+        controller.drone.getNavDataManager().addBatteryListener(batteryListener);
     }
     
     @SuppressWarnings("unchecked")
@@ -139,7 +132,7 @@ public class MenuPanel extends javax.swing.JPanel
     private void jbStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartStopActionPerformed
         if(running) {
             try {
-                if(cmd.land()) {
+                if(controller.cmd.land()) {
                     running = false;
                 jlStatus.setText("Status: Landing");
                     jbStartStop.setText("Start");
@@ -155,7 +148,7 @@ public class MenuPanel extends javax.swing.JPanel
         else {
             try {
 //                cmd.animateLEDs(10);
-                cmd.takeOff();
+                controller.cmd.takeOff();
                 
                 running = true;
                 jlStatus.setText("Status: Flying");
@@ -172,19 +165,23 @@ public class MenuPanel extends javax.swing.JPanel
     }//GEN-LAST:event_jbStartStopActionPerformed
 
     private void jbKillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbKillActionPerformed
-        cmd.kill();
+        controller.cmd.kill();
     }//GEN-LAST:event_jbKillActionPerformed
 
     private void jbWBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbWBActionPerformed
         try {
-            Calibrator calib = new Calibrator(video.image, true);
+            Calibrator calib = new Calibrator(controller.getVideoFrame(), true);
             colorOffset = calib.calibrate(3, 3, 3);
         } catch (DetectionException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jbWBActionPerformed
     
-    protected static void updateDistanceDisplay(double distance) {
+    protected void updateBatteryDisplay(int batteryLevel) {
+        jlBattery.setText("Battery: " + (100 - batteryLevel) + "%");
+    }
+    
+    protected void updateDistanceDisplay(double distance) {
         StringBuilder sb = new StringBuilder("Distance: ");
         if(distance > 1000000)
             sb.append(String.format("%.2f", distance / 1000000)).append(" km");
@@ -198,7 +195,7 @@ public class MenuPanel extends javax.swing.JPanel
         jlDistance.setText(sb.toString());
     }
     
-    public static void updateNavigationDisplay(double tilt, double roll, double spin) {
+    protected void updateNavigationDisplay(double tilt, double roll, double spin) {
         if(jlNav != null) {
             StringBuilder sb = new StringBuilder("Tilt: ");
             sb.append((int) tilt);
@@ -209,7 +206,7 @@ public class MenuPanel extends javax.swing.JPanel
         }
     }
     
-    public static void updateLastCMDDisplay(String cmd) {
+    protected void updateLastCMDDisplay(String cmd) {
         if(jlLastCmd != null)
             jlLastCmd.setText("Last Command: " + cmd);
     }

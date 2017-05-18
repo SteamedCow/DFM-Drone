@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dfmDrone.examples;
 
 import java.awt.Graphics;
@@ -10,27 +7,18 @@ import javax.swing.JPanel;
 
 /**
  * @author Asger
- *
  * 22/03/2017
  */
-public class showImage extends JPanel{
-	Image img;
-
-	/* (non-Javadoc)
-	 * @see javax.swing.JComponent#paint(java.awt.Graphics)
-	 */
-	
-	showImage(Image img){
-		this.img=img;
-		
-	}
-	@Override
-	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
-		super.paint(g);
-		g.drawImage(img, 0, 0,null);
-	}
-	
-	
-
+public class showImage extends JPanel {
+    private final Image img;
+    
+    public showImage(Image img){
+        this.img=img;
+    }
+    
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.drawImage(img, 0, 0,null);
+    }
 }
