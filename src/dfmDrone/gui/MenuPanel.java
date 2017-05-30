@@ -8,6 +8,7 @@ import whiteBalance.tools.Calibrator;
 
 /**
  * MenuPanel
+ * <b>OBS: Nogle metoder i denne klasse kræver at .form filen også redigeres!</b>
  * @author Lasse
  * @version 08-03-2017
  */
@@ -20,6 +21,7 @@ public class MenuPanel extends javax.swing.JPanel
     public MenuPanel(GUIController controller) {
         this.controller = controller;
         initComponents();
+        jpVideo.setBackground(Color.WHITE);
     }
     
     protected void addVideoPanel(JPanel video) {
@@ -32,6 +34,9 @@ public class MenuPanel extends javax.swing.JPanel
         controller.drone.getNavDataManager().addBatteryListener(batteryListener);
     }
     
+    /**
+     * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -129,6 +134,9 @@ public class MenuPanel extends javax.swing.JPanel
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
+     */
     private void jbStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartStopActionPerformed
         if(running) {
             try {
@@ -164,10 +172,16 @@ public class MenuPanel extends javax.swing.JPanel
         }
     }//GEN-LAST:event_jbStartStopActionPerformed
 
+    /**
+     * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
+     */
     private void jbKillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbKillActionPerformed
         controller.cmd.kill();
     }//GEN-LAST:event_jbKillActionPerformed
 
+    /**
+     * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
+     */
     private void jbWBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbWBActionPerformed
         try {
             Calibrator calib = new Calibrator(controller.getVideoFrame(), true);
@@ -211,6 +225,9 @@ public class MenuPanel extends javax.swing.JPanel
             jlLastCmd.setText("Last Command: " + cmd);
     }
     
+    /**
+     * <b>OBS: Rediger kun disse variabler hvis form filen også redigeres!</b>
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;

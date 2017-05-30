@@ -2,11 +2,12 @@ package dfmDrone.gui;
 
 import dfmDrone.listeners.BatteryListener;
 import de.yadrone.base.IARDrone;
+import dfmDrone.DroneLogic;
 import dfmDrone.listeners.CameraSwitchListener;
 import dfmDrone.listeners.GUIWindowListener;
 import dfmDrone.listeners.VideoListener;
 import dfmDrone.utils.Commander;
-import java.awt.Color;
+import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
@@ -17,11 +18,13 @@ import javax.swing.JFrame;
  */
 public class GUIController 
 {
-    public boolean flying = false;
+    public boolean droneFlying = false;
+    public boolean droneBusy = false;
     
     private final MenuPanel menu;
     private final JFrame window;
     private final VideoPanel video;
+    private final DroneLogic droneLogic;
     
     protected final Commander cmd;
     protected final IARDrone drone;
@@ -29,10 +32,10 @@ public class GUIController
     public GUIController(IARDrone drone) {
         this.drone = drone;
         cmd = new Commander(this);
+        droneLogic = new DroneLogic(this, cmd);
         
         video = new VideoPanel(this);
         video.setSize((int) (640 * 1.5), (int) (360 * 1.5));
-        video.setBackground(Color.WHITE);
         video.addVideoListener(new VideoListener(this));
         video.addCameraSwitchListener(new CameraSwitchListener(this));
         
@@ -73,5 +76,9 @@ public class GUIController
 
     public void updateNavigationDisplay(float pitch, float roll, float yaw) {
         menu.updateNavigationDisplay(pitch, roll, yaw);
+    }
+    
+    protected void computeFlight(ImageAnalyticsModel imageAnalytics) {
+        droneLogic.compute(imageAnalytics);
     }
 }

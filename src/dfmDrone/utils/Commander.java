@@ -22,11 +22,6 @@ public class Commander
         dCmd = drone.getCommandManager();
     }
     
-//    public Commander(IARDrone drone, CommandManager commandManager) {
-//        this.drone = drone;
-//        this.dCmd = commandManager;
-//    }
-    
     public void animateLEDs(int duration) {
         controller.updateLastCMDDisplay("LEDS");
         dCmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, duration);
@@ -34,19 +29,22 @@ public class Commander
     
     public void takeOffAndLand(long hoverTime) {
         controller.updateLastCMDDisplay("TAKE OFF AND LAND");
-//        Drone.flying = true;
-        controller.flying = true;
+        
+        controller.droneFlying = true;
+        controller.droneBusy = true;
+        
         dCmd.takeOff();
         dCmd.waitFor(hoverTime);
         dCmd.landing();
-//        Drone.flying = false;
-        controller.flying = false;
+        
+        controller.droneFlying = false;
+        controller.droneBusy = false;
     }
     
     public void takeOff() {
         controller.updateLastCMDDisplay("TAKE OFF");
-//        Drone.flying = true;
-        controller.flying = true;
+        controller.droneFlying = true;
+        controller.droneBusy = true;
         dCmd.takeOff();
         dCmd.hover();
         
@@ -57,6 +55,8 @@ public class Commander
         animateLEDs(5);
         System.out.println("FLY UP!");
         moveVertical(5000);
+        
+        controller.droneBusy = false;
     }
     
     public void scan(){
@@ -66,6 +66,7 @@ public class Commander
     
     public void moveVertical(int val) {
         controller.updateLastCMDDisplay("MOVE VERTICAL " + val);
+        controller.droneBusy = true;
         if(val > 0)
             dCmd.up(val);
         else
@@ -76,10 +77,12 @@ public class Commander
 //        } catch (InterruptedException ex) {
 //        }
 //        dCmd.hover();
+        controller.droneBusy = false;
     }
     
     public boolean land() {
         controller.updateLastCMDDisplay("LAND");
+        controller.droneBusy = true;
         boolean success = false;
         try {
             dCmd.landing();
@@ -91,17 +94,18 @@ public class Commander
             success = false;
         }
         finally {
-         //   dCmd.stop();
-//            Drone.flying = false;
-            controller.flying = false;
+            controller.droneBusy = false;
+            controller.droneFlying = false;
         }
         return success;
     }
     
     public void kill() {
+        controller.droneBusy = true;
         dCmd.emergency();
-//        Drone.flying = false;
-        controller.flying = false;
+        
+        controller.droneBusy = false;
+        controller.droneFlying = false;
         controller.updateLastCMDDisplay("KILL");
     }
 }
