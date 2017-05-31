@@ -1,8 +1,10 @@
 package dfmDrone.gui;
 
 import de.yadrone.base.navdata.BatteryListener;
-import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import whiteBalance.exceptions.DetectionException;
 import whiteBalance.tools.Calibrator;
 
@@ -15,13 +17,36 @@ import whiteBalance.tools.Calibrator;
 public class MenuPanel extends javax.swing.JPanel
 {
     private final GUIController controller;
-    private static boolean running = false;
     protected static Integer[] colorOffset = null;
+    
+    private final HashMap<InfoLabel, Integer> tableMatrix = new HashMap<>();
+    private DefaultTableModel jtModel;
     
     public MenuPanel(GUIController controller) {
         this.controller = controller;
         initComponents();
-        jpVideo.setBackground(Color.WHITE);
+        initTable();
+    }
+    
+    private enum InfoLabel {
+        Status, LastCommand, Busy, Battery, Distance, Tilt, Roll, Rotate;
+    }
+    
+    private void initTable() {
+        tableMatrix.put(InfoLabel.Status, 0);
+        tableMatrix.put(InfoLabel.LastCommand, 1);
+        tableMatrix.put(InfoLabel.Busy, 2);
+        tableMatrix.put(InfoLabel.Battery, 3);
+        tableMatrix.put(InfoLabel.Distance, 4);
+        tableMatrix.put(InfoLabel.Tilt, 5);
+        tableMatrix.put(InfoLabel.Roll, 6);
+        tableMatrix.put(InfoLabel.Rotate, 7);
+        
+        jtModel = (DefaultTableModel) jtInfoTable.getModel();
+        jtModel.setRowCount(tableMatrix.size());
+        
+        for (Entry<InfoLabel, Integer> rowSet : tableMatrix.entrySet()) 
+            jtModel.setValueAt(rowSet.getKey().toString(), rowSet.getValue(), 0);
     }
     
     protected void addVideoPanel(JPanel video) {
@@ -41,18 +66,21 @@ public class MenuPanel extends javax.swing.JPanel
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jbStartStop = new javax.swing.JButton();
+        jlTitle = new javax.swing.JLabel();
+        jspUI = new javax.swing.JScrollPane();
+        jpUI = new javax.swing.JPanel();
         jbKill = new javax.swing.JButton();
-        jlStatus = new javax.swing.JLabel();
-        jpVideo = new javax.swing.JPanel();
+        jbStartStop = new javax.swing.JButton();
         jbWB = new javax.swing.JButton();
+        jspInfTable = new javax.swing.JScrollPane();
+        jtInfoTable = new javax.swing.JTable();
+        jpVideo = new javax.swing.JPanel();
 
-        jbStartStop.setText("Start");
-        jbStartStop.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbStartStopActionPerformed(evt);
-            }
-        });
+        jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jlTitle.setText("Don Frankos zzKillerDronezz");
+
+        jspUI.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jspUI.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jbKill.setBackground(new java.awt.Color(240, 0, 0));
         jbKill.setText("Kill");
@@ -62,22 +90,12 @@ public class MenuPanel extends javax.swing.JPanel
             }
         });
 
-        jlStatus.setText("Status: Landed");
-
-        javax.swing.GroupLayout jpVideoLayout = new javax.swing.GroupLayout(jpVideo);
-        jpVideo.setLayout(jpVideoLayout);
-        jpVideoLayout.setHorizontalGroup(
-            jpVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jpVideoLayout.setVerticalGroup(
-            jpVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 229, Short.MAX_VALUE)
-        );
-
-        jlBattery.setText("Battery:");
-
-        jlDistance.setText("Distance: ");
+        jbStartStop.setText("Start");
+        jbStartStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbStartStopActionPerformed(evt);
+            }
+        });
 
         jbWB.setText("White Balance");
         jbWB.addActionListener(new java.awt.event.ActionListener() {
@@ -86,51 +104,112 @@ public class MenuPanel extends javax.swing.JPanel
             }
         });
 
-        jlNav.setText("Tilt: Roll: Rotate:");
+        jspInfTable.setBorder(null);
+        jspInfTable.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jlLastCmd.setText("Last Command:");
+        jtInfoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "", "Value"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtInfoTable.setEnabled(false);
+        jtInfoTable.getTableHeader().setReorderingAllowed(false);
+        jspInfTable.setViewportView(jtInfoTable);
+
+        javax.swing.GroupLayout jpUILayout = new javax.swing.GroupLayout(jpUI);
+        jpUI.setLayout(jpUILayout);
+        jpUILayout.setHorizontalGroup(
+            jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpUILayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpUILayout.createSequentialGroup()
+                        .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jpUILayout.createSequentialGroup()
+                        .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpUILayout.createSequentialGroup()
+                                .addComponent(jbStartStop)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbKill))
+                            .addComponent(jbWB))
+                        .addGap(0, 121, Short.MAX_VALUE))))
+        );
+        jpUILayout.setVerticalGroup(
+            jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpUILayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbStartStop)
+                    .addComponent(jbKill))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jspInfTable, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbWB)
+                .addContainerGap())
+        );
+
+        jspUI.setViewportView(jpUI);
+
+        javax.swing.GroupLayout jpVideoLayout = new javax.swing.GroupLayout(jpVideo);
+        jpVideo.setLayout(jpVideoLayout);
+        jpVideoLayout.setHorizontalGroup(
+            jpVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 466, Short.MAX_VALUE)
+        );
+        jpVideoLayout.setVerticalGroup(
+            jpVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jbKill)
+                .addComponent(jspUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbStartStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbWB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlStatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlLastCmd)
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jlBattery)
-                .addGap(18, 18, 18)
-                .addComponent(jlNav)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlDistance))
-            .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbKill)
-                    .addComponent(jbStartStop)
-                    .addComponent(jlStatus)
-                    .addComponent(jbWB)
-                    .addComponent(jlLastCmd))
+                .addComponent(jlTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlBattery)
-                    .addComponent(jlDistance)
-                    .addComponent(jlNav)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jspUI))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -138,36 +217,34 @@ public class MenuPanel extends javax.swing.JPanel
      * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
      */
     private void jbStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartStopActionPerformed
-        if(running) {
+        if(controller.droneFlying) {
             try {
                 if(controller.cmd.land()) {
-                    running = false;
-                jlStatus.setText("Status: Landing");
+                    controller.droneFlying = false;
+                    setInfoValue(InfoLabel.Status, "Landing");
                     jbStartStop.setText("Start");
                 }
-            } 
+            }
             catch (Exception e) {
                 e.printStackTrace();
-                jlStatus.setForeground(Color.red);
-                jlStatus.setText("Error: Could not land!");
+                setInfoValue(InfoLabel.Status, "Error: Could not land!");
             }
-            jlStatus.setText("Status: Landed");
+            setInfoValue(InfoLabel.Status, "Landed");
         }
         else {
             try {
 //                cmd.animateLEDs(10);
                 controller.cmd.takeOff();
                 
-                running = true;
-                jlStatus.setText("Status: Flying");
+                controller.droneFlying = true;
+                setInfoValue(InfoLabel.Status, "Flying");
                 jbStartStop.setText("Stop");
 //                Thread.sleep(7000);
 //                cmd.scan();
             } 
             catch (Exception e) {
                 e.printStackTrace();
-                jlStatus.setForeground(Color.red);
-                jlStatus.setText("Error: Could not start!");
+                setInfoValue(InfoLabel.Status, "Error: Could not start!");
             }
         }
     }//GEN-LAST:event_jbStartStopActionPerformed
@@ -192,11 +269,11 @@ public class MenuPanel extends javax.swing.JPanel
     }//GEN-LAST:event_jbWBActionPerformed
     
     protected void updateBatteryDisplay(int batteryLevel) {
-        jlBattery.setText("Battery: " + (100 - batteryLevel) + "%");
+        setInfoValue(InfoLabel.Battery, (100 - batteryLevel) + "%");
     }
     
     protected void updateDistanceDisplay(double distance) {
-        StringBuilder sb = new StringBuilder("Distance: ");
+        StringBuilder sb = new StringBuilder();
         if(distance > 1000000)
             sb.append(String.format("%.2f", distance / 1000000)).append(" km");
         else if(distance > 1000)
@@ -206,23 +283,24 @@ public class MenuPanel extends javax.swing.JPanel
         else
             sb.append(String.format("%.0f", distance)).append(" mm");
         
-        jlDistance.setText(sb.toString());
+        setInfoValue(InfoLabel.Distance, sb.toString());
     }
     
     protected void updateNavigationDisplay(double tilt, double roll, double spin) {
-        if(jlNav != null) {
-            StringBuilder sb = new StringBuilder("Tilt: ");
-            sb.append((int) tilt);
-            sb.append(", Roll: ").append((int) roll);
-            sb.append(", Spin: ").append((int) spin);
-            
-            jlNav.setText(sb.toString());
-        }
+        setInfoValue(InfoLabel.Tilt, "" + tilt);
+        setInfoValue(InfoLabel.Roll, "" + roll);
+        setInfoValue(InfoLabel.Rotate, "" + spin);
     }
     
     protected void updateLastCMDDisplay(String cmd) {
-        if(jlLastCmd != null)
-            jlLastCmd.setText("Last Command: " + cmd);
+        setInfoValue(InfoLabel.LastCommand, cmd);
+    }
+    
+    private void setInfoValue(InfoLabel label, String value) {
+        if(tableMatrix.containsKey(label))
+            jtModel.setValueAt(value, tableMatrix.get(label), 1);
+        else
+            throw new NoSuchFieldError("No row value assigned to the label: " + label.name());
     }
     
     /**
@@ -232,11 +310,11 @@ public class MenuPanel extends javax.swing.JPanel
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;
     private javax.swing.JButton jbWB;
-    private static final javax.swing.JLabel jlBattery = new javax.swing.JLabel();
-    private static final javax.swing.JLabel jlDistance = new javax.swing.JLabel();
-    private static final javax.swing.JLabel jlLastCmd = new javax.swing.JLabel();
-    private static final javax.swing.JLabel jlNav = new javax.swing.JLabel();
-    private javax.swing.JLabel jlStatus;
+    private javax.swing.JLabel jlTitle;
+    private javax.swing.JPanel jpUI;
     private javax.swing.JPanel jpVideo;
+    private javax.swing.JScrollPane jspInfTable;
+    private javax.swing.JScrollPane jspUI;
+    private javax.swing.JTable jtInfoTable;
     // End of variables declaration//GEN-END:variables
 }
