@@ -109,14 +109,7 @@ public class MenuPanel extends javax.swing.JPanel
 
         jtInfoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "", "Value"
