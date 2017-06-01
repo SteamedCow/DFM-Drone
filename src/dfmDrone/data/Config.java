@@ -9,11 +9,14 @@ import de.yadrone.base.command.VideoCodec;
  */
 public class Config 
 {
-    public static String droneAddress = "192.168.1.1";
-    public static int maxAltitude = 3500;
-    public static int vidFPS = 15;
-    public static VideoCodec vidCodec = VideoCodec.H264_360P;
+    protected final static String DEFAULT_DRONE_IP = "192.168.1.1";
+    protected final static int DEFAULT_MAX_ALTITUDE = 3500;
+    protected final static int DEFAULT_VIDEO_FRAMERATE = 15;
+    protected final static boolean DEFAULT_OUTDOOR = false;
+    protected final static boolean DEFAULT_HULL = true;
+    protected final static int DEFAULT_PORTAL_HEIGHT = 850; //in mm
+    protected final static double DEFAULT_CAMERA_CONSTANT = 1.61806;
+    protected final static int DEFAULT_LOGGER_LEVEL = 3;
     
-    public static double portalHeight = 850; //in mm
-    public static double camConst = 1.61806;
+    public final static VideoCodec VIDEO_CODEC = VideoCodec.H264_360P;
 }

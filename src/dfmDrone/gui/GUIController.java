@@ -3,6 +3,8 @@ package dfmDrone.gui;
 import dfmDrone.listeners.BatteryListener;
 import de.yadrone.base.IARDrone;
 import dfmDrone.DroneLogic;
+import dfmDrone.data.PropertyHandler;
+import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.listeners.CameraSwitchListener;
 import dfmDrone.listeners.GUIWindowListener;
 import dfmDrone.listeners.VideoListener;
@@ -21,6 +23,7 @@ public class GUIController
     public boolean droneFlying = false;
     public boolean droneBusy = false;
     
+    private final PropertyHandler propHandler;
     private final MenuPanel menu;
     private final JFrame window;
     private final VideoPanel video;
@@ -29,8 +32,9 @@ public class GUIController
     protected final Commander cmd;
     protected final IARDrone drone;
     
-    public GUIController(IARDrone drone) {
+    public GUIController(IARDrone drone, PropertyHandler propHandler) {
         this.drone = drone;
+        this.propHandler = propHandler;
         cmd = new Commander(this);
         droneLogic = new DroneLogic(this, cmd);
         
@@ -48,6 +52,10 @@ public class GUIController
         window.setSize(1200, 600);
         window.setContentPane(menu);
         window.setVisible(true);
+    }
+    
+    public String getProperty(PropertyLabel propLabel) {
+        return propHandler.get(propLabel);
     }
 
     public IARDrone getDrone() {

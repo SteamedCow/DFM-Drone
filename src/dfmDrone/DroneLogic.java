@@ -1,7 +1,7 @@
 package dfmDrone;
 
 import com.google.zxing.Result;
-import dfmDrone.data.Config;
+import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.gui.GUIController;
 import dfmDrone.utils.Commander;
 import dfmDrone.utils.OpenCVUtils;
@@ -31,7 +31,7 @@ public class DroneLogic
         if(!controller.droneBusy && controller.droneFlying) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
-                double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.portalHeight, Config.camConst);
+                double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight)), Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
                 controller.updateDistanceDisplay(distance);
                 
 //                centerVertical(rect.y, sourceImg.height());
