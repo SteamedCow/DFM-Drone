@@ -15,6 +15,7 @@ public class Commander
     private final IARDrone drone;
     private final CommandManager dCmd;
     private final GUIController controller;
+    private boolean block = false;
     
     public Commander(GUIController controller) {
         this.controller = controller;
@@ -23,11 +24,15 @@ public class Commander
     }
     
     public void animateLEDs(int duration) {
-        controller.updateLastCMDDisplay("LEDS");
-        dCmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, duration);
+        if(!block) {
+            controller.updateLastCMDDisplay("LEDS");
+            dCmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, duration);
+        }
     }
     
     public void takeOffAndLand(long hoverTime) {
+        block = false;
+        
         controller.updateLastCMDDisplay("TAKE OFF AND LAND");
         
         controller.droneFlying = true;
@@ -42,41 +47,45 @@ public class Commander
     }
     
     public void takeOff() {
+        block = false;
+        
         controller.updateLastCMDDisplay("TAKE OFF");
         controller.droneFlying = true;
         controller.setBusy(true);
         dCmd.takeOff();
         dCmd.hover();
         
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-        }        
         controller.setBusy(false);
     }
     
     public void scan(){
-        controller.updateLastCMDDisplay("SCAN");
-    	dCmd.spinLeft(15);
+        if(!block) {
+            controller.updateLastCMDDisplay("SCAN");
+            dCmd.spinLeft(15);
+        }
     }
     
     public void moveVertical(int val) {
-        controller.updateLastCMDDisplay("MOVE VERTICAL " + val);
-        controller.setBusy(true);
-        if(val > 0)
-            dCmd.up(val);
-        else
-            dCmd.down(-val);
+        if(!block) {
+            controller.updateLastCMDDisplay("MOVE VERTICAL " + val);
+            controller.setBusy(true);
+            if(val > 0)
+                dCmd.up(val);
+            else
+                dCmd.down(val);
+            
+            controller.setBusy(false);
+        }
         
 //        try {
 //            Thread.sleep(5000);
 //        } catch (InterruptedException ex) {
 //        }
 //        dCmd.hover();
-        controller.setBusy(false);
     }
     
     public boolean land() {
+        block = true;
         controller.updateLastCMDDisplay("LAND");
         controller.setBusy(true);
         boolean success = false;
@@ -97,6 +106,7 @@ public class Commander
     }
     
     public void kill() {
+        block = true;
         controller.setBusy(true);
         dCmd.emergency();
         

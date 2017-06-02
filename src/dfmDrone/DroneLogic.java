@@ -34,7 +34,7 @@ public class DroneLogic
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight)), Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
                 controller.updateDistanceDisplay(distance);
                 
-//                centerVertical(rect.y, sourceImg.height());
+                centerVertical(imageAnalytics.rect.y, imageAnalytics.sourceImg.height());
             }
             
             //QR Scan
@@ -55,14 +55,14 @@ public class DroneLogic
         controller.droneFlying = true;
         double centerHeight = imageHeight/2;
         
-        if(objCenterY - centerHeight > 10 || objCenterY - centerHeight < -10) {
+        if(objCenterY - centerHeight > 20 || objCenterY - centerHeight < -20) {
             if(objCenterY > centerHeight) {
                 System.out.println("up");
-                cmd.moveVertical(-50);
+                cmd.moveVertical(-1);
             }
             else {
                 System.out.println("down");
-                cmd.moveVertical(50);
+                cmd.moveVertical(1);
             }
         }
         controller.droneFlying = false;

@@ -59,7 +59,7 @@ public class GUIController
     }
     
     public void setBusy(boolean busy) {
-        droneBusy = true;
+        droneBusy = busy;
         menu.updateBusy(busy);
     }
     

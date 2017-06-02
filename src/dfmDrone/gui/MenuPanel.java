@@ -229,10 +229,16 @@ public class MenuPanel extends javax.swing.JPanel
 //                cmd.animateLEDs(10);
                 controller.cmd.takeOff();
                 
-                controller.droneFlying = true;
                 setInfoValue(InfoLabel.Status, "Flying");
                 jbStartStop.setText("Stop");
-//                Thread.sleep(7000);
+                
+                while(controller.isBusy()) {
+                    System.out.println("waiting");
+                    Thread.sleep(100);
+                }
+//                    
+                controller.cmd.moveVertical(10);
+//                
 //                cmd.scan();
             } 
             catch (Exception e) {
