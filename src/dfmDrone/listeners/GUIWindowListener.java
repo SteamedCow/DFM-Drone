@@ -1,6 +1,7 @@
 package dfmDrone.listeners;
 
 import dfmDrone.gui.GUIController;
+import dfmDrone.utils.DFMLogger;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -15,16 +16,17 @@ public class GUIWindowListener extends WindowAdapter
 
     public GUIWindowListener(GUIController controller) {
         //Setup GUI Window Listener
-        System.out.println("\n---- Setup GUI Window Listener ---");
+        DFMLogger.logger.config("Setup GUI Window Listener");
         this.controller = controller;
     }
     
     @Override
     public void windowClosing(WindowEvent e) {
         System.out.println("\n--- GUI Closed ---");
-        System.out.println("Stopping Drone");
+        DFMLogger.logger.info("GUI Closed");
+        DFMLogger.logger.fine("Stopping Drone");
         controller.getDrone().stop();
-        System.out.println("Closing Program");
+        DFMLogger.logger.fine("Closing Program");
         System.exit(0);
     }
 }

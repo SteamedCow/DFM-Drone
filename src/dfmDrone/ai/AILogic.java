@@ -1,9 +1,8 @@
-package dfmDrone;
+package dfmDrone.ai;
 
 import com.google.zxing.Result;
 import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.gui.GUIController;
-import dfmDrone.utils.Commander;
 import dfmDrone.utils.OpenCVUtils;
 import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
 import java.awt.Dimension;
@@ -13,16 +12,16 @@ import java.util.Date;
 import navigation.tools.DistanceMeaure;
 
 /**
- * DroneLogic
+ * AILogic
  * @author Lasse
  * @version 30-05-2017
  */
-public class DroneLogic 
+public class AILogic 
 {
     private final GUIController controller;
     private final Commander cmd;
 
-    public DroneLogic(GUIController controller, Commander cmd) {
+    public AILogic(GUIController controller, Commander cmd) {
         this.controller = controller;
         this.cmd = cmd;
     }

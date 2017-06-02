@@ -2,15 +2,17 @@ package dfmDrone.gui;
 
 import dfmDrone.listeners.BatteryListener;
 import de.yadrone.base.IARDrone;
-import dfmDrone.DroneLogic;
+import dfmDrone.ai.AILogic;
 import dfmDrone.data.PropertyHandler;
 import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.listeners.CameraSwitchListener;
 import dfmDrone.listeners.GUIWindowListener;
 import dfmDrone.listeners.VideoListener;
-import dfmDrone.utils.Commander;
+import dfmDrone.ai.Commander;
+import dfmDrone.utils.DFMLogger;
 import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 
 /**
@@ -27,7 +29,7 @@ public class GUIController
     private final MenuPanel menu;
     private final JFrame window;
     private final VideoPanel video;
-    private final DroneLogic droneLogic;
+    private final AILogic droneLogic;
     
     protected final Commander cmd;
     protected final IARDrone drone;
@@ -36,7 +38,7 @@ public class GUIController
         this.drone = drone;
         this.propHandler = propHandler;
         cmd = new Commander(this);
-        droneLogic = new DroneLogic(this, cmd);
+        droneLogic = new AILogic(this, cmd);
         
         video = new VideoPanel(this);
         video.setSize((int) (640 * 1.5), (int) (360 * 1.5));
@@ -59,6 +61,7 @@ public class GUIController
     }
     
     public void setBusy(boolean busy) {
+        DFMLogger.logger.log(Level.FINER, "Busy: {0}", busy);
         droneBusy = busy;
         menu.updateBusy(busy);
     }

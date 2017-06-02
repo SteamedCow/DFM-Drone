@@ -26,9 +26,9 @@ public class DFMDrone
     public static GUIController guiController;
     
     public static void main(String[] args) {
+        DFMLogger.logger.log(Level.INFO, "Booting program");
         //Load properties
-        System.out.println("\n---- Load properties ---");
-        DFMLogger.logger.log(Level.FINE, "Load properties");
+        DFMLogger.logger.log(Level.CONFIG, "Load properties");
         PropertyHandler propHandler = new PropertyHandler(Data.PROPERTIES_FILEPATH, true);
         DFMLogger.setLevel(Level.parse(propHandler.get(PropertyLabel.LoggerLevel)));
         
@@ -43,31 +43,30 @@ public class DFMDrone
         IARDrone drone;
         
         //Setup Drone
-        System.out.println("\n---- Setup Drone ---");
-        DFMLogger.logger.log(Level.FINE, "Setup Drone");
+        DFMLogger.logger.log(Level.CONFIG, "Setup Drone");
         try {
             drone = new ARDrone(propHandler.get(PropertyLabel.DroneIP), new XugglerDecoder());
             drone.start();
             
             //Setup Error Listener
-            System.out.println("\n---- Setup Error Listener ---");
+            DFMLogger.logger.log(Level.CONFIG, "Setup Error Listener");
             drone.addExceptionListener(new ErrorListener());
             
             //Set Configurations
-            System.out.println("\n---- Set Configurations ---");
+            DFMLogger.logger.log(Level.CONFIG, "Set Configurations");
             drone.setMaxAltitude(Integer.parseInt(propHandler.get(PropertyLabel.MaxAltitude)));
             drone.getCommandManager().setOutdoor(Boolean.parseBoolean(propHandler.get(PropertyLabel.Outdoor)), Boolean.parseBoolean(propHandler.get(PropertyLabel.Hull)));
             drone.getCommandManager().setVideoCodecFps(Integer.parseInt(propHandler.get(PropertyLabel.VideoFrameRate)));
             drone.getCommandManager().setVideoCodec(Config.VIDEO_CODEC);
             
             //Setup Video Listener and controller
-            System.out.println("\n---- Setup Video Listener & controller ---");
+            DFMLogger.logger.log(Level.CONFIG, "Setup Video Listener & controller");
             guiController = new GUIController(drone, propHandler);
             
             //Setup Attitude Listener
-            System.out.println("\n---- Setup Attitude Listener ---");
+            DFMLogger.logger.log(Level.CONFIG, "Setup Attitude Listener");
             NavDataManager navDatMan = drone.getNavDataManager();
-            System.out.println("Adding listener");
+            DFMLogger.logger.log(Level.CONFIG, "Adding listener");
             navDatMan.addAttitudeListener(new AttitudeListener(guiController) {});
         }
         catch (Exception e) {
@@ -75,7 +74,7 @@ public class DFMDrone
             DFMLogger.logger.log(Level.SEVERE, "Could not run main: {0}", e.getMessage());
         }
         finally {
-            System.out.println("\n --- END OF MAIN ---");
+            DFMLogger.logger.log(Level.CONFIG, "END OF MAIN");
         }
     }
 }

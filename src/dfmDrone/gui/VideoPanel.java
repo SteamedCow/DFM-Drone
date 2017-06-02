@@ -2,10 +2,12 @@ package dfmDrone.gui;
 
 import dfmDrone.utils.OpenCVUtils;
 import de.yadrone.base.video.ImageListener;
+import dfmDrone.utils.DFMLogger;
 import static dfmDrone.utils.OpenCVUtils.findAndDrawEllipse;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -29,13 +31,13 @@ public class VideoPanel extends JPanel {
     
     protected void addVideoListener(ImageListener videoListener) {
         // Setup Image Listener
-        System.out.println("\n---- Setup Image Listener ---");
+        DFMLogger.logger.log(Level.FINE, "Setup Image Listener");
         controller.drone.getVideoManager().addImageListener(videoListener);
     }
     
     protected void addCameraSwitchListener(MouseAdapter cameraSwitchListener) {
         // Setup Camera Switch Listener
-        System.out.println("\n---- Setup Camera Switch Listener ---");
+        DFMLogger.logger.log(Level.FINE, "Setup Camera Switch Listener");
         addMouseListener(cameraSwitchListener);
     }
     
@@ -63,19 +65,6 @@ public class VideoPanel extends JPanel {
             //compute flight
             if(imageAnalytics != null) {
                 controller.computeFlight(imageAnalytics);
-                
-//                //Compute and show distance to portal if a portal is found
-//                if(imageAnalytics.rect != null) {
-//                    double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.portalHeight, Config.camConst);
-//                    controller.updateDistanceDisplay(distance);
-//                    
-//                    centerVertical(rect.y, sourceImg.height());
-//                }
-//                
-//                //QR Scan
-//                Result qr = OpenCVUtils.QRScanner(imageRaw);
-//                if (qr != null)
-//                    System.out.println(qr.getText() + ": " + new Date().getSeconds());
                 
                 //Draw analysed image
                 BufferedImage imgAnalysed = (BufferedImage) OpenCVUtils.toBufferedImage(imageAnalytics.sourceImg);

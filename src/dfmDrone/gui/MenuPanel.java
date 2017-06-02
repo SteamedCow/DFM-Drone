@@ -1,6 +1,7 @@
 package dfmDrone.gui;
 
 import de.yadrone.base.navdata.BatteryListener;
+import dfmDrone.utils.DFMLogger;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import javax.swing.JPanel;
@@ -56,6 +57,7 @@ public class MenuPanel extends javax.swing.JPanel
     protected void addBatteryListener(BatteryListener batteryListener) {
         //Setup Battery Listener
         System.out.println("\n---- Setup Battery Listener ---");
+        DFMLogger.logger.config("Setup Battery Listener");
         controller.drone.getNavDataManager().addBatteryListener(batteryListener);
     }
     
@@ -211,6 +213,7 @@ public class MenuPanel extends javax.swing.JPanel
      */
     private void jbStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartStopActionPerformed
         if(controller.droneFlying) {
+            DFMLogger.logger.info("Land command requested");
             try {
                 if(controller.cmd.land()) {
                     controller.droneFlying = false;
@@ -225,6 +228,7 @@ public class MenuPanel extends javax.swing.JPanel
             setInfoValue(InfoLabel.Status, "Landed");
         }
         else {
+            DFMLogger.logger.info("Takeoff command requested");
             try {
 //                cmd.animateLEDs(10);
                 controller.cmd.takeOff();
@@ -236,8 +240,6 @@ public class MenuPanel extends javax.swing.JPanel
                     System.out.println("waiting");
                     Thread.sleep(100);
                 }
-//                    
-                controller.cmd.moveVertical(10);
 //                
 //                cmd.scan();
             } 

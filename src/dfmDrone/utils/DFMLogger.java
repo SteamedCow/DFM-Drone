@@ -61,6 +61,6 @@ public class DFMLogger
      *      Logger nivau
      */
     public static void setLevel(Level level) {
-        logger.setLevel(Level.OFF);
+        logger.setLevel(level);
     }
 }
