@@ -67,7 +67,7 @@ public class PropertyHandler
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public void saveProperties(String droneIP, Integer maxAltitude, Integer VideoFrameRate, Boolean outdoor, Boolean hull, Integer PortalHeight, Double CameraConstant, Integer loggerLevel) throws FileNotFoundException, IOException {
+    public void saveProperties(String droneIP, Integer maxAltitude, Integer VideoFrameRate, Boolean outdoor, Boolean hull, Integer PortalHeight, Double CameraConstant, Level loggerLevel) throws FileNotFoundException, IOException {
         try (OutputStream output = new FileOutputStream(filepath)) {
             prop.setProperty(PropertyLabel.DroneIP.name(), droneIP);
             prop.setProperty(PropertyLabel.MaxAltitude.name(), maxAltitude.toString());
@@ -76,7 +76,7 @@ public class PropertyHandler
             prop.setProperty(PropertyLabel.Hull.name(), hull.toString());
             prop.setProperty(PropertyLabel.PortalHeight.name(), PortalHeight.toString());
             prop.setProperty(PropertyLabel.CameraConstant.name(), CameraConstant.toString());
-            prop.setProperty(PropertyLabel.LoggerLevel.name(), loggerLevel.toString());
+            prop.setProperty(PropertyLabel.LoggerLevel.name(), loggerLevel.getName());
             prop.store(output, "DFM drone client properties");
             DFMLogger.logger.info("Properties saved");
         }

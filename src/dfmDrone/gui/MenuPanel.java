@@ -261,6 +261,10 @@ public class MenuPanel extends javax.swing.JPanel
         }
     }//GEN-LAST:event_jbWBActionPerformed
     
+    protected void updateBusy(Boolean busy) {
+        setInfoValue(InfoLabel.Busy, busy.toString());
+    }
+    
     protected void updateBatteryDisplay(int batteryLevel) {
         setInfoValue(InfoLabel.Battery, (100 - batteryLevel) + "%");
     }
@@ -279,10 +283,10 @@ public class MenuPanel extends javax.swing.JPanel
         setInfoValue(InfoLabel.Distance, sb.toString());
     }
     
-    protected void updateNavigationDisplay(double tilt, double roll, double spin) {
-        setInfoValue(InfoLabel.Tilt, "" + tilt);
-        setInfoValue(InfoLabel.Roll, "" + roll);
-        setInfoValue(InfoLabel.Rotate, "" + spin);
+    protected void updateNavigationDisplay(Float tilt, Float roll, Float spin) {
+        setInfoValue(InfoLabel.Tilt, tilt.toString());
+        setInfoValue(InfoLabel.Roll, roll.toString());
+        setInfoValue(InfoLabel.Rotate, spin.toString());
     }
     
     protected void updateLastCMDDisplay(String cmd) {

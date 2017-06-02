@@ -28,7 +28,7 @@ public class DroneLogic
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-        if(!controller.droneBusy && controller.droneFlying) {
+        if(!controller.isBusy() && controller.droneFlying) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight)), Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));

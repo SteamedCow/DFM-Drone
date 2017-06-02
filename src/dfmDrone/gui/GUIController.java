@@ -21,7 +21,7 @@ import javax.swing.JFrame;
 public class GUIController 
 {
     public boolean droneFlying = false;
-    public boolean droneBusy = false;
+    private boolean droneBusy = false;
     
     private final PropertyHandler propHandler;
     private final MenuPanel menu;
@@ -52,6 +52,15 @@ public class GUIController
         window.setSize(1200, 600);
         window.setContentPane(menu);
         window.setVisible(true);
+    }
+    
+    public boolean isBusy() {
+        return droneBusy;
+    }
+    
+    public void setBusy(boolean busy) {
+        droneBusy = true;
+        menu.updateBusy(busy);
     }
     
     public String getProperty(PropertyLabel propLabel) {

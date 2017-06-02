@@ -28,7 +28,9 @@ public class DFMDrone
     public static void main(String[] args) {
         //Load properties
         System.out.println("\n---- Load properties ---");
+        DFMLogger.logger.log(Level.FINE, "Load properties");
         PropertyHandler propHandler = new PropertyHandler(Data.PROPERTIES_FILEPATH, true);
+        DFMLogger.setLevel(Level.parse(propHandler.get(PropertyLabel.LoggerLevel)));
         
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -42,6 +44,7 @@ public class DFMDrone
         
         //Setup Drone
         System.out.println("\n---- Setup Drone ---");
+        DFMLogger.logger.log(Level.FINE, "Setup Drone");
         try {
             drone = new ARDrone(propHandler.get(PropertyLabel.DroneIP), new XugglerDecoder());
             drone.start();
