@@ -1,6 +1,7 @@
 package dfmDrone.ai;
 
 import com.google.zxing.Result;
+import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.gui.GUIController;
 import dfmDrone.utils.OpenCVUtils;
@@ -19,15 +20,15 @@ import navigation.tools.DistanceMeaure;
 public class AILogic 
 {
     private final GUIController controller;
-    private final Commander cmd;
+    private final CommandQueue cmdQ;
 
-    public AILogic(GUIController controller, Commander cmd) {
+    public AILogic(GUIController controller, CommandQueue cmdQ) {
         this.controller = controller;
-        this.cmd = cmd;
+        this.cmdQ = cmdQ;
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-        if(!controller.isBusy() && controller.droneFlying) {
+        if(!controller.cmdQ.isDroneFlying()) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight)), Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
@@ -51,20 +52,18 @@ public class AILogic
     }
     
     private void centerVertical(double objCenterY, double imageHeight) {
-        controller.droneFlying = true;
         double centerHeight = imageHeight/2;
         
         if(objCenterY - centerHeight > 20 || objCenterY - centerHeight < -20) {
             if(objCenterY > centerHeight) {
                 System.out.println("up");
-                cmd.moveVertical(-1);
+                cmdQ.add(Command.MoveUp, 1, 100);
             }
             else {
                 System.out.println("down");
-                cmd.moveVertical(1);
+                cmdQ.add(Command.MoveDown, 1, 100);
             }
         }
-        controller.droneFlying = false;
     }
     
     private void ortogonalPlacement(Point2D center, Dimension dim, double distance) {

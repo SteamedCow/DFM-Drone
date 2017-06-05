@@ -25,7 +25,7 @@ public class Commander
         dCmd = drone.getCommandManager();
     }
     
-    public void animateLEDs(int duration) {
+    protected void animateLEDs(int duration) {
         if(!block) {
             controller.updateLastCMDDisplay("LEDS");
             DFMLogger.logger.fine("cmd - LED");
@@ -33,29 +33,26 @@ public class Commander
         }
     }
     
-    public void takeOffAndLand(long hoverTime) {
+    protected void takeOffAndLand(long hoverTime) {
         block = false;
         
         controller.updateLastCMDDisplay("TAKE OFF AND LAND");
         DFMLogger.logger.info("cmd - Take off and land");
         
-        controller.droneFlying = true;
         controller.setBusy(true);
         
         dCmd.takeOff();
         dCmd.waitFor(hoverTime);
         dCmd.landing();
         
-        controller.droneFlying = false;
         controller.setBusy(false);
     }
     
-    public void takeOff() {
+    protected void takeOff() {
         block = false;
         
         controller.updateLastCMDDisplay("TAKE OFF");
         DFMLogger.logger.info("cmd - Take off");
-        controller.droneFlying = true;
         controller.setBusy(true);
         dCmd.takeOff();
         dCmd.waitFor(1000);
@@ -63,7 +60,7 @@ public class Commander
         controller.setBusy(false);
     }
     
-    public boolean land() {
+    protected boolean land() {
         block = true;
         controller.setBusy(true);
         
@@ -82,23 +79,21 @@ public class Commander
         }
         finally {
             controller.setBusy(false);
-            controller.droneFlying = false;
         }
         return success;
     }
     
-    public void kill() {
+    protected void kill() {
         block = true;
         controller.setBusy(true);
         dCmd.emergency();
         
         controller.setBusy(false);
-        controller.droneFlying = false;
         controller.updateLastCMDDisplay("KILL");
         DFMLogger.logger.info("cmd - KILL");
     }
     
-    public void scan(){
+    protected void scan(){
         if(!block) {
             controller.updateLastCMDDisplay("SCAN");
             DFMLogger.logger.fine("cmd - Scan");
@@ -113,7 +108,7 @@ public class Commander
      * @param duration 
      *      Time in miliseconds
      */
-    public void moveVertival(int speed, int duration) {
+    protected void moveVertival(int speed, int duration) {
         if(!block) {
             controller.updateLastCMDDisplay("MOVE VERTICAL " + speed);
             DFMLogger.logger.log(Level.FINE, "cmd - Move vertical for {0}s at {1}mm/s", new Integer[]{duration, speed});
@@ -137,7 +132,7 @@ public class Commander
      * @param speed
      *      Milimeters per second
      */
-    public void moveVertical(int speed) {
+    protected void moveVertical(int speed) {
         moveVertival(speed, -1);
     }
 }
