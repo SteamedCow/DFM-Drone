@@ -1,6 +1,8 @@
 package dfmDrone.gui;
 
 import de.yadrone.base.navdata.BatteryListener;
+import dfmDrone.ai.CommandQueue.Command;
+import dfmDrone.ai.CommandQueue.PushType;
 import dfmDrone.utils.DFMLogger;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -212,11 +214,10 @@ public class MenuPanel extends javax.swing.JPanel
      * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
      */
     private void jbStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartStopActionPerformed
-        if(controller.droneFlying) {
+        if(controller.cmdQ.isDroneFlying()) {
             DFMLogger.logger.info("Land command requested");
             try {
-                if(controller.cmd.land()) {
-                    controller.droneFlying = false;
+                if(controller.cmdQ.add(Command.Land, -1, -1, PushType.Instant, PushType.Block, PushType.IgnoreBlock, PushType.IgnoreBusy)) {
                     setInfoValue(InfoLabel.Status, "Landing");
                     jbStartStop.setText("Start");
                 }
@@ -231,15 +232,10 @@ public class MenuPanel extends javax.swing.JPanel
             DFMLogger.logger.info("Takeoff command requested");
             try {
 //                cmd.animateLEDs(10);
-                controller.cmd.takeOff();
+                controller.cmdQ.add(Command.TakeOff, -1, -1, PushType.Block);
                 
                 setInfoValue(InfoLabel.Status, "Flying");
                 jbStartStop.setText("Stop");
-                
-                while(controller.isBusy()) {
-                    System.out.println("waiting");
-                    Thread.sleep(100);
-                }
 //                
 //                cmd.scan();
             } 
@@ -254,7 +250,7 @@ public class MenuPanel extends javax.swing.JPanel
      * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
      */
     private void jbKillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbKillActionPerformed
-        controller.cmd.kill();
+        controller.cmdQ.add(Command.Kill, -1, -1, PushType.Block, PushType.Instant, PushType.IgnoreBlock, PushType.IgnoreBusy);
     }//GEN-LAST:event_jbKillActionPerformed
 
     /**

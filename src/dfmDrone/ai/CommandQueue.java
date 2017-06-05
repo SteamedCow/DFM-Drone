@@ -15,6 +15,9 @@ import java.util.logging.Level;
  */
 public class CommandQueue implements Runnable
 {
+    /** True if the drone is flying */
+    private boolean droneFlying = false;
+    
     /** Command handler class that contains instructions for executing commands */
     private final Commander commandHandler;
     
@@ -201,6 +204,14 @@ public class CommandQueue implements Runnable
     public boolean isRunning() {
         return commandThread.isAlive();
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public boolean isDroneFlying() {
+        return droneFlying;
+    }
 
     @Override
     public void run() {
@@ -213,13 +224,16 @@ public class CommandQueue implements Runnable
                 
                 switch(cmd.cmd) {
                     case TakeOff: {
-                        commandHandler.takeOff(); break;
+                        commandHandler.takeOff();
+                        droneFlying = true; break;
                     }
                     case Land: {
-                        commandHandler.land(); break;
+                        commandHandler.land();
+                        droneFlying = false; break;
                     }
                     case Kill: {
-                        commandHandler.kill(); break;
+                        commandHandler.kill();
+                        droneFlying = false; break;
                     }
                     case Hover: {
                         //TODO: Implement method
@@ -265,7 +279,9 @@ public class CommandQueue implements Runnable
                         break;
                     }
                     case Test: {
-                        commandHandler.takeOffAndLand(3000); break;
+                        droneFlying = true;
+                        commandHandler.takeOffAndLand(3000);
+                        droneFlying = false; break;
                     }
                     default: {
                         DFMLogger.logger.log(Level.WARNING, "Unknown command issued: {0}", cmd.cmd);
