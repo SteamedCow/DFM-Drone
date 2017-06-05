@@ -4,10 +4,14 @@ import de.yadrone.base.navdata.BatteryListener;
 import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.ai.CommandQueue.PushType;
 import dfmDrone.utils.DFMLogger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultCaret;
 import whiteBalance.exceptions.DetectionException;
 import whiteBalance.tools.Calibrator;
 
@@ -29,6 +33,14 @@ public class MenuPanel extends javax.swing.JPanel
         this.controller = controller;
         initComponents();
         initTable();
+        
+        DefaultCaret caret = (DefaultCaret)jTextArea1.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        
+        updateLogger("rgerf1");
+        updateLogger("ashdiashdahsidh2");
+        updateLogger("blahblah3");
+        updateLogger("kjaekjas4");
     }
     
     private enum InfoLabel {
@@ -78,6 +90,8 @@ public class MenuPanel extends javax.swing.JPanel
         jbWB = new javax.swing.JButton();
         jspInfTable = new javax.swing.JScrollPane();
         jtInfoTable = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jpVideo = new javax.swing.JPanel();
 
         jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -113,7 +127,14 @@ public class MenuPanel extends javax.swing.JPanel
 
         jtInfoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
                 "", "Value"
@@ -138,6 +159,11 @@ public class MenuPanel extends javax.swing.JPanel
         jtInfoTable.getTableHeader().setReorderingAllowed(false);
         jspInfTable.setViewportView(jtInfoTable);
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout jpUILayout = new javax.swing.GroupLayout(jpUI);
         jpUI.setLayout(jpUILayout);
         jpUILayout.setHorizontalGroup(
@@ -146,16 +172,18 @@ public class MenuPanel extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpUILayout.createSequentialGroup()
-                        .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jpUILayout.createSequentialGroup()
                         .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpUILayout.createSequentialGroup()
                                 .addComponent(jbStartStop)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbKill))
                             .addComponent(jbWB))
-                        .addGap(0, 121, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpUILayout.createSequentialGroup()
+                        .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jspInfTable, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jpUILayout.setVerticalGroup(
             jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +193,9 @@ public class MenuPanel extends javax.swing.JPanel
                     .addComponent(jbStartStop)
                     .addComponent(jbKill))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jspInfTable, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbWB)
                 .addContainerGap())
@@ -214,6 +244,7 @@ public class MenuPanel extends javax.swing.JPanel
      * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
      */
     private void jbStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartStopActionPerformed
+        updateLogger("SOmethingsadasd");
         if(controller.cmdQ.isDroneFlying()) {
             DFMLogger.logger.info("Land command requested");
             try {
@@ -297,6 +328,15 @@ public class MenuPanel extends javax.swing.JPanel
         setInfoValue(InfoLabel.LastCommand, cmd);
     }
     
+    protected void updateLogger(String s){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH.mm.ss - ");
+      //  jTextArea1.append(sdf.format(new Date()) + s +"\n");
+        jTextArea1.setText(sdf.format(new Date()) + s +"\n" + jTextArea1.getText());
+        
+    }
+    
+    
+    
     private void setInfoValue(InfoLabel label, String value) {
         if(tableMatrix.containsKey(label))
             jtModel.setValueAt(value, tableMatrix.get(label), 1);
@@ -308,6 +348,8 @@ public class MenuPanel extends javax.swing.JPanel
      * <b>OBS: Rediger kun disse variabler hvis form filen også redigeres!</b>
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;
     private javax.swing.JButton jbWB;
