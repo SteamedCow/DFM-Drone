@@ -28,6 +28,8 @@ public class MenuPanel extends javax.swing.JPanel
     private final HashMap<InfoLabel, Integer> tableMatrix = new HashMap<>();
     private DefaultTableModel jtModel;
     
+    private final SimpleDateFormat sdf = new SimpleDateFormat("HH.mm.ss: ");
+    
     public MenuPanel(GUIController controller) {
         this.controller = controller;
         initComponents();
@@ -335,13 +337,12 @@ public class MenuPanel extends javax.swing.JPanel
     }
     
     protected void updateLogger(String s){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH.mm.ss - ");
-      //  jTextArea1.append(sdf.format(new Date()) + s +"\n");
-        jTextArea1.setText(sdf.format(new Date()) + s +"\n" + jTextArea1.getText());
+        String previous = jTextArea1.getText();
+        if(previous.length() > 1000)
+            previous = previous.substring(0, 1000);
         
+        jTextArea1.setText(sdf.format(new Date()) + s +"\n" + previous);
     }
-    
-    
     
     private void setInfoValue(InfoLabel label, String value) {
         if(tableMatrix.containsKey(label))

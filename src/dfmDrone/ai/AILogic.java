@@ -4,6 +4,7 @@ import com.google.zxing.Result;
 import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.gui.GUIController;
+import dfmDrone.utils.DFMLogger;
 import dfmDrone.utils.OpenCVUtils;
 import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
 import java.awt.Dimension;
@@ -28,20 +29,20 @@ public class AILogic
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-        if(!controller.cmdQ.isDroneFlying()) {
+//        if(controller.cmdQ.isDroneFlying()) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight)), Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
                 controller.updateDistanceDisplay(distance);
                 
-                centerVertical(imageAnalytics.rect.y, imageAnalytics.sourceImg.height());
+                centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height());
             }
             
             //QR Scan
             Result qr = QRScan(controller.getVideoFrame());
             if (qr != null)
                 System.out.println(qr.getText() + ": " + new Date().getSeconds());
-        }
+//        }
     }
     
     private Result QRScan(BufferedImage img) {
@@ -54,14 +55,16 @@ public class AILogic
     private void centerVertical(double objCenterY, double imageHeight) {
         double centerHeight = imageHeight/2;
         
-        if(objCenterY - centerHeight > 20 || objCenterY - centerHeight < -20) {
-            if(objCenterY > centerHeight) {
-                System.out.println("up");
-                cmdQ.add(Command.MoveUp, 1, 100);
+        if(objCenterY - centerHeight > 50 || objCenterY - centerHeight < -50) {
+            if(objCenterY < centerHeight) {
+                DFMLogger.logger.finest("Up requested");
+                controller.updateLogDisplay("up");
+//                cmdQ.add(Command.MoveUp, 30, 100);
             }
             else {
-                System.out.println("down");
-                cmdQ.add(Command.MoveDown, 1, 100);
+                controller.updateLogDisplay("down");
+                DFMLogger.logger.finest("Down requested");
+//                cmdQ.add(Command.MoveDown, 30, 100);
             }
         }
     }

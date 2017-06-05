@@ -64,8 +64,7 @@ public class VideoPanel extends JPanel {
             
             //compute flight
             if(imageAnalytics != null) {
-//                if(controller.cmdQ.isDroneFlying())
-//                    controller.computeFlight(imageAnalytics);
+                controller.computeFlight(imageAnalytics);
                 
                 //Draw analysed image
                 BufferedImage imgAnalysed = (BufferedImage) OpenCVUtils.toBufferedImage(imageAnalytics.sourceImg);

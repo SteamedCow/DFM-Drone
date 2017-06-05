@@ -108,14 +108,16 @@ public class Commander
         DFMLogger.logger.log(Level.FINE, "cmd - Move vertical for {0}s at {1}mm/s", new Integer[]{duration, speed});
         controller.setBusy(true);
         
-        if(speed > 0 && duration > -1)
-            dCmd.up(speed).down(duration);
+        if(speed > 0 && duration > 0)
+            dCmd.up(speed).doFor(duration);
         else if(speed > 0)
             dCmd.up(speed);
-        else if(speed < 0 && duration > -1)
-            dCmd.down(speed).down(duration);
+        else if(speed <= 0 && duration > 0)
+            dCmd.down(-speed).doFor(duration);
         else
-            dCmd.down(speed);
+            dCmd.down(-speed);
+        
+        sleep(duration);
         
         controller.setBusy(false);
     }

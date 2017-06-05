@@ -1,5 +1,6 @@
 package dfmDrone.ai;
 
+import dfmDrone.gui.GUIController;
 import dfmDrone.utils.DFMLogger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ public class CommandQueue implements Runnable
     /** True if the drone is flying */
     private boolean droneFlying = false;
     
+    private final GUIController controller;
     /** Command handler class that contains instructions for executing commands */
     private final Commander commandHandler;
     
@@ -38,10 +40,13 @@ public class CommandQueue implements Runnable
     /**
      * Queue off all commands to be executed. The command will be removed after execution.
      * <br> Uses FIFO (First In = First Out) queue method.
+     * @param controller
+     *      Controller class
      * @param commandHandler
      *      Command handler class that contains instructions for executing commands
      */
-    public CommandQueue(Commander commandHandler) {
+    public CommandQueue(GUIController controller, Commander commandHandler) {
+        this.controller = controller;
         this.commandHandler = commandHandler;
     }
     
@@ -119,10 +124,10 @@ public class CommandQueue implements Runnable
                 if(pushFlags.contains(PushType.Block))
                     block++;
                 
+//                controller.updateLogDisplay("Add command to queue: " + command.name() + ", speed=" + speed + ", dur=" + duration);
                 return commandQueue.add(new CommandModel(command, speed, duration, pushTypes));
             }
         }
-        
         return false;
     }
     
@@ -251,15 +256,11 @@ public class CommandQueue implements Runnable
                         break;
                     }
                     case MoveUp: {
-                        //TODO: Implement method
-                        DFMLogger.logger.warning("Move up command not impleneted yet!");
-//                        commandHandler.moveVertival(cmd.speed, cmd.duration);
+                        commandHandler.moveVertival(cmd.speed, cmd.duration);
                         break;
                     }
                     case MoveDown: {
-                        //TODO: Implement method
-                        DFMLogger.logger.warning("Move down command not impleneted yet!");
-//                        commandHandler.moveVertival(-cmd.speed, cmd.duration);
+                        commandHandler.moveVertival(-cmd.speed, cmd.duration);
                         break;
                     }
                     case MoveLeft: {
