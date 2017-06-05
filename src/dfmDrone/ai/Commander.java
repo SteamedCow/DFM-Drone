@@ -17,7 +17,6 @@ public class Commander
     private final IARDrone drone;
     private final CommandManager dCmd;
     private final GUIController controller;
-    private boolean block = false;
     
     public Commander(GUIController controller) {
         this.controller = controller;
@@ -26,16 +25,12 @@ public class Commander
     }
     
     protected void animateLEDs(int duration) {
-        if(!block) {
-            controller.updateLastCMDDisplay("LEDS");
-            DFMLogger.logger.fine("cmd - LED");
-            dCmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, duration);
-        }
+        controller.updateLastCMDDisplay("LEDS");
+        DFMLogger.logger.fine("cmd - LED");
+        dCmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, duration);
     }
     
     protected void takeOffAndLand(long hoverTime) {
-        block = false;
-        
         controller.updateLastCMDDisplay("TAKE OFF AND LAND");
         DFMLogger.logger.info("cmd - Take off and land");
         
@@ -49,19 +44,18 @@ public class Commander
     }
     
     protected void takeOff() {
-        block = false;
-        
         controller.updateLastCMDDisplay("TAKE OFF");
         DFMLogger.logger.info("cmd - Take off");
         controller.setBusy(true);
         dCmd.takeOff();
         dCmd.waitFor(1000);
+        sleep(1000);
+        DFMLogger.logger.info("cmd - Take off - Complete");
         
         controller.setBusy(false);
     }
     
     protected boolean land() {
-        block = true;
         controller.setBusy(true);
         
         controller.updateLastCMDDisplay("LAND");
@@ -70,7 +64,7 @@ public class Commander
         try {
             dCmd.landing();
             success = true;
-        } 
+        }
         catch (Exception e) {
             System.err.println("Could not land drone: " + e.getMessage());
             DFMLogger.logger.log(Level.WARNING, "Could not land drone: {0}", e.getMessage());
@@ -84,7 +78,6 @@ public class Commander
     }
     
     protected void kill() {
-        block = true;
         controller.setBusy(true);
         dCmd.emergency();
         
@@ -94,37 +87,33 @@ public class Commander
     }
     
     protected void scan(){
-        if(!block) {
-            controller.updateLastCMDDisplay("SCAN");
-            DFMLogger.logger.fine("cmd - Scan");
-            dCmd.spinLeft(15);
-        }
+        controller.updateLastCMDDisplay("SCAN");
+        DFMLogger.logger.fine("cmd - Scan");
+        dCmd.spinLeft(15);
     }
     
     /**
      * Move the drone up or down for a specific duration
      * @param speed
      *      Milimeters per second
-     * @param duration 
+     * @param duration
      *      Time in miliseconds
      */
     protected void moveVertival(int speed, int duration) {
-        if(!block) {
-            controller.updateLastCMDDisplay("MOVE VERTICAL " + speed);
-            DFMLogger.logger.log(Level.FINE, "cmd - Move vertical for {0}s at {1}mm/s", new Integer[]{duration, speed});
-            controller.setBusy(true);
-            
-            if(speed > 0 && duration > -1)
-                dCmd.up(speed).down(duration);
-            else if(speed > 0)
-                dCmd.up(speed);
-            else if(speed < 0 && duration > -1)
-                dCmd.down(speed).down(duration);
-            else
-                dCmd.down(speed);
-            
-            controller.setBusy(false);
-        }
+        controller.updateLastCMDDisplay("MOVE VERTICAL " + speed);
+        DFMLogger.logger.log(Level.FINE, "cmd - Move vertical for {0}s at {1}mm/s", new Integer[]{duration, speed});
+        controller.setBusy(true);
+        
+        if(speed > 0 && duration > -1)
+            dCmd.up(speed).down(duration);
+        else if(speed > 0)
+            dCmd.up(speed);
+        else if(speed < 0 && duration > -1)
+            dCmd.down(speed).down(duration);
+        else
+            dCmd.down(speed);
+        
+        controller.setBusy(false);
     }
     
     /**
@@ -134,5 +123,13 @@ public class Commander
      */
     protected void moveVertical(int speed) {
         moveVertival(speed, -1);
+    }
+    
+    private void sleep(int timeout) {
+        try {
+            Thread.sleep(timeout);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
