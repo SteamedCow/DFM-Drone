@@ -81,6 +81,14 @@ public class PropertyHandler
             DFMLogger.logger.info("Properties saved");
         }
     }
+
+    public void saveMaxAltitude(Integer maxAltitude) throws FileNotFoundException, IOException
+    {
+        try( OutputStream output = new FileOutputStream(filepath)){
+            prop.setProperty(PropertyLabel.MaxAltitude.name(), maxAltitude.toString());
+            prop.store(output,"DFM drone client properties");
+        }
+    }
     
     /**
      * Henter properties for den angivende nøgle
