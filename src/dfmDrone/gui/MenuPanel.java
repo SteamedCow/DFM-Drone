@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultCaret;
 import whiteBalance.exceptions.DetectionException;
@@ -36,11 +35,6 @@ public class MenuPanel extends javax.swing.JPanel
         
         DefaultCaret caret = (DefaultCaret)jTextArea1.getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-        
-        updateLogger("rgerf1");
-        updateLogger("ashdiashdahsidh2");
-        updateLogger("blahblah3");
-        updateLogger("kjaekjas4");
     }
     
     private enum InfoLabel {
@@ -92,6 +86,7 @@ public class MenuPanel extends javax.swing.JPanel
         jtInfoTable = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jbSettings = new javax.swing.JButton();
         jpVideo = new javax.swing.JPanel();
 
         jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -164,6 +159,13 @@ public class MenuPanel extends javax.swing.JPanel
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jbSettings.setText("Settings");
+        jbSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSettingsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpUILayout = new javax.swing.GroupLayout(jpUI);
         jpUI.setLayout(jpUILayout);
         jpUILayout.setHorizontalGroup(
@@ -172,18 +174,17 @@ public class MenuPanel extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpUILayout.createSequentialGroup()
-                        .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpUILayout.createSequentialGroup()
-                                .addComponent(jbStartStop)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbKill))
-                            .addComponent(jbWB))
+                        .addComponent(jbStartStop)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbKill)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpUILayout.createSequentialGroup()
-                        .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jspInfTable, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-                        .addContainerGap())))
+                    .addGroup(jpUILayout.createSequentialGroup()
+                        .addComponent(jbWB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbSettings))
+                    .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jpUILayout.setVerticalGroup(
             jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +198,9 @@ public class MenuPanel extends javax.swing.JPanel
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbWB)
+                .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbWB)
+                    .addComponent(jbSettings))
                 .addContainerGap())
         );
 
@@ -244,7 +247,6 @@ public class MenuPanel extends javax.swing.JPanel
      * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
      */
     private void jbStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartStopActionPerformed
-        updateLogger("SOmethingsadasd");
         if(controller.cmdQ.isDroneFlying()) {
             DFMLogger.logger.info("Land command requested");
             try {
@@ -295,6 +297,10 @@ public class MenuPanel extends javax.swing.JPanel
             e.printStackTrace();
         }
     }//GEN-LAST:event_jbWBActionPerformed
+
+    private void jbSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSettingsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbSettingsActionPerformed
     
     protected void updateBusy(Boolean busy) {
         setInfoValue(InfoLabel.Busy, busy.toString());
@@ -351,6 +357,7 @@ public class MenuPanel extends javax.swing.JPanel
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbKill;
+    private javax.swing.JButton jbSettings;
     private javax.swing.JButton jbStartStop;
     private javax.swing.JButton jbWB;
     private javax.swing.JLabel jlTitle;

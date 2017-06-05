@@ -30,26 +30,27 @@ public class Commander
         dCmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 3, duration);
     }
     
-    protected void takeOffAndLand(long hoverTime) {
+    protected void takeOffAndLand(int hoverTime) {
+        controller.setBusy(true);
         controller.updateLastCMDDisplay("TAKE OFF AND LAND");
         DFMLogger.logger.info("cmd - Take off and land");
         
-        controller.setBusy(true);
-        
         dCmd.takeOff();
         dCmd.waitFor(hoverTime);
+        animateLEDs(hoverTime);
+        sleep(hoverTime);
         dCmd.landing();
         
         controller.setBusy(false);
     }
     
     protected void takeOff() {
+        controller.setBusy(true);
         controller.updateLastCMDDisplay("TAKE OFF");
         DFMLogger.logger.info("cmd - Take off");
-        controller.setBusy(true);
         dCmd.takeOff();
-        dCmd.waitFor(1000);
-        sleep(1000);
+        dCmd.waitFor(2000);
+        sleep(2000);
         DFMLogger.logger.info("cmd - Take off - Complete");
         
         controller.setBusy(false);
@@ -63,11 +64,14 @@ public class Commander
         boolean success = false;
         try {
             dCmd.landing();
+            dCmd.waitFor(2000);
+            sleep(2000);
             success = true;
         }
         catch (Exception e) {
             System.err.println("Could not land drone: " + e.getMessage());
             DFMLogger.logger.log(Level.WARNING, "Could not land drone: {0}", e.getMessage());
+            controller.updateLogDisplay("Could not land drone: " + e.getMessage());
             e.printStackTrace();
             success = false;
         }
@@ -81,9 +85,9 @@ public class Commander
         controller.setBusy(true);
         dCmd.emergency();
         
-        controller.setBusy(false);
         controller.updateLastCMDDisplay("KILL");
         DFMLogger.logger.info("cmd - KILL");
+        controller.setBusy(false);
     }
     
     protected void scan(){

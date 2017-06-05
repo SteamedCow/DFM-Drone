@@ -10,11 +10,13 @@ import dfmDrone.listeners.CameraSwitchListener;
 import dfmDrone.listeners.GUIWindowListener;
 import dfmDrone.listeners.VideoListener;
 import dfmDrone.ai.Commander;
+import dfmDrone.data.Config;
 import dfmDrone.utils.DFMLogger;
 import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import javax.swing.JFrame;
+import oracle.jrockit.jfr.tools.ConCatRepository;
 
 /**
  * GUIController
@@ -23,23 +25,18 @@ import javax.swing.JFrame;
  */
 public class GUIController 
 {
-//    public boolean droneFlying = false;
-//    private boolean droneBusy = false;
-    
     private final PropertyHandler propHandler;
     private final MenuPanel menu;
     private final JFrame window;
     private final VideoPanel video;
     private final AILogic droneLogic;
     
-//    protected final Commander cmd;
     public final CommandQueue cmdQ;
     protected final IARDrone drone;
     
     public GUIController(IARDrone drone, PropertyHandler propHandler) {
         this.drone = drone;
         this.propHandler = propHandler;
-//        cmd = new Commander(this);
         cmdQ = new CommandQueue(new Commander(this));
         droneLogic = new AILogic(this, cmdQ);
         
@@ -57,6 +54,11 @@ public class GUIController
         window.setSize(1200, 600);
         window.setContentPane(menu);
         window.setVisible(true);
+        
+        setBusy(true);
+        cmdQ.clearQueue();
+        cmdQ.start(Config.CMDQ_TIMEOUT);
+        setBusy(false);
     }
     
     public void setBusy(boolean busy) {
@@ -90,6 +92,12 @@ public class GUIController
 
     public void updateLastCMDDisplay(String command) {
         menu.updateLastCMDDisplay(command);
+        updateLogDisplay("CMD - " + command);
+    }
+    
+    public void updateLogDisplay(String message) {
+        DFMLogger.logger.log(Level.FINEST, "LOG - {0}", message);
+        menu.updateLogger(message);
     }
 
     public void updateNavigationDisplay(float pitch, float roll, float yaw) {

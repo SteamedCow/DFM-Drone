@@ -224,8 +224,8 @@ public class CommandQueue implements Runnable
                 
                 switch(cmd.cmd) {
                     case TakeOff: {
-                        commandHandler.takeOff();
-                        droneFlying = true; break;
+                        droneFlying = true;
+                        commandHandler.takeOff(); break;
                     }
                     case Land: {
                         commandHandler.land();

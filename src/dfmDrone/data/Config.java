@@ -11,7 +11,7 @@ import java.util.logging.Level;
 public class Config 
 {
     protected final static String DEFAULT_DRONE_IP = "192.168.1.1";
-    protected final static int DEFAULT_MAX_ALTITUDE = 3500;
+    protected final static int DEFAULT_MAX_ALTITUDE = 3500; // in mm
     protected final static int DEFAULT_VIDEO_FRAMERATE = 15;
     protected final static boolean DEFAULT_OUTDOOR = false;
     protected final static boolean DEFAULT_HULL = true;
@@ -20,4 +20,5 @@ public class Config
     protected final static Level DEFAULT_LOGGER_LEVEL = Level.INFO;
     
     public final static VideoCodec VIDEO_CODEC = VideoCodec.H264_360P;
+    public final static int CMDQ_TIMEOUT = 200; //in ms
 }
