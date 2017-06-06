@@ -85,10 +85,18 @@ public class PropertyHandler
         }
     }
 
-    public void saveMaxAltitude(Integer maxAltitude) throws FileNotFoundException, IOException
+    public void saveCameraConstant(double cameraConstant) throws FileNotFoundException, IOException
     {
         try( OutputStream output = new FileOutputStream(filepath)){
-            prop.setProperty(PropertyLabel.MaxAltitude.name(), maxAltitude.toString());
+            prop.setProperty(PropertyLabel.CameraConstant.name(), String.valueOf(cameraConstant));
+            prop.store(output,"DFM drone client properties");
+        }
+    }
+
+    public void save(PropertyLabel propLabel, Integer value) throws FileNotFoundException, IOException
+    {
+        try( OutputStream output = new FileOutputStream(filepath)){
+            prop.setProperty(propLabel.name(), value.toString());
             prop.store(output,"DFM drone client properties");
         }
     }
