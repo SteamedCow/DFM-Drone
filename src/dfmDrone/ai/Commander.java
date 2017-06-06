@@ -51,6 +51,13 @@ public class Commander
         dCmd.takeOff();
         dCmd.waitFor(2000);
         sleep(2000);
+        dCmd.up(2500).doFor(2000);
+        dCmd.hover();
+        sleep(2000);
+        dCmd.setLedsAnimation(LEDAnimation.BLINK_RED, 1, 500);
+        sleep(500);
+        dCmd.hover();
+        
         DFMLogger.logger.info("cmd - Take off - Complete");
         
         controller.setBusy(false);
@@ -118,6 +125,7 @@ public class Commander
             dCmd.down(-speed);
         
         sleep(duration);
+        dCmd.hover();
         
         controller.setBusy(false);
     }

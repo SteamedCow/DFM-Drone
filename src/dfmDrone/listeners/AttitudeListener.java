@@ -9,15 +9,15 @@ import dfmDrone.gui.GUIController;
  */
 public class AttitudeListener implements de.yadrone.base.navdata.AttitudeListener
 {
-    private final GUIController controller;
+//    private final GUIController controller;
 
     public AttitudeListener(GUIController controller) {
-        this.controller = controller;
+//        this.controller = controller;
     }
     
     @Override
     public void attitudeUpdated(float pitch, float roll, float yaw) {
-        controller.updateNavigationDisplay(pitch, roll, yaw);
+//        controller.updateNavigationDisplay(pitch, roll, yaw);
     }
     
     @Override

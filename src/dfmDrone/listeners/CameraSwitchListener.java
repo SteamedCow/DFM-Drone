@@ -12,14 +12,14 @@ import java.awt.event.MouseEvent;
  */
 public class CameraSwitchListener extends MouseAdapter
 {
-    private final GUIController controller;
+//    private final GUIController controller;
 
     public CameraSwitchListener(GUIController controller) {
-        this.controller = controller;
+//        this.controller = controller;
     }
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.NEXT);
+//        controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.NEXT);
     }
 }

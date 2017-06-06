@@ -55,16 +55,12 @@ public class AILogic
     private void centerVertical(double objCenterY, double imageHeight) {
         double centerHeight = imageHeight/2;
         
-        if(objCenterY - centerHeight > 50 || objCenterY - centerHeight < -50) {
+        if(objCenterY - centerHeight > 0 || objCenterY - centerHeight < -75) {
             if(objCenterY < centerHeight) {
-                DFMLogger.logger.finest("Up requested");
-                controller.updateLogDisplay("up");
-               cmdQ.add(Command.MoveUp, 30, 100);
+                cmdQ.add(Command.MoveUp, 10, 500);
             }
             else {
-                controller.updateLogDisplay("down");
-                DFMLogger.logger.finest("Down requested");
-                cmdQ.add(Command.MoveDown, 30, 100);
+                cmdQ.add(Command.MoveDown, 10, 500);
             }
         }
     }

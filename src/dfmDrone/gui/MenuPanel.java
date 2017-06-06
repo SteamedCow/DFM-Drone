@@ -1,6 +1,7 @@
 package dfmDrone.gui;
 
 import de.yadrone.base.navdata.BatteryListener;
+import dfmDrone.HSVSettingsPanel;
 import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.ai.CommandQueue.PushType;
 import dfmDrone.utils.DFMLogger;
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultCaret;
@@ -37,6 +39,12 @@ public class MenuPanel extends javax.swing.JPanel
         
         DefaultCaret caret = (DefaultCaret)jTextArea1.getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        
+        JFrame frame = new JFrame("HSV Settings");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setContentPane(new HSVSettingsPanel());
+        frame.pack();
+        frame.setVisible(true);
     }
     
     private enum InfoLabel {

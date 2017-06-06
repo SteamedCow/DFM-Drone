@@ -7,6 +7,7 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import dfmDrone.data.DummyData;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -18,6 +19,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
@@ -71,14 +73,19 @@ public class OpenCVUtils
         Imgproc.cvtColor(sourceImg, hsvImg, Imgproc.COLOR_BGR2HSV);
         Mat lower_hue_range = new Mat();
         Mat upper_hue_range = new Mat();
-        Core.inRange(hsvImg, new Scalar(0, 100, 45), new Scalar(15, 255, 255), lower_hue_range);
-        Core.inRange(hsvImg, new Scalar(160, 100, 45), new Scalar(180, 255, 255), upper_hue_range);
+//        Core.inRange(hsvImg, new Scalar(0, 100, 45), new Scalar(15, 255, 255), lower_hue_range);
+//        Core.inRange(hsvImg, new Scalar(160, 100, 45), new Scalar(180, 255, 255), upper_hue_range);
+        Core.inRange(hsvImg, new Scalar(DummyData.lowerB1H, DummyData.lowerB1S, DummyData.lowerB1V),
+                new Scalar(DummyData.upperB1H, DummyData.upperB1S, DummyData.upperB1V), lower_hue_range);
+        Core.inRange(hsvImg, new Scalar(DummyData.lowerB2H, DummyData.lowerB2S, DummyData.lowerB2V),
+                new Scalar(DummyData.upperB2H, DummyData.upperB2S, DummyData.upperB2V), upper_hue_range);
         Mat red_hue_image = new Mat();
         Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
 //        Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
 //        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2, 2));
         
-        Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9));
+//        Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9));
+        Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9), new Point(2, 2));
         // Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
         // Imgproc.dilate(Binarized, Binarized, dilateElement);
         // init
