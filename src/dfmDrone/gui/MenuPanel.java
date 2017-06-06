@@ -4,6 +4,8 @@ import de.yadrone.base.navdata.BatteryListener;
 import dfmDrone.HSVSettingsPanel;
 import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.ai.CommandQueue.PushType;
+import dfmDrone.data.Config;
+import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.utils.DFMLogger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,7 +87,10 @@ public class MenuPanel extends javax.swing.JPanel
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        int portalHeight = Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight));
+        Config.PORTAL_HEIGHT = portalHeight;
+        double cameraConstant = Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant));
+        Config.CAMERA_CONSTANT=cameraConstant;
         jlTitle = new javax.swing.JLabel();
         jspUI = new javax.swing.JScrollPane();
         jpUI = new javax.swing.JPanel();
