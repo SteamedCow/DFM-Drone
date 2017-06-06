@@ -12,7 +12,7 @@ import java.util.logging.Level;
 public class PropertyHandler 
 {
     public enum PropertyLabel {
-        DroneIP, MaxAltitude, VideoFrameRate, Outdoor, Hull, PortalHeight, CameraConstant, LoggerLevel;
+        DroneIP, MaxAltitude, MinAltitude, VideoFrameRate, Outdoor, Hull, PortalHeight, CameraConstant, LoggerLevel;
     }
     
     private final Properties prop = new Properties();
@@ -27,7 +27,7 @@ public class PropertyHandler
             } catch (IOException e1) {
                 DFMLogger.logger.log(Level.WARNING, "Property file not found \"{0}\". Creating property file with default values: {1}", new String[]{filepath, e1.getMessage()});
                 try {
-                    saveProperties(Config.DEFAULT_DRONE_IP, Config.DEFAULT_MAX_ALTITUDE, Config.DEFAULT_VIDEO_FRAMERATE, Config.DEFAULT_OUTDOOR, Config.DEFAULT_HULL, Config.DEFAULT_PORTAL_HEIGHT, Config.DEFAULT_CAMERA_CONSTANT, Config.DEFAULT_LOGGER_LEVEL);
+                    saveProperties(Config.DEFAULT_DRONE_IP, Config.DEFAULT_MAX_ALTITUDE, Config.DEFAULT_MIN_ALTITUDE, Config.DEFAULT_VIDEO_FRAMERATE, Config.DEFAULT_OUTDOOR, Config.DEFAULT_HULL, Config.DEFAULT_PORTAL_HEIGHT, Config.DEFAULT_CAMERA_CONSTANT, Config.DEFAULT_LOGGER_LEVEL);
                 } catch (IOException e2) {
                     e2.printStackTrace();
                 }
@@ -52,6 +52,8 @@ public class PropertyHandler
      *      Dronens IP addresse
      * @param maxAltitude
      *      Max flyvehøjde i milimeter
+     * @param minAltitude
+     *      Minimum flyvehøjde i milimeter
      * @param VideoFrameRate
      *      Framerate for videooptagelse for dronens kameraer
      * @param outdoor
@@ -67,10 +69,11 @@ public class PropertyHandler
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public void saveProperties(String droneIP, Integer maxAltitude, Integer VideoFrameRate, Boolean outdoor, Boolean hull, Integer PortalHeight, Double CameraConstant, Level loggerLevel) throws FileNotFoundException, IOException {
+    public void saveProperties(String droneIP, Integer maxAltitude, Integer minAltitude, Integer VideoFrameRate, Boolean outdoor, Boolean hull, Integer PortalHeight, Double CameraConstant, Level loggerLevel) throws FileNotFoundException, IOException {
         try (OutputStream output = new FileOutputStream(filepath)) {
             prop.setProperty(PropertyLabel.DroneIP.name(), droneIP);
             prop.setProperty(PropertyLabel.MaxAltitude.name(), maxAltitude.toString());
+            prop.setProperty(PropertyLabel.MinAltitude.name(), minAltitude.toString());
             prop.setProperty(PropertyLabel.VideoFrameRate.name(), VideoFrameRate.toString());
             prop.setProperty(PropertyLabel.Outdoor.name(), outdoor.toString());
             prop.setProperty(PropertyLabel.Hull.name(), hull.toString());
