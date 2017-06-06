@@ -124,7 +124,6 @@ public class CommandQueue implements Runnable
                 if(pushFlags.contains(PushType.Block))
                     block++;
                 
-//                controller.updateLogDisplay("Add command to queue: " + command.name() + ", speed=" + speed + ", dur=" + duration);
                 return commandQueue.add(new CommandModel(command, speed, duration, pushTypes));
             }
         }

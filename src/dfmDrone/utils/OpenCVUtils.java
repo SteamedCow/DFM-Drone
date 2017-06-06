@@ -1,5 +1,6 @@
 package dfmDrone.utils;
 
+import boofcv.alg.color.ColorHsv;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -7,6 +8,7 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import dfmDrone.data.Data;
 import dfmDrone.data.DummyData;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -138,7 +140,10 @@ public class OpenCVUtils
         catch (CvException e) {
             System.out.println("Ingen ellipse fundet: " + e);
         }
-        return new ImageAnalyticsModel(sourceImg, rect, rotatedrectbest);
+        if(Data.SHOW_BINARY)
+            return new ImageAnalyticsModel(red_hue_image, rect, rotatedrectbest);
+        else
+            return new ImageAnalyticsModel(sourceImg, rect, rotatedrectbest);
     }
     
     public static class ImageAnalyticsModel {
@@ -151,5 +156,22 @@ public class OpenCVUtils
             this.rect = rect;
             this.rotatedrectbest = rotatedrectbest;
         }
+    }
+    
+    public static double[] hsvToRGB(int hue, int saturation, int value) {
+        double[] rgb = new double[3];
+        
+        double s = 0, v = 0;
+        if(saturation != 0)
+            s = saturation/255.0;
+        if(value != 0)
+            v = value/255.0;
+        
+        ColorHsv.hsvToRgb(Math.toRadians(hue * 2), s, v, rgb);
+        rgb[0] *= 255;
+        rgb[1] *= 255;
+        rgb[2] *= 255;
+        
+        return rgb;
     }
 }

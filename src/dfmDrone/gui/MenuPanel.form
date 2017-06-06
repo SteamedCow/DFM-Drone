@@ -25,6 +25,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jlTitle" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jtbBinary" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jbHSV" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -32,11 +36,15 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jlTitle" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbHSV" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtbBinary" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jpVideo" max="32767" attributes="0"/>
-                  <Component id="jspUI" max="32767" attributes="0"/>
+                  <Component id="jspUI" pref="426" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -226,5 +234,21 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.JButton" name="jbHSV">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Adjust HSV"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbHSVActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="jtbBinary">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Binary"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtbBinaryActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

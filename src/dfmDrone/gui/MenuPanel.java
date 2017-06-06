@@ -1,11 +1,9 @@
 package dfmDrone.gui;
 
 import de.yadrone.base.navdata.BatteryListener;
-import dfmDrone.HSVSettingsPanel;
 import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.ai.CommandQueue.PushType;
-import dfmDrone.data.Config;
-import dfmDrone.data.PropertyHandler.PropertyLabel;
+import dfmDrone.data.Data;
 import dfmDrone.utils.DFMLogger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,12 +39,6 @@ public class MenuPanel extends javax.swing.JPanel
         
         DefaultCaret caret = (DefaultCaret)jTextArea1.getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-        
-        JFrame frame = new JFrame("HSV Settings");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setContentPane(new HSVSettingsPanel());
-        frame.pack();
-        frame.setVisible(true);
     }
     
     private enum InfoLabel {
@@ -87,10 +79,7 @@ public class MenuPanel extends javax.swing.JPanel
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        int portalHeight = Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight));
-        Config.PORTAL_HEIGHT = portalHeight;
-        double cameraConstant = Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant));
-        Config.CAMERA_CONSTANT=cameraConstant;
+
         jlTitle = new javax.swing.JLabel();
         jspUI = new javax.swing.JScrollPane();
         jpUI = new javax.swing.JPanel();
@@ -103,6 +92,8 @@ public class MenuPanel extends javax.swing.JPanel
         jTextArea1 = new javax.swing.JTextArea();
         jbSettings = new javax.swing.JButton();
         jpVideo = new javax.swing.JPanel();
+        jbHSV = new javax.swing.JButton();
+        jtbBinary = new javax.swing.JToggleButton();
 
         jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlTitle.setText("Don Frankos zzKillerDronezz");
@@ -232,6 +223,20 @@ public class MenuPanel extends javax.swing.JPanel
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jbHSV.setText("Adjust HSV");
+        jbHSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbHSVActionPerformed(evt);
+            }
+        });
+
+        jtbBinary.setText("Binary");
+        jtbBinary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtbBinaryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -243,17 +248,24 @@ public class MenuPanel extends javax.swing.JPanel
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jtbBinary)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbHSV)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlTitle)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTitle)
+                    .addComponent(jbHSV)
+                    .addComponent(jtbBinary))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jspUI))
+                    .addComponent(jspUI, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -279,7 +291,6 @@ public class MenuPanel extends javax.swing.JPanel
         else {
             DFMLogger.logger.info("Takeoff command requested");
             try {
-//                cmd.animateLEDs(10);
                 controller.cmdQ.add(Command.TakeOff, -1, -1, PushType.Block);
                 
                 setInfoValue(InfoLabel.Status, "Flying");
@@ -316,13 +327,25 @@ public class MenuPanel extends javax.swing.JPanel
     private void jbSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSettingsActionPerformed
         new OptionsPanel(controller);
     }//GEN-LAST:event_jbSettingsActionPerformed
+
+    private void jbHSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHSVActionPerformed
+        JFrame frame = new JFrame("HSV Settings");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setContentPane(new HSVSettingsPanel());
+        frame.pack();
+        frame.setVisible(true);
+    }//GEN-LAST:event_jbHSVActionPerformed
+
+    private void jtbBinaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbBinaryActionPerformed
+        Data.SHOW_BINARY = jtbBinary.isSelected();
+    }//GEN-LAST:event_jtbBinaryActionPerformed
     
     protected void updateBusy(Boolean busy) {
         setInfoValue(InfoLabel.Busy, busy.toString());
     }
     
     protected void updateBatteryDisplay(int batteryLevel) {
-        setInfoValue(InfoLabel.Battery, (100 - batteryLevel) + "%");
+        setInfoValue(InfoLabel.Battery, batteryLevel + "%");
     }
     
     protected void updateDistanceDisplay(double distance) {
@@ -370,6 +393,7 @@ public class MenuPanel extends javax.swing.JPanel
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton jbHSV;
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbSettings;
     private javax.swing.JButton jbStartStop;
@@ -380,5 +404,6 @@ public class MenuPanel extends javax.swing.JPanel
     private javax.swing.JScrollPane jspInfTable;
     private javax.swing.JScrollPane jspUI;
     private javax.swing.JTable jtInfoTable;
+    private javax.swing.JToggleButton jtbBinary;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,6 +14,6 @@ public class ErrorListener implements IExceptionListener
 {
     @Override
     public void exeptionOccurred(ARDroneException e) {
-        DFMLogger.logger.log(Level.INFO, "[ERROR LISTENER]: {0}", e.getMessage());
+        DFMLogger.logger.log(Level.FINE, "[ERROR LISTENER]: {0}", e.getMessage());
     }
 }

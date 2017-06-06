@@ -5,7 +5,6 @@ import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.data.Config;
 import dfmDrone.data.PropertyHandler.PropertyLabel;
 import dfmDrone.gui.GUIController;
-import dfmDrone.utils.DFMLogger;
 import dfmDrone.utils.OpenCVUtils;
 import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
 import java.awt.Dimension;
