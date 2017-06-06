@@ -301,7 +301,7 @@ public class MenuPanel extends javax.swing.JPanel
     }//GEN-LAST:event_jbWBActionPerformed
 
     private void jbSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSettingsActionPerformed
-        // TODO add your handling code here:
+        new OptionsPanel(controller);
     }//GEN-LAST:event_jbSettingsActionPerformed
     
     protected void updateBusy(Boolean busy) {

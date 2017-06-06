@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 
+
 /**
  * GUIController
  * @author SteamedCow

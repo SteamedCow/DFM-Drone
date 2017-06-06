@@ -29,7 +29,7 @@ public class AILogic
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-//        if(controller.cmdQ.isDroneFlying()) {
+        if(controller.cmdQ.isDroneFlying()) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Integer.parseInt(controller.getProperty(PropertyLabel.PortalHeight)), Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
@@ -42,7 +42,7 @@ public class AILogic
             Result qr = QRScan(controller.getVideoFrame());
             if (qr != null)
                 System.out.println(qr.getText() + ": " + new Date().getSeconds());
-//        }
+        }
     }
     
     private Result QRScan(BufferedImage img) {
@@ -59,12 +59,12 @@ public class AILogic
             if(objCenterY < centerHeight) {
                 DFMLogger.logger.finest("Up requested");
                 controller.updateLogDisplay("up");
-//                cmdQ.add(Command.MoveUp, 30, 100);
+               cmdQ.add(Command.MoveUp, 30, 100);
             }
             else {
                 controller.updateLogDisplay("down");
                 DFMLogger.logger.finest("Down requested");
-//                cmdQ.add(Command.MoveDown, 30, 100);
+                cmdQ.add(Command.MoveDown, 30, 100);
             }
         }
     }
