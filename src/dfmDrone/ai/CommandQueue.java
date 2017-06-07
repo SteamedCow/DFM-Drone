@@ -240,18 +240,15 @@ public class CommandQueue implements Runnable
                         droneFlying = false; break;
                     }
                     case Hover: {
-                        //TODO: Implement method
-                        DFMLogger.logger.warning("Hover command not impleneted yet!");
+                        commandHandler.hover(cmd.duration);
                         break;
                     }
                     case SpinLeft: {
-                        //TODO: Implement method
-                        DFMLogger.logger.warning("Spin left command not impleneted yet!");
+                        commandHandler.rotate(-cmd.speed, cmd.duration);
                         break;
                     }
                     case SpinRight: {
-                        //TODO: Implement method
-                        DFMLogger.logger.warning("Spin right command not impleneted yet!");
+                        commandHandler.rotate(cmd.speed, cmd.duration);
                         break;
                     }
                     case MoveUp: {
@@ -263,13 +260,11 @@ public class CommandQueue implements Runnable
                         break;
                     }
                     case MoveLeft: {
-                        //TODO: Implement method
-                        DFMLogger.logger.warning("Move left command not impleneted yet!");
+                        commandHandler.moveHorizontal(-cmd.speed, cmd.duration);
                         break;
                     }
                     case MoveRight: {
-                        //TODO: Implement method
-                        DFMLogger.logger.warning("Move right command not impleneted yet!");
+                        commandHandler.moveHorizontal(cmd.speed, cmd.duration);
                         break;
                     }
                     case LED: {

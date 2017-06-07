@@ -278,6 +278,8 @@ public class MenuPanel extends javax.swing.JPanel
             DFMLogger.logger.info("Land command requested");
             try {
                 if(controller.cmdQ.add(Command.Land, -1, -1, PushType.Instant, PushType.Block, PushType.IgnoreBlock, PushType.IgnoreBusy)) {
+                    controller.cmdQ.add(Command.SpinLeft, 1, 500);
+                    
                     setInfoValue(InfoLabel.Status, "Landing");
                     jbStartStop.setText("Start");
                 }
