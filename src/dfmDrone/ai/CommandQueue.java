@@ -70,6 +70,10 @@ public class CommandQueue implements Runnable
         SpinLeft,
         /** Spin right */
         SpinRight,
+        /** Move forward */
+        Forward,
+        /** Move Backward */
+        Backward,
         /** Stop drone in flight <b>(WARNING: WILL CRASH DOWN TO EARTH!)</b> */
         Kill, 
         /** Stand still in air */
@@ -265,6 +269,14 @@ public class CommandQueue implements Runnable
                     }
                     case MoveRight: {
                         commandHandler.moveHorizontal(cmd.speed, cmd.duration);
+                        break;
+                    }
+                    case Forward: {
+                        commandHandler.move(cmd.speed, cmd.duration);
+                        break;
+                    }
+                     case Backward: {
+                        commandHandler.move(-cmd.speed, cmd.duration);
                         break;
                     }
                     case LED: {

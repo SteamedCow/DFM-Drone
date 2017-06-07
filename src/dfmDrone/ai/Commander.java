@@ -169,6 +169,40 @@ public class Commander
         controller.setBusy(false);
     }
     
+     /**
+     * Move the drone up or down for a specific duration
+     * <br>Negative speed value moves the drone backwards while a positive value moves it forward
+     * @param speed
+     *      Milimeters per second
+     * @param duration
+     *      Time in miliseconds
+     */
+    protected void move(int speed, int duration){
+        if(speed > 0){
+        controller.updateLastCMDDisplay("MOVE FORWARD" + speed + " for " + duration);
+        DFMLogger.logger.log(Level.FINE, "cmd - Move forward for {0}ms at {1}mm/s", new Integer[]{duration, speed});
+        }
+        else{
+        controller.updateLastCMDDisplay("MOVE  BACKWARD" + speed + " for " + duration);
+        DFMLogger.logger.log(Level.FINE, "cmd - Move backward for {0}ms at {1}mm/s", new Integer[]{duration, speed});    
+        }
+        controller.setBusy(true);
+        
+        if(speed > 0 && duration > 0)
+            dCmd.forward(speed).doFor(duration);
+        else if(speed > 0)
+            dCmd.forward(speed);
+        else if(speed <= 0 && duration > 0)
+            dCmd.backward(-speed).doFor(duration);
+        else
+            dCmd.backward(-speed);
+        
+        sleep(duration);
+        dCmd.hover();
+        
+        controller.setBusy(false);
+    }
+    
     /**
      * Move the drone up or down for a specific duration
      * <br>Negative speed value moves the drone down while a positive value moves it up
