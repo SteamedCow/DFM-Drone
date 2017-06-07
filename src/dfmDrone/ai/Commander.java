@@ -102,7 +102,7 @@ public class Commander
      * <br>Negative speed value spins the drone anti-clockwise/left while a positive value spins it clockwise/right
      * @param speed
      *      Rotation in radians per second
-     * @param duration 
+     * @param duration
      *      Time in miliseconds
      */
     protected void rotate(int speed, int duration){
@@ -118,6 +118,50 @@ public class Commander
             dCmd.spinLeft(speed).doFor(duration);
         else
             dCmd.spinLeft(speed);
+        
+        sleep(duration);
+        dCmd.hover();
+        
+        controller.setBusy(false);
+    }
+    
+    protected void hover(int duration){
+        controller.updateLastCMDDisplay("HOVER for" + duration);
+        controller.setBusy(true);
+        controller.updateLogDisplay("HOVER");
+        
+        if(duration == -1){
+            dCmd.hover();
+        }
+        else{
+            dCmd.hover().doFor(duration);
+            sleep(duration);
+        }
+        
+        controller.setBusy(false);
+    }
+    
+    /**
+     * Move the drone up or down for a specific duration
+     * <br>Negative speed value moves the drone left while a positive value moves it right
+     * @param speed
+     *      Milimeters per second
+     * @param duration
+     *      Time in miliseconds
+     */
+    protected void moveHorizontal(int speed, int duration){
+        controller.updateLastCMDDisplay("MOVE HORIZONTAL " + speed + " for " + duration);
+        DFMLogger.logger.log(Level.FINE, "cmd - Move horizontal for {0}ms at {1}mm/s", new Integer[]{duration, speed});
+        controller.setBusy(true);
+        
+        if(speed > 0 && duration > 0)
+            dCmd.goRight(speed).doFor(duration);
+        else if(speed > 0)
+            dCmd.goRight(speed);
+        else if(speed <= 0 && duration > 0)
+            dCmd.goLeft(-speed).doFor(duration);
+        else
+            dCmd.goLeft(-speed);
         
         sleep(duration);
         dCmd.hover();
