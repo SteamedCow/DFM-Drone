@@ -31,6 +31,7 @@ import org.opencv.imgproc.Imgproc;
 /**
  * OpenCVUtils
  * @author SteamedCow
+ * @author as
  * @version 18-05-2017
  */
 public class OpenCVUtils
