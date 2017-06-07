@@ -97,22 +97,45 @@ public class Commander
         controller.setBusy(false);
     }
     
-    protected void scan(){
-        controller.updateLastCMDDisplay("SCAN");
-        DFMLogger.logger.fine("cmd - Scan");
-        dCmd.spinLeft(15);
+    /**
+     * Rotate the drone arond itself for a specific duration and speed
+     * <br>Negative speed value spins the drone anti-clockwise/left while a positive value spins it clockwise/right
+     * @param speed
+     *      Rotation in radians per second
+     * @param duration 
+     *      Time in miliseconds
+     */
+    protected void rotate(int speed, int duration){
+        controller.updateLastCMDDisplay("ROTATE " + speed + " for " + duration);
+        DFMLogger.logger.log(Level.FINE, "cmd - Rotate for {0}ms at {1}mm/s", new Integer[]{duration, speed});
+        controller.setBusy(true);
+        
+        if(speed > 0 && duration > 0)
+            dCmd.spinRight(speed).doFor(duration);
+        else if(speed > 0)
+            dCmd.spinRight(speed);
+        else if(speed <= 0 && duration > 0)
+            dCmd.spinLeft(speed).doFor(duration);
+        else
+            dCmd.spinLeft(speed);
+        
+        sleep(duration);
+        dCmd.hover();
+        
+        controller.setBusy(false);
     }
     
     /**
      * Move the drone up or down for a specific duration
+     * <br>Negative speed value moves the drone down while a positive value moves it up
      * @param speed
      *      Milimeters per second
      * @param duration
      *      Time in miliseconds
      */
     protected void moveVertival(int speed, int duration) {
-        controller.updateLastCMDDisplay("MOVE VERTICAL " + speed);
-        DFMLogger.logger.log(Level.FINE, "cmd - Move vertical for {0}s at {1}mm/s", new Integer[]{duration, speed});
+        controller.updateLastCMDDisplay("MOVE VERTICAL " + speed + " for " + duration);
+        DFMLogger.logger.log(Level.FINE, "cmd - Move vertical for {0}ms at {1}mm/s", new Integer[]{duration, speed});
         controller.setBusy(true);
         
         if(speed > 0 && duration > 0)
