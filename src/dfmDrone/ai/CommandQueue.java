@@ -163,7 +163,7 @@ public class CommandQueue implements Runnable
     }
     
     /**
-     * Clear all commands in queue (ignores the current command)
+     * Clear all commands in queue (ignores the current command) hej test
      */
     public void clearQueue() {
         commandQueue.clear();
