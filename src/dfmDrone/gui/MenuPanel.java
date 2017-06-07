@@ -91,6 +91,7 @@ public class MenuPanel extends javax.swing.JPanel
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jbSettings = new javax.swing.JButton();
+        jbManual = new javax.swing.JButton();
         jpVideo = new javax.swing.JPanel();
         jbHSV = new javax.swing.JButton();
         jtbBinary = new javax.swing.JToggleButton();
@@ -172,6 +173,13 @@ public class MenuPanel extends javax.swing.JPanel
             }
         });
 
+        jbManual.setText("Manual");
+        jbManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbManualActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpUILayout = new javax.swing.GroupLayout(jpUI);
         jpUI.setLayout(jpUILayout);
         jpUILayout.setHorizontalGroup(
@@ -183,6 +191,8 @@ public class MenuPanel extends javax.swing.JPanel
                         .addComponent(jbStartStop)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbKill)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbManual)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jpUILayout.createSequentialGroup()
                         .addComponent(jbWB)
@@ -198,7 +208,8 @@ public class MenuPanel extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbStartStop)
-                    .addComponent(jbKill))
+                    .addComponent(jbKill)
+                    .addComponent(jbManual))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -278,7 +289,7 @@ public class MenuPanel extends javax.swing.JPanel
             DFMLogger.logger.info("Land command requested");
             try {
                 if(controller.cmdQ.add(Command.Land, -1, -1, PushType.Instant, PushType.Block, PushType.IgnoreBlock, PushType.IgnoreBusy)) {
-                    controller.cmdQ.add(Command.SpinLeft, 1, 500);
+                //    controller.cmdQ.add(Command.SpinLeft, 1, 500);
                     
                     setInfoValue(InfoLabel.Status, "Landing");
                     jbStartStop.setText("Start");
@@ -341,6 +352,14 @@ public class MenuPanel extends javax.swing.JPanel
     private void jtbBinaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbBinaryActionPerformed
         Data.SHOW_BINARY = jtbBinary.isSelected();
     }//GEN-LAST:event_jtbBinaryActionPerformed
+
+    private void jbManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbManualActionPerformed
+          JFrame frame = new JFrame("Manual control");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setContentPane(new ManualPanel(controller));
+        frame.pack();
+        frame.setVisible(true);
+    }//GEN-LAST:event_jbManualActionPerformed
     
     protected void updateBusy(Boolean busy) {
         setInfoValue(InfoLabel.Busy, busy.toString());
@@ -397,6 +416,7 @@ public class MenuPanel extends javax.swing.JPanel
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbHSV;
     private javax.swing.JButton jbKill;
+    private javax.swing.JButton jbManual;
     private javax.swing.JButton jbSettings;
     private javax.swing.JButton jbStartStop;
     private javax.swing.JButton jbWB;
