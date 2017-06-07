@@ -115,9 +115,9 @@ public class Commander
         else if(speed > 0)
             dCmd.spinRight(speed);
         else if(speed <= 0 && duration > 0)
-            dCmd.spinLeft(speed).doFor(duration);
+            dCmd.spinLeft(-speed).doFor(duration);
         else
-            dCmd.spinLeft(speed);
+            dCmd.spinLeft(-speed);
         
         sleep(duration);
         dCmd.hover();

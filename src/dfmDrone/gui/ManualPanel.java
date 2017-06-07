@@ -149,11 +149,11 @@ public class ManualPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardActionPerformed
-        //controller.cmdQ.add(CommandQueue.Command.)
+        controller.cmdQ.add(CommandQueue.Command.Forward, 15, 250, CommandQueue.PushType.Instant);
     }//GEN-LAST:event_ForwardActionPerformed
 
     private void ReverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReverseActionPerformed
-       
+       controller.cmdQ.add(CommandQueue.Command.Backward, 15, 250, CommandQueue.PushType.Instant);
     }//GEN-LAST:event_ReverseActionPerformed
 
     private void rotateLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateLActionPerformed
