@@ -18,11 +18,13 @@ import navigation.tools.DistanceMeaure;
  * @author Lasse
  * @version 30-05-2017
  */
-public class AILogic 
+public class AILogic
 {
     private final GUIController controller;
     private final CommandQueue cmdQ;
-
+    private double OldRatio = -1;
+    private boolean movedRight;
+    
     public AILogic(GUIController controller, CommandQueue cmdQ) {
         this.controller = controller;
         this.cmdQ = cmdQ;
@@ -37,8 +39,9 @@ public class AILogic
                 
                 if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                     if(rotatePlacement(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width())) {
-//                        centerHorizontal(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width());
-                        controller.updateLogDisplay("-CENTERED-");
+                        if(centerHorizontal(imageAnalytics.rect.height, imageAnalytics.rect.width, imageAnalytics.sourceImg.width())) {
+                            controller.updateLogDisplay("-CENTERED-");
+                        }
                     }
                 }
             }
@@ -71,17 +74,40 @@ public class AILogic
         return true;
     }
     
-     private void centerHorizontal(double objCenterX, double imageWidth){
-          double centerWidth = imageWidth/2;
-          
-          if(objCenterX - centerWidth > 0 || objCenterX - centerWidth < -75) {
-            if(objCenterX < centerWidth) {
-                cmdQ.add(Command.MoveLeft, 10, 500);
+    private boolean centerHorizontal(double objHeight, double objWidth, double imageWidth){
+        double ratio = objWidth/objHeight;
+        
+        if(ratio > 0.85){
+            return true;
+        }
+        
+        if(OldRatio == -1){
+            OldRatio = ratio;
+            cmdQ.add(Command.MoveRight, 10, 500);
+            movedRight = true;
+        }
+        else{
+            if(ratio > OldRatio){
+                if(movedRight){
+                    cmdQ.add(Command.MoveRight, 10, 500);
+                }
+                else{
+                    cmdQ.add(Command.MoveLeft, 10, 500);
+                    movedRight = false;
+                }
             }
-            else {
-                cmdQ.add(Command.MoveRight, 10, 500);
+            else if(ratio < OldRatio){
+                if(movedRight){
+                    cmdQ.add(Command.MoveLeft, 10, 500);
+                    movedRight = false;
+                }
+                else{
+                    cmdQ.add(Command.MoveRight, 10, 500);
+                    movedRight = true;
+                }
             }
         }
+        return false;
     }
     
     private boolean rotatePlacement(double objCenterX, double imageWidth) {
