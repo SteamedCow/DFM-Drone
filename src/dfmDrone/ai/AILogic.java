@@ -115,10 +115,10 @@ public class AILogic
         
         if(objCenterX - centerWidth > 25 || objCenterX - centerWidth < 25) {
             if(objCenterX < centerWidth) {
-                cmdQ.add(Command.SpinLeft, 30, 500);
+                cmdQ.add(Command.SpinLeft, 10, 200);
             }
             else {
-                cmdQ.add(Command.SpinRight, 30, 500);
+                cmdQ.add(Command.SpinRight, 10, 200);
             }
             return false;
         }

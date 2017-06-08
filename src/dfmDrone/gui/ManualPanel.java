@@ -153,7 +153,7 @@ public class ManualPanel extends javax.swing.JPanel
     }//GEN-LAST:event_ReverseActionPerformed
 
     private void rotateLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateLActionPerformed
-        controller.cmdQ.add(CommandQueue.Command.SpinLeft, 30, 500, CommandQueue.PushType.Instant);
+        controller.cmdQ.add(CommandQueue.Command.SpinLeft, 30, 500, CommandQueue.PushType.Instant, CommandQueue.PushType.IgnoreBusy);
     }//GEN-LAST:event_rotateLActionPerformed
 
     private void UpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpActionPerformed
@@ -161,7 +161,7 @@ public class ManualPanel extends javax.swing.JPanel
     }//GEN-LAST:event_UpActionPerformed
 
     private void rotateRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateRActionPerformed
-        controller.cmdQ.add(CommandQueue.Command.SpinRight, 30, 500, CommandQueue.PushType.Instant);
+        controller.cmdQ.add(CommandQueue.Command.SpinRight, 30, 500, CommandQueue.PushType.Instant, CommandQueue.PushType.IgnoreBusy);
     }//GEN-LAST:event_rotateRActionPerformed
 
     private void LeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeftActionPerformed
