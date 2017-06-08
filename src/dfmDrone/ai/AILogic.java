@@ -35,7 +35,11 @@ public class AILogic
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.PORTAL_HEIGHT, Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
                 controller.updateDistanceDisplay(distance);
                 
-//                centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height());
+                if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
+                    if(rotatePlacement(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width())) {
+                        controller.updateLogDisplay("-CENTERED-");
+                    }
+                }
             }
             
             //QR Scan
@@ -52,21 +56,32 @@ public class AILogic
             throw new NullPointerException("No image provided for QR scan");
     }
     
-    private void centerVertical(double objCenterY, double imageHeight) {
+    private boolean centerVertical(double objCenterY, double imageHeight) {
         double centerHeight = imageHeight/2;
         
         if(objCenterY - centerHeight > 0 || objCenterY - centerHeight < -75) {
-            if(objCenterY < centerHeight) {
+            if(objCenterY < centerHeight)
                 cmdQ.add(Command.MoveUp, 10, 500);
-            }
-            else {
+            else
                 cmdQ.add(Command.MoveDown, 10, 500);
-            }
+            
+            return false;
         }
+        return true;
     }
     
-    private void ortogonalPlacement(Point2D center, Dimension dim, double distance) {
-        double aspect = dim.height / dim.width;
-        //TODO
+    private boolean rotatePlacement(double objCenterX, double imageWidth) {
+        double centerWidth = imageWidth/2;
+        
+        if(objCenterX - centerWidth > 25 || objCenterX - centerWidth < 25) {
+            if(objCenterX < centerWidth) {
+                cmdQ.add(Command.SpinLeft, 30, 500);
+            }
+            else {
+                cmdQ.add(Command.SpinRight, 30, 500);
+            }
+            return false;
+        }
+        return true;
     }
 }
