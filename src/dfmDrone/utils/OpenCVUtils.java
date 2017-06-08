@@ -85,11 +85,11 @@ public class OpenCVUtils
         Mat red_hue_image = new Mat();
         Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
 //        Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
-//        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2, 2));
+        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1, 1));
         
 //        Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9));
         Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9), new Point(2, 2));
-        // Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
+         Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
         // Imgproc.dilate(Binarized, Binarized, dilateElement);
         // init
         List<MatOfPoint> contours = new ArrayList<>();

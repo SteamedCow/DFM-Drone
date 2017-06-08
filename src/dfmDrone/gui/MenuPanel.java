@@ -391,8 +391,8 @@ public class MenuPanel extends javax.swing.JPanel
     
     protected void updateLogger(String s){
         String previous = jTextArea1.getText();
-        if(previous.length() > 1000)
-            previous = previous.substring(0, 1000);
+        if(previous.length() > 50000)
+            previous = previous.substring(0, 50000);
         
         jTextArea1.setText(sdf.format(new Date()) + s +"\n" + previous);
     }
