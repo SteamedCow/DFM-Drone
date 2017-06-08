@@ -37,6 +37,7 @@ public class AILogic
                 
                 if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                     if(rotatePlacement(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width())) {
+//                        centerHorizontal(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width());
                         controller.updateLogDisplay("-CENTERED-");
                     }
                 }
@@ -68,6 +69,19 @@ public class AILogic
             return false;
         }
         return true;
+    }
+    
+     private void centerHorizontal(double objCenterX, double imageWidth){
+          double centerWidth = imageWidth/2;
+          
+          if(objCenterX - centerWidth > 0 || objCenterX - centerWidth < -75) {
+            if(objCenterX < centerWidth) {
+                cmdQ.add(Command.MoveLeft, 10, 500);
+            }
+            else {
+                cmdQ.add(Command.MoveRight, 10, 500);
+            }
+        }
     }
     
     private boolean rotatePlacement(double objCenterX, double imageWidth) {
