@@ -48,6 +48,7 @@ public class Commander
         controller.setBusy(true);
         controller.updateLastCMDDisplay("TAKE OFF");
         DFMLogger.logger.info("cmd - Take off");
+        dCmd.flatTrim();
         dCmd.takeOff();
         dCmd.waitFor(2000);
         sleep(2000);

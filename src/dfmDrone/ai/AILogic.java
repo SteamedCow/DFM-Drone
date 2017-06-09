@@ -31,7 +31,7 @@ public class AILogic
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-        if(controller.cmdQ.isDroneFlying()) {
+//        if(controller.cmdQ.isDroneFlying()) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.PORTAL_HEIGHT, Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
@@ -50,7 +50,7 @@ public class AILogic
             Result qr = QRScan(controller.getVideoFrame());
             if (qr != null)
                 System.out.println(qr.getText() + ": " + new Date().getSeconds());
-        }
+//        }
     }
     
     private Result QRScan(BufferedImage img) {
@@ -77,19 +77,19 @@ public class AILogic
     private boolean centerHorizontal(double objHeight, double objWidth, double imageWidth){
         double ratio = objWidth/objHeight;
 
-        if(ratio > 0.85){
+        if(ratio > 0.95){
             return true;
         }
 
         if(OldRatio == -1){
             OldRatio = ratio;
-            cmdQ.add(Command.MoveRight, 10, 500);
+            cmdQ.add(Command.MoveRight, 8, 500);
             movedRight = true;
         }
         else{
             if(ratio > OldRatio){
                 if(movedRight){
-                    cmdQ.add(Command.MoveRight, 10, 500);
+                    cmdQ.add(Command.MoveRight, 8, 500);
                 }
                 else{
                     cmdQ.add(Command.MoveLeft, 10, 500);
@@ -113,7 +113,7 @@ public class AILogic
     private boolean rotatePlacement(double objCenterX, double imageWidth) {
         double centerWidth = imageWidth/2;
         
-        if(objCenterX - centerWidth > 75 || objCenterX - centerWidth < -75) {
+        if(objCenterX - centerWidth > 50 || objCenterX - centerWidth < -50) {
             if(objCenterX < centerWidth) {
                 cmdQ.add(Command.SpinLeft, 15, 300);
             }
