@@ -41,6 +41,7 @@ public class AILogic
                     if(rotatePlacement(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width())) {
                         if(centerHorizontal(imageAnalytics.rect.height, imageAnalytics.rect.width, imageAnalytics.sourceImg.width())) {
                             controller.updateLogDisplay("-CENTERED-");
+                            cmdQ.add(Command.Forward, 500, (int)distance / 500 * 1000);
                         }
                     }
                 }
@@ -82,7 +83,7 @@ public class AILogic
         }
 
         if(OldRatio == -1){
-            OldRatio = ratio;
+            
             cmdQ.add(Command.MoveRight, 8, 500);
             movedRight = true;
         }
@@ -107,6 +108,7 @@ public class AILogic
                 }
             }
         }
+        OldRatio = ratio;
         return false;
     }
     
@@ -115,10 +117,10 @@ public class AILogic
         
         if(objCenterX - centerWidth > 50 || objCenterX - centerWidth < -50) {
             if(objCenterX < centerWidth) {
-                cmdQ.add(Command.SpinLeft, 15, 300);
+                cmdQ.add(Command.SpinLeft, 7, 300);
             }
             else {
-                cmdQ.add(Command.SpinRight, 15, 300);
+                cmdQ.add(Command.SpinRight, 7, 300);
             }
             return false;
         }
