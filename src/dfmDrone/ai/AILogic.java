@@ -113,12 +113,12 @@ public class AILogic
     private boolean rotatePlacement(double objCenterX, double imageWidth) {
         double centerWidth = imageWidth/2;
         
-        if(objCenterX - centerWidth > 75 || objCenterX - centerWidth < 75) {
+        if(objCenterX - centerWidth > 75 || objCenterX - centerWidth < -75) {
             if(objCenterX < centerWidth) {
-                cmdQ.add(Command.SpinLeft, 4, 290);
+                cmdQ.add(Command.SpinLeft, 15, 300);
             }
             else {
-                cmdQ.add(Command.SpinRight, 4, 308);
+                cmdQ.add(Command.SpinRight, 15, 300);
             }
             return false;
         }
