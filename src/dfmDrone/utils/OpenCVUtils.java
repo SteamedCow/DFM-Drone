@@ -84,13 +84,14 @@ public class OpenCVUtils
                 new Scalar(DummyData.upperB2H, DummyData.upperB2S, DummyData.upperB2V), upper_hue_range);
         Mat red_hue_image = new Mat();
         Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
-//        Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
-        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1, 1));
+       Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10));
+        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(6, 6));
         
 //        Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9));
-        Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9), new Point(2, 2));
+        Imgproc.blur(red_hue_image, red_hue_image, new Size(8, 8), new Point(2, 2));
+
          Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
-        // Imgproc.dilate(Binarized, Binarized, dilateElement);
+         Imgproc.dilate(red_hue_image, red_hue_image, dilateElement);
         // init
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();

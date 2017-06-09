@@ -35,13 +35,20 @@ public class AILogic
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.PORTAL_HEIGHT, Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
+                System.out.println("sourceImg.height(): "+imageAnalytics.sourceImg.height() +", sourceImg.width: " +imageAnalytics.sourceImg.width()+", rect.height: "+imageAnalytics.rect.height + ",portal height: "+ Config.PORTAL_HEIGHT+" Camera Constant: "+Double.parseDouble((controller.getProperty((PropertyLabel.CameraConstant)))));
                 controller.updateDistanceDisplay(distance);
                 
                 if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                     if(rotatePlacement(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width())) {
                         if(centerHorizontal(imageAnalytics.rect.height, imageAnalytics.rect.width, imageAnalytics.sourceImg.width())) {
                             controller.updateLogDisplay("-CENTERED-");
-                            cmdQ.add(Command.Forward, 500, (int)distance / 500 * 1000);
+                            if(distance>= 2000){
+                                cmdQ.add(Command.Forward, 300,300) ;
+                            }
+                            else {
+                                cmdQ.add(Command.Forward, 500, (int) distance / 500 * 1000/2);
+                                cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block);
+                            }
                         }
                     }
                 }

@@ -59,6 +59,8 @@ public class DFMDrone
             drone.setMinAltitude(Integer.parseInt(propHandler.get(PropertyLabel.MinAltitude)));
             drone.getCommandManager().setVideoCodecFps(Integer.parseInt(propHandler.get(PropertyLabel.VideoFrameRate)));
             drone.getCommandManager().setVideoCodec(Config.VIDEO_CODEC);
+            Config.PORTAL_HEIGHT = Integer.parseInt(propHandler.get(PropertyLabel.PortalHeight));
+            Config.CAMERA_CONSTANT = Double.parseDouble(propHandler.get(PropertyLabel.CameraConstant));
             
             //Setup Video Listener and controller
             DFMLogger.logger.log(Level.CONFIG, "Setup Video Listener & controller");

@@ -19,7 +19,7 @@ import java.io.IOException;
 public class OptionsPanel extends JFrame {
     private JSlider jsMaxAltitude;
     private JPanel Jpanel;
-    private JLabel maxAltitudeLabel;
+    private JTextField maxAltitudeLabel;
     private JTextField portalHeightText;
     private JSlider jsMinAltitude;
     private JTextField cameraConstantText;
@@ -41,7 +41,6 @@ public class OptionsPanel extends JFrame {
 
     }
 
-
     public void jsMaxAltitudeStateChange(ChangeEvent e) {
         JSlider source = (JSlider) e.getSource();
         if (!source.getValueIsAdjusting()) {
@@ -52,13 +51,16 @@ public class OptionsPanel extends JFrame {
                 controller.propHandler.save(PropertyLabel.MaxAltitude, source.getValue());
 
 
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
 
         }
         maxAltitudeLabel.setText("MaxAltitude: " + source.getValue());
+        maxAltitudeLabel.validate();
     }
+
 
     public void jsMinAltitudeStateChange(ChangeEvent e) {
         JSlider source = (JSlider) e.getSource();
@@ -75,15 +77,16 @@ public class OptionsPanel extends JFrame {
             }
 
         }
-        maxAltitudeLabel.setText("MaxAltitude: " + source.getValue());
+        maxAltitudeLabel.setText("MinAltitude: " + source.getValue());
     }
 
 
     private void createUIComponents() {
 
+
         jsMaxAltitude = new JSlider(JSlider.HORIZONTAL, 0, 10000, Integer.parseInt(controller.getProperty(PropertyLabel.MaxAltitude)));
         jsMinAltitude = new JSlider(JSlider.HORIZONTAL, 0, 4000, Integer.parseInt(controller.getProperty(PropertyLabel.MinAltitude)));
-        maxAltitudeLabel = new JLabel();
+        maxAltitudeLabel = new JTextField();
         maxAltitudeLabel.setText("MaxAltitude: " + controller.getProperty(PropertyLabel.MaxAltitude));
         minAltitudeLabel = new JLabel();
         minAltitudeLabel.setText("MinAltitude: " + controller.getProperty(PropertyLabel.MinAltitude));
@@ -157,7 +160,6 @@ public class OptionsPanel extends JFrame {
         jsMaxAltitude.setPaintLabels(true);
         jsMaxAltitude.setPaintTicks(true);
         Jpanel.add(jsMaxAltitude, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        Jpanel.add(maxAltitudeLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         Jpanel.add(portalHeightText, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         jsMinAltitude.setMajorTickSpacing(1000);
         jsMinAltitude.setMaximum(4000);
@@ -177,6 +179,8 @@ public class OptionsPanel extends JFrame {
         label3.setText("Video Frame Rate");
         Jpanel.add(label3, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         Jpanel.add(videoFrameText, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        maxAltitudeLabel.setEditable(false);
+        Jpanel.add(maxAltitudeLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         label1.setLabelFor(portalHeightText);
         label2.setLabelFor(cameraConstantText);
         label3.setLabelFor(videoFrameText);
