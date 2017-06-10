@@ -15,13 +15,14 @@ import javax.swing.JOptionPane;
 public class DFMLogger 
 {
     public static final Logger logger = Logger.getLogger("Log");
+    private static FileHandler fh;
 
     /**
      * Static konstruktør for loggeren. Ændrer formattet
      */
     static {
         try {
-            FileHandler fh = new FileHandler(Data.LOG_FILEPATH, true);
+            fh = new FileHandler(Data.LOG_FILEPATH, true);
             
             fh.setFormatter(new Formatter() {
                 @Override
@@ -32,6 +33,8 @@ public class DFMLogger
                     buf.append(rec.getLevel());
                     buf.append("] ");
                     buf.append(formatMessage(rec));
+                    if(rec.getLevel().intValue() > Level.INFO.intValue())
+                        buf.append("(").append(rec.getSourceClassName()).append('.').append(rec.getSourceMethodName()).append(')');
                     buf.append("\r\n");
                     
                     try {
@@ -40,7 +43,7 @@ public class DFMLogger
                         else if(rec.getLevel().intValue() > Level.INFO.intValue())
                             JOptionPane.showMessageDialog(new JFrame(), rec.getLevel()+"\n"+formatMessage(rec), "DFM Drone - Warning", JOptionPane.WARNING_MESSAGE);
                     } catch (Exception e) {
-                        System.err.println("Logger error!");
+                        System.err.println("! LOGGER ERROR !");
                         e.printStackTrace();
                     }
                     
@@ -53,6 +56,12 @@ public class DFMLogger
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static void close() {
+        logger.removeHandler(fh);
+        fh.flush();
+        fh.close();
     }
     
     /**

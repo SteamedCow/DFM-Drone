@@ -115,6 +115,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel2.setText("Hue");
 
         LH1Value.setText("0");
+        LH1Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        LH1Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         jlLower1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlLower1.setText("Lower");
@@ -130,6 +132,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel5.setText("Saturation");
 
         LS1Value.setText("0");
+        LS1Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        LS1Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         LV1Slider.setMaximum(255);
         LV1Slider.setValue(128);
@@ -142,6 +146,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel7.setText("Value");
 
         LV1Value.setText("0");
+        LV1Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        LV1Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         jlUpper1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlUpper1.setText("Upper");
@@ -157,6 +163,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel10.setText("Value");
 
         UV1Value.setText("0");
+        UV1Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        UV1Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         UH1Slider.setMaximum(180);
         UH1Slider.setValue(90);
@@ -169,6 +177,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel12.setText("Hue");
 
         UH1Value.setText("0");
+        UH1Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        UH1Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         US1Slider.setMaximum(255);
         US1Slider.setValue(128);
@@ -181,6 +191,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel14.setText("Saturation");
 
         US1Value.setText("0");
+        US1Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        US1Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         LV2Slider.setMaximum(255);
         LV2Slider.setValue(128);
@@ -203,8 +215,12 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel17.setText("Saturation");
 
         LV2Value.setText("0");
+        LV2Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        LV2Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         US2Value.setText("0");
+        US2Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        US2Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         jlUpper2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlUpper2.setText("Upper");
@@ -220,6 +236,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel21.setText("Value");
 
         UV2Value.setText("0");
+        UV2Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        UV2Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         UH2Slider.setMaximum(180);
         UH2Slider.setValue(90);
@@ -243,6 +261,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel24.setText("Hue");
 
         LH2Value.setText("0");
+        LH2Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        LH2Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         jlLower2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlLower2.setText("Lower");
@@ -260,8 +280,12 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         jLabel28.setText("Hue");
 
         LS2Value.setText("0");
+        LS2Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        LS2Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         UH2Value.setText("0");
+        UH2Value.setMaximumSize(new java.awt.Dimension(8, 14));
+        UH2Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         jbSave.setText("Save");
         jbSave.setEnabled(false);
@@ -359,9 +383,9 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                                                 .addComponent(UH1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(UH1Value, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                                            .addComponent(UV1Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(US1Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addComponent(UH1Value, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(UV1Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(US1Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -378,8 +402,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                                                 .addComponent(UH2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(UH2Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(UV2Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(UH2Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(UV2Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(US2Value, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +412,7 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(LV2Slider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(LV2Slider, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                                             .addComponent(LH2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                             .addComponent(LS2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                             .addComponent(jpL2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -412,20 +436,22 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                                             .addComponent(jpU1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(LH1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(LS1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(LV1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                            .addComponent(LV1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(LH1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel10, jLabel12, jLabel14, jLabel16, jLabel17, jLabel2, jLabel21, jLabel24, jLabel27, jLabel28, jLabel5, jLabel7});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {LH1Value, LH2Value, LS1Value, LS2Value, LV1Value, LV2Value, UH1Value, UH2Value, US1Value, US2Value, UV1Value, UV2Value});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LH1Value)
+                    .addComponent(LH1Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jlRange1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -438,12 +464,12 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                             .addComponent(LH1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LS1Value)
+                    .addComponent(LS1Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(LS1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LV1Value)
+                    .addComponent(LV1Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(LV1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -452,22 +478,22 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                     .addComponent(jpU1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(UH1Value)
+                    .addComponent(UH1Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(UH1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(US1Value)
+                    .addComponent(US1Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
                     .addComponent(US1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(UV1Value)
+                    .addComponent(UV1Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(UV1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LH2Value)
+                    .addComponent(LH2Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jlRange2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -480,12 +506,12 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                             .addComponent(LH2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LS2Value)
+                    .addComponent(LS2Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27)
                     .addComponent(LS2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LV2Value)
+                    .addComponent(LV2Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(LV2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -494,17 +520,17 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                     .addComponent(jpU2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(UH2Value)
+                    .addComponent(UH2Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28)
                     .addComponent(UH2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(US2Value)
+                    .addComponent(US2Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
                     .addComponent(US2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(UV2Value)
+                    .addComponent(UV2Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21)
                     .addComponent(UV2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

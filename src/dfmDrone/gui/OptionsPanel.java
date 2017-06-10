@@ -9,14 +9,13 @@ import dfmDrone.data.PropertyHandler.PropertyLabel;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
  * Created by as on 6/5/17.
  */
-public class OptionsPanel extends JFrame {
+public class OptionsPanel extends JFrame
+{
     private JSlider jsMaxAltitude;
     private JPanel Jpanel;
     private JTextField maxAltitudeLabel;
@@ -28,7 +27,6 @@ public class OptionsPanel extends JFrame {
     private final GUIController controller;
 
     public OptionsPanel(GUIController controller) {
-
         this.controller = controller;
         $$$setupUI$$$();
         createUIComponents();
@@ -41,49 +39,36 @@ public class OptionsPanel extends JFrame {
 
     }
 
-    public void jsMaxAltitudeStateChange(ChangeEvent e) {
-        JSlider source = (JSlider) e.getSource();
+    public void jsMaxAltitudeStateChange(ChangeEvent evt) {
+        JSlider source = (JSlider) evt.getSource();
         if (!source.getValueIsAdjusting()) {
-
             try {
                 controller.getDrone().setMaxAltitude(source.getValue());
                 maxAltitudeLabel.setText("MaxAltitude: " + source.getValue());
                 controller.propHandler.save(PropertyLabel.MaxAltitude, source.getValue());
-
-
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
         }
         maxAltitudeLabel.setText("MaxAltitude: " + source.getValue());
         maxAltitudeLabel.validate();
     }
 
-
-    public void jsMinAltitudeStateChange(ChangeEvent e) {
-        JSlider source = (JSlider) e.getSource();
+    public void jsMinAltitudeStateChange(ChangeEvent evt) {
+        JSlider source = (JSlider) evt.getSource();
         if (!source.getValueIsAdjusting()) {
-
             try {
                 controller.getDrone().setMinAltitude(source.getValue());
                 minAltitudeLabel.setText("MinAltitude: " + source.getValue());
                 controller.propHandler.save(PropertyLabel.MinAltitude, source.getValue());
-
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
         }
         maxAltitudeLabel.setText("MinAltitude: " + source.getValue());
     }
 
-
     private void createUIComponents() {
-
-
         jsMaxAltitude = new JSlider(JSlider.HORIZONTAL, 0, 10000, Integer.parseInt(controller.getProperty(PropertyLabel.MaxAltitude)));
         jsMinAltitude = new JSlider(JSlider.HORIZONTAL, 0, 4000, Integer.parseInt(controller.getProperty(PropertyLabel.MinAltitude)));
         maxAltitudeLabel = new JTextField();
@@ -135,8 +120,6 @@ public class OptionsPanel extends JFrame {
                 e1.printStackTrace();
             }
         });
-
-
     }
 
     /**

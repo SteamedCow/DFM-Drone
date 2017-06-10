@@ -68,9 +68,9 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="UH1Value" pref="22" max="32767" attributes="0"/>
-                                          <Component id="UV1Value" max="32767" attributes="0"/>
-                                          <Component id="US1Value" max="32767" attributes="0"/>
+                                          <Component id="UH1Value" linkSize="2" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="UV1Value" linkSize="2" max="-2" attributes="0"/>
+                                          <Component id="US1Value" linkSize="2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -94,9 +94,9 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="UH2Value" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="UV2Value" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="US2Value" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="UH2Value" linkSize="2" alignment="0" max="-2" attributes="0"/>
+                                          <Component id="UV2Value" linkSize="2" alignment="0" max="-2" attributes="0"/>
+                                          <Component id="US2Value" linkSize="2" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -107,7 +107,7 @@
                                       </Group>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="LV2Slider" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="LV2Slider" alignment="0" pref="164" max="32767" attributes="0"/>
                                           <Component id="LH2Slider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="LS2Slider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="jpL2" alignment="1" max="32767" attributes="0"/>
@@ -115,9 +115,9 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="LH2Value" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
-                                          <Component id="LS2Value" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
-                                          <Component id="LV2Value" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="LH2Value" linkSize="2" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="LS2Value" linkSize="2" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="LV2Value" linkSize="2" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -136,9 +136,9 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="LH1Value" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
-                                          <Component id="LS1Value" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
-                                          <Component id="LV1Value" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="LS1Value" linkSize="2" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="LV1Value" linkSize="2" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="LH1Value" linkSize="2" alignment="1" min="-2" pref="34" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -293,6 +293,12 @@
     <Component class="javax.swing.JLabel" name="LH1Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jlLower1">
@@ -320,6 +326,12 @@
     <Component class="javax.swing.JLabel" name="LS1Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JSlider" name="LV1Slider">
@@ -339,6 +351,12 @@
     <Component class="javax.swing.JLabel" name="LV1Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jlUpper1">
@@ -366,6 +384,12 @@
     <Component class="javax.swing.JLabel" name="UV1Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JSlider" name="UH1Slider">
@@ -385,6 +409,12 @@
     <Component class="javax.swing.JLabel" name="UH1Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JSlider" name="US1Slider">
@@ -404,6 +434,12 @@
     <Component class="javax.swing.JLabel" name="US1Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JSlider" name="LV2Slider">
@@ -437,11 +473,23 @@
     <Component class="javax.swing.JLabel" name="LV2Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="US2Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jlUpper2">
@@ -469,6 +517,12 @@
     <Component class="javax.swing.JLabel" name="UV2Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JSlider" name="UH2Slider">
@@ -505,6 +559,12 @@
     <Component class="javax.swing.JLabel" name="LH2Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jlLower2">
@@ -537,11 +597,23 @@
     <Component class="javax.swing.JLabel" name="LS2Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="UH2Value">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[8, 14]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbSave">

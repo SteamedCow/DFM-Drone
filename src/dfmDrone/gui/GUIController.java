@@ -52,6 +52,7 @@ public class GUIController
         window = new JFrame("Killer Drone");
         window.addWindowListener(new GUIWindowListener(this));
         window.setSize(1200, 600);
+        window.setMenuBar(new GUIMenuBar());
         window.setContentPane(menu);
         window.setVisible(true);
         
