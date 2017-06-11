@@ -3,7 +3,7 @@ package dfmDrone.ai;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
 import de.yadrone.base.command.LEDAnimation;
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 import dfmDrone.utils.DFMLogger;
 import java.util.logging.Level;
 
@@ -16,9 +16,9 @@ public class Commander
 {
     private final IARDrone drone;
     private final CommandManager dCmd;
-    private final GUIController controller;
+    private final Controller controller;
     
-    public Commander(GUIController controller) {
+    public Commander(Controller controller) {
         this.controller = controller;
         drone = this.controller.getDrone();
         dCmd = drone.getCommandManager();

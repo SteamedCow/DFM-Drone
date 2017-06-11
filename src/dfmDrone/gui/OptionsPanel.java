@@ -24,9 +24,9 @@ public class OptionsPanel extends JFrame
     private JTextField cameraConstantText;
     private JTextField videoFrameText;
     private JLabel minAltitudeLabel;
-    private final GUIController controller;
+    private final Controller controller;
 
-    public OptionsPanel(GUIController controller) {
+    public OptionsPanel(Controller controller) {
         this.controller = controller;
         $$$setupUI$$$();
         createUIComponents();

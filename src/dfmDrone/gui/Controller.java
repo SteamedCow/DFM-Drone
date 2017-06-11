@@ -11,6 +11,7 @@ import dfmDrone.listeners.GUIWindowListener;
 import dfmDrone.listeners.VideoListener;
 import dfmDrone.ai.Commander;
 import dfmDrone.data.Config;
+import dfmDrone.data.HSVHandler;
 import dfmDrone.utils.DFMLogger;
 import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
 import java.awt.image.BufferedImage;
@@ -19,13 +20,14 @@ import javax.swing.JFrame;
 
 
 /**
- * GUIController
+ * Controller
  * @author SteamedCow
  * @version 18-05-2017
  */
-public class GUIController 
+public class Controller 
 {
     public final PropertyHandler propHandler;
+    public final HSVHandler hsvHandler;
     private final MenuPanel menu;
     private final JFrame window;
     private final VideoPanel video;
@@ -34,9 +36,11 @@ public class GUIController
     public final CommandQueue cmdQ;
     protected final IARDrone drone;
     
-    public GUIController(IARDrone drone, PropertyHandler propHandler) {
+    public Controller(IARDrone drone, PropertyHandler propHandler, HSVHandler hsvHandler) {
         this.drone = drone;
         this.propHandler = propHandler;
+        this.hsvHandler = hsvHandler;
+        
         cmdQ = new CommandQueue(this, new Commander(this));
         droneLogic = new AILogic(this, cmdQ);
         
@@ -52,7 +56,7 @@ public class GUIController
         window = new JFrame("Killer Drone");
         window.addWindowListener(new GUIWindowListener(this));
         window.setSize(1200, 600);
-        window.setMenuBar(new GUIMenuBar());
+        window.setMenuBar(new GUIMenuBar(this));
         window.setContentPane(menu);
         window.setVisible(true);
         
@@ -60,6 +64,10 @@ public class GUIController
         cmdQ.clearQueue();
         cmdQ.start(Config.CMDQ_TIMEOUT);
         setBusy(false);
+    }
+    
+    public void setColorOffset(Integer[] colorOffset) {
+        MenuPanel.colorOffset = colorOffset;
     }
     
     public void setBusy(boolean busy) {

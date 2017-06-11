@@ -1,6 +1,6 @@
 package dfmDrone.ai;
 
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 import dfmDrone.utils.DFMLogger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class CommandQueue implements Runnable
     /** True if the drone is flying */
     private boolean droneFlying = false;
     
-    private final GUIController controller;
+    private final Controller controller;
     /** Command handler class that contains instructions for executing commands */
     private final Commander commandHandler;
     
@@ -45,7 +45,7 @@ public class CommandQueue implements Runnable
      * @param commandHandler
      *      Command handler class that contains instructions for executing commands
      */
-    public CommandQueue(GUIController controller, Commander commandHandler) {
+    public CommandQueue(Controller controller, Commander commandHandler) {
         this.controller = controller;
         this.commandHandler = commandHandler;
     }

@@ -13,13 +13,13 @@ import dfmDrone.ai.CommandQueue;
  */
 public class ManualPanel extends javax.swing.JPanel
 {
-    private final GUIController controller;
+    private final Controller controller;
     
     /**
      * Creates new form ManualPanel
      * @param controller
      */
-    public ManualPanel(GUIController controller) {
+    public ManualPanel(Controller controller) {
         this.controller = controller;
         
         initComponents();

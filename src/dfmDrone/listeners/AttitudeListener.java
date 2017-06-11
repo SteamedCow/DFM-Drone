@@ -1,6 +1,6 @@
 package dfmDrone.listeners;
 
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 
 /**
  * AttitudeListener
@@ -9,9 +9,9 @@ import dfmDrone.gui.GUIController;
  */
 public class AttitudeListener implements de.yadrone.base.navdata.AttitudeListener
 {
-//    private final GUIController controller;
+//    private final Controller controller;
 
-    public AttitudeListener(GUIController controller) {
+    public AttitudeListener(Controller controller) {
 //        this.controller = controller;
     }
     

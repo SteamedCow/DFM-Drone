@@ -22,10 +22,10 @@ import whiteBalance.tools.WhiteBalance;
  * @version 08-03-2017
  */
 public class VideoPanel extends JPanel {
-    private final GUIController controller;
+    private final Controller controller;
     protected BufferedImage imageRaw = null;
     
-    public VideoPanel(GUIController controller) {
+    public VideoPanel(Controller controller) {
         this.controller = controller;
     }
     
@@ -60,7 +60,7 @@ public class VideoPanel extends JPanel {
             }
             
             //Analyse imageRaw
-            OpenCVUtils.ImageAnalyticsModel imageAnalytics = findAndDrawEllipse(OpenCVUtils.bufferedImageToMat(imageRaw));
+            OpenCVUtils.ImageAnalyticsModel imageAnalytics = findAndDrawEllipse(OpenCVUtils.bufferedImageToMat(imageRaw), controller.hsvHandler.getSettings());
             
             //compute flight
             if(imageAnalytics != null) {

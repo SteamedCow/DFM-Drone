@@ -1,7 +1,7 @@
 package dfmDrone.listeners;
 
 import de.yadrone.base.video.ImageListener;
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 import java.awt.image.BufferedImage;
 
 /**
@@ -11,9 +11,9 @@ import java.awt.image.BufferedImage;
  */
 public class VideoListener implements ImageListener
 {
-    private final GUIController controller;
+    private final Controller controller;
 
-    public VideoListener(GUIController controller) {
+    public VideoListener(Controller controller) {
         this.controller = controller;
     }
     

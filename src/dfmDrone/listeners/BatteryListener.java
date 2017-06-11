@@ -1,6 +1,6 @@
 package dfmDrone.listeners;
 
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 
 /**
  * BatteryListener
@@ -9,9 +9,9 @@ import dfmDrone.gui.GUIController;
  */
 public class BatteryListener implements de.yadrone.base.navdata.BatteryListener
 {
-    private final GUIController controller;
+    private final Controller controller;
 
-    public BatteryListener(GUIController controller) {
+    public BatteryListener(Controller controller) {
         this.controller = controller;
     }
     

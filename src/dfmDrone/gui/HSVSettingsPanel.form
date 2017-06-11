@@ -19,22 +19,9 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jlRange1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlRange2" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jbSave" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jbExit" min="-2" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jlUpper1" min="-2" max="-2" attributes="0"/>
@@ -76,6 +63,11 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel28" linkSize="1" min="-2" pref="49" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="UH2Slider" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Component id="jLabel17" linkSize="1" alignment="0" max="32767" attributes="0"/>
                                                   <Component id="jLabel21" linkSize="1" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
@@ -85,11 +77,6 @@
                                                   <Component id="US2Slider" alignment="0" pref="0" max="32767" attributes="0"/>
                                                   <Component id="UV2Slider" alignment="0" pref="0" max="32767" attributes="0"/>
                                               </Group>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel28" linkSize="1" min="-2" pref="49" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="UH2Slider" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -107,7 +94,7 @@
                                       </Group>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="LV2Slider" alignment="0" pref="164" max="32767" attributes="0"/>
+                                          <Component id="LV2Slider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="LH2Slider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="LS2Slider" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="jpL2" alignment="1" max="32767" attributes="0"/>
@@ -144,6 +131,20 @@
                               </Group>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jlRange1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlRange2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jbSave" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbReset" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="106" max="32767" attributes="0"/>
+                      <Component id="jbDefault" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -260,7 +261,8 @@
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbSave" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbExit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbReset" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbDefault" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -619,14 +621,19 @@
     <Component class="javax.swing.JButton" name="jbSave">
       <Properties>
         <Property name="text" type="java.lang.String" value="Save"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbSaveActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jbExit">
+    <Component class="javax.swing.JButton" name="jbReset">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancel"/>
+        <Property name="text" type="java.lang.String" value="Reset"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbResetActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jpL1">
 
@@ -688,5 +695,13 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.JButton" name="jbDefault">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Default"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbDefaultActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

@@ -4,11 +4,9 @@ import com.google.zxing.Result;
 import dfmDrone.ai.CommandQueue.Command;
 import dfmDrone.data.Config;
 import dfmDrone.data.PropertyHandler.PropertyLabel;
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 import dfmDrone.utils.OpenCVUtils;
 import dfmDrone.utils.OpenCVUtils.ImageAnalyticsModel;
-import java.awt.Dimension;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import navigation.tools.DistanceMeaure;
@@ -20,12 +18,12 @@ import navigation.tools.DistanceMeaure;
  */
 public class AILogic
 {
-    private final GUIController controller;
+    private final Controller controller;
     private final CommandQueue cmdQ;
     private double OldRatio = -1;
     private boolean movedRight;
 
-    public AILogic(GUIController controller, CommandQueue cmdQ) {
+    public AILogic(Controller controller, CommandQueue cmdQ) {
         this.controller = controller;
         this.cmdQ = cmdQ;
     }

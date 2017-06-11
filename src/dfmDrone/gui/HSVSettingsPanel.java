@@ -1,8 +1,10 @@
 package dfmDrone.gui;
 
-import dfmDrone.data.DummyData;
+import dfmDrone.data.HSVHandler;
+import dfmDrone.data.HSVHandler.HSVSetting;
 import dfmDrone.utils.OpenCVUtils;
 import java.awt.Color;
+import org.opencv.core.Scalar;
 
 /**
  * HSVSettingsPanel
@@ -11,36 +13,50 @@ import java.awt.Color;
  */
 public class HSVSettingsPanel extends javax.swing.JPanel
 {
-    public HSVSettingsPanel() {
+    private final HSVHandler hsvHandler;
+    private final HSVSetting hsvSettingTmp;
+    
+    public HSVSettingsPanel(HSVHandler hsvHandler) {
         initComponents();
+        this.hsvHandler = hsvHandler;
+        hsvSettingTmp = hsvHandler.getSettings();
         
-        LH1Slider.setValue(DummyData.lowerB1H);
-        LH1Value.setText("" + DummyData.lowerB1H);
-        LS1Slider.setValue(DummyData.lowerB1S);
-        LS1Value.setText("" + DummyData.lowerB1S);
-        LV1Slider.setValue(DummyData.lowerB1V);
-        LV1Value.setText("" + DummyData.lowerB1V);
+        updateValues(hsvSettingTmp);
+    }
+    
+    private void updateValues(HSVSetting settings) {
+        Scalar r1Lower = settings.getR1Lower();
+        Scalar r1Upper = settings.getR1Upper();
+        Scalar r2Lower = settings.getR2Lower();
+        Scalar r2Upper = settings.getR2Upper();
         
-        UH1Slider.setValue(DummyData.upperB1H);
-        UH1Value.setText("" + DummyData.upperB1H);
-        US1Slider.setValue(DummyData.upperB1S);
-        US1Value.setText("" + DummyData.upperB1S);
-        UV1Slider.setValue(DummyData.upperB1V);
-        UV1Value.setText("" + DummyData.upperB1V);
+        LH1Slider.setValue((int) r1Lower.val[0]);
+        LH1Value.setText("" + (int) r1Lower.val[0]);
+        LS1Slider.setValue((int) r1Lower.val[1]);
+        LS1Value.setText("" + (int) r1Lower.val[1]);
+        LV1Slider.setValue((int) r1Lower.val[2]);
+        LV1Value.setText("" + (int) r1Lower.val[2]);
         
-        LH2Slider.setValue(DummyData.lowerB2H);
-        LH2Value.setText("" + DummyData.lowerB2H);
-        LS2Slider.setValue(DummyData.lowerB2S);
-        LS2Value.setText("" + DummyData.lowerB2S);
-        LV2Slider.setValue(DummyData.lowerB2V);
-        LV2Value.setText("" + DummyData.lowerB2V);
+        UH1Slider.setValue((int) r1Upper.val[0]);
+        UH1Value.setText("" + (int) r1Upper.val[0]);
+        US1Slider.setValue((int) r1Upper.val[1]);
+        US1Value.setText("" + (int) r1Upper.val[1]);
+        UV1Slider.setValue((int) r1Upper.val[2]);
+        UV1Value.setText("" + (int) r1Upper.val[2]);
         
-        UH2Slider.setValue(DummyData.upperB2H);
-        UH2Value.setText("" + DummyData.upperB2H);
-        US2Slider.setValue(DummyData.upperB2S);
-        US2Value.setText("" + DummyData.upperB2S);
-        UV2Slider.setValue(DummyData.upperB2V);
-        UV2Value.setText("" + DummyData.upperB2V);
+        LH2Slider.setValue((int) r2Lower.val[0]);
+        LH2Value.setText("" + (int) r2Lower.val[0]);
+        LS2Slider.setValue((int) r2Lower.val[1]);
+        LS2Value.setText("" + (int) r2Lower.val[1]);
+        LV2Slider.setValue((int) r2Lower.val[2]);
+        LV2Value.setText("" + (int) r2Lower.val[2]);
+        
+        UH2Slider.setValue((int) r2Upper.val[0]);
+        UH2Value.setText("" + (int) r2Upper.val[0]);
+        US2Slider.setValue((int) r2Upper.val[1]);
+        US2Value.setText("" + (int) r2Upper.val[1]);
+        UV2Slider.setValue((int) r2Upper.val[2]);
+        UV2Value.setText("" + (int) r2Upper.val[2]);
         
         updateColorL1();
         updateColorU1();
@@ -95,11 +111,12 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         LS2Value = new javax.swing.JLabel();
         UH2Value = new javax.swing.JLabel();
         jbSave = new javax.swing.JButton();
-        jbExit = new javax.swing.JButton();
+        jbReset = new javax.swing.JButton();
         jpL1 = new javax.swing.JPanel();
         jpU1 = new javax.swing.JPanel();
         jpL2 = new javax.swing.JPanel();
         jpU2 = new javax.swing.JPanel();
+        jbDefault = new javax.swing.JButton();
 
         jlRange1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlRange1.setText("Range 1");
@@ -288,10 +305,19 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         UH2Value.setPreferredSize(new java.awt.Dimension(8, 14));
 
         jbSave.setText("Save");
-        jbSave.setEnabled(false);
+        jbSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSaveActionPerformed(evt);
+            }
+        });
 
-        jbExit.setText("Cancel");
-        jbExit.setEnabled(false);
+        jbReset.setText("Reset");
+        jbReset.setEnabled(false);
+        jbReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpL1Layout = new javax.swing.GroupLayout(jpL1);
         jpL1.setLayout(jpL1Layout);
@@ -337,6 +363,13 @@ public class HSVSettingsPanel extends javax.swing.JPanel
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jbDefault.setText("Default");
+        jbDefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDefaultActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,18 +378,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlRange1)
-                            .addComponent(jlRange2))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jbSave)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbExit))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jlUpper1)
@@ -389,17 +412,17 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(UH2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                            .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(US2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                                    .addComponent(UV2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(UH2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                                    .addComponent(UV2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(UH2Value, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -412,7 +435,7 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(LV2Slider, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                            .addComponent(LV2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                             .addComponent(LH2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                             .addComponent(LS2Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                             .addComponent(jpL2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -438,7 +461,18 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(LS1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(LV1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(LH1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                            .addComponent(LH1Value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlRange1)
+                            .addComponent(jlRange2))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbReset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                        .addComponent(jbDefault)))
                 .addContainerGap())
         );
 
@@ -536,82 +570,109 @@ public class HSVSettingsPanel extends javax.swing.JPanel
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSave)
-                    .addComponent(jbExit))
+                    .addComponent(jbReset)
+                    .addComponent(jbDefault))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void LH1SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LH1SliderStateChanged
         LH1Value.setText("" + LH1Slider.getValue());
-        DummyData.lowerB1H = LH1Slider.getValue();
+        double[] oldValue = hsvHandler.getRange1Lower().val;
+        hsvHandler.updateRange1Lower(new Scalar(LH1Slider.getValue(), oldValue[1], oldValue[2]));
         updateColorL1();
     }//GEN-LAST:event_LH1SliderStateChanged
 
     private void LS1SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LS1SliderStateChanged
         LS1Value.setText("" + LS1Slider.getValue());
-        DummyData.lowerB1S = LS1Slider.getValue();
+        double[] oldValue = hsvHandler.getRange1Lower().val;
+        hsvHandler.updateRange1Lower(new Scalar(oldValue[0], LS1Slider.getValue(), oldValue[2]));
         updateColorL1();
     }//GEN-LAST:event_LS1SliderStateChanged
 
     private void LV1SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LV1SliderStateChanged
         LV1Value.setText("" + LV1Slider.getValue());
-        DummyData.lowerB1V = LV1Slider.getValue();
+        double[] oldValue = hsvHandler.getRange1Lower().val;
+        hsvHandler.updateRange1Lower(new Scalar(oldValue[0], oldValue[1], LV1Slider.getValue()));
         updateColorL1();
     }//GEN-LAST:event_LV1SliderStateChanged
 
     private void UH1SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_UH1SliderStateChanged
         UH1Value.setText("" + UH1Slider.getValue());
-        DummyData.upperB1H = UH1Slider.getValue();
+        double[] oldValue = hsvHandler.getRange1Upper().val;
+        hsvHandler.updateRange1Upper(new Scalar(UH1Slider.getValue(), oldValue[1], oldValue[2]));
         updateColorU1();
     }//GEN-LAST:event_UH1SliderStateChanged
 
     private void US1SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_US1SliderStateChanged
         US1Value.setText("" + US1Slider.getValue());
-        DummyData.upperB1S = US1Slider.getValue();
+        double[] oldValue = hsvHandler.getRange1Upper().val;
+        hsvHandler.updateRange1Upper(new Scalar(oldValue[0], US1Slider.getValue(), oldValue[2]));
         updateColorU1();
     }//GEN-LAST:event_US1SliderStateChanged
 
     private void UV1SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_UV1SliderStateChanged
         UV1Value.setText("" + UV1Slider.getValue());
-        DummyData.upperB1V = UV1Slider.getValue();
+        double[] oldValue = hsvHandler.getRange1Upper().val;
+        hsvHandler.updateRange1Upper(new Scalar(oldValue[0], oldValue[1], UV1Slider.getValue()));
         updateColorU1();
     }//GEN-LAST:event_UV1SliderStateChanged
 
     private void LS2SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LS2SliderStateChanged
         LS2Value.setText("" + LS2Slider.getValue());
-        DummyData.lowerB2S = LS2Slider.getValue();
+        double[] oldValue = hsvHandler.getRange2Lower().val;
+        hsvHandler.updateRange2Lower(new Scalar(oldValue[0], LS2Slider.getValue(), oldValue[2]));
         updateColorL2();
     }//GEN-LAST:event_LS2SliderStateChanged
 
     private void LV2SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LV2SliderStateChanged
         LV2Value.setText("" + LV2Slider.getValue());
-        DummyData.lowerB2V = LV2Slider.getValue();
+        double[] oldValue = hsvHandler.getRange2Lower().val;
+        hsvHandler.updateRange2Lower(new Scalar(oldValue[0], oldValue[1], LV2Slider.getValue()));
         updateColorL2();
     }//GEN-LAST:event_LV2SliderStateChanged
 
     private void UH2SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_UH2SliderStateChanged
         UH2Value.setText("" + UH2Slider.getValue());
-        DummyData.upperB2H = UH2Slider.getValue();
+        double[] oldValue = hsvHandler.getRange2Upper().val;
+        hsvHandler.updateRange1Lower(new Scalar(UH2Slider.getValue(), oldValue[1], oldValue[2]));
         updateColorU2();
     }//GEN-LAST:event_UH2SliderStateChanged
 
     private void US2SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_US2SliderStateChanged
         US2Value.setText("" + US2Slider.getValue());
-        DummyData.upperB2S = US2Slider.getValue();
+        double[] oldValue = hsvHandler.getRange2Upper().val;
+        hsvHandler.updateRange2Upper(new Scalar(oldValue[0], US2Slider.getValue(), oldValue[2]));
         updateColorU2();
     }//GEN-LAST:event_US2SliderStateChanged
 
     private void UV2SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_UV2SliderStateChanged
         UV2Value.setText("" + UV2Slider.getValue());
-        DummyData.upperB2V = UV2Slider.getValue();
+        double[] oldValue = hsvHandler.getRange2Upper().val;
+        hsvHandler.updateRange2Upper(new Scalar(oldValue[0], oldValue[1], UV2Slider.getValue()));
         updateColorU2();
     }//GEN-LAST:event_UV2SliderStateChanged
 
     private void LH2SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LH2SliderStateChanged
         LH2Value.setText("" + LH2Slider.getValue());
-        DummyData.lowerB2H = LH2Slider.getValue();
+        double[] oldValue = hsvHandler.getRange2Lower().val;
+        hsvHandler.updateRange2Lower(new Scalar(LH2Slider.getValue(), oldValue[1], oldValue[2]));
         updateColorL2();
     }//GEN-LAST:event_LH2SliderStateChanged
+
+    private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSaveActionPerformed
+        hsvHandler.save();
+    }//GEN-LAST:event_jbSaveActionPerformed
+
+    private void jbResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetActionPerformed
+        hsvHandler.updateSettings(hsvSettingTmp);
+        updateValues(hsvHandler.getSettings());
+    }//GEN-LAST:event_jbResetActionPerformed
+
+    private void jbDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDefaultActionPerformed
+        hsvHandler.resetToDefault();
+        updateValues(hsvHandler.getSettings());
+    }//GEN-LAST:event_jbDefaultActionPerformed
 
     private void updateColorL1() {
         double[] rgb = OpenCVUtils.hsvToRGB(LH1Slider.getValue(), LS1Slider.getValue(), LV1Slider.getValue());
@@ -670,7 +731,8 @@ public class HSVSettingsPanel extends javax.swing.JPanel
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JButton jbExit;
+    private javax.swing.JButton jbDefault;
+    private javax.swing.JButton jbReset;
     private javax.swing.JButton jbSave;
     private javax.swing.JLabel jlLower1;
     private javax.swing.JLabel jlLower2;

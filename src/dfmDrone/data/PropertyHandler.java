@@ -24,8 +24,8 @@ public class PropertyHandler
         if(createIfMissing) {
             try {
                 loadProperties();
-            } catch (IOException e1) {
-                DFMLogger.logger.log(Level.WARNING, "Property file not found \"{0}\". Creating property file with default values: {1}", new String[]{filepath, e1.getMessage()});
+            } catch (IOException e) {
+                DFMLogger.logger.log(Level.WARNING, "Property file not found \"{0}\". Creating property file with default values: {1}", new String[]{filepath, e.getMessage()});
                 try {
                     saveProperties(Config.DEFAULT_DRONE_IP, Config.DEFAULT_MAX_ALTITUDE, Config.DEFAULT_MIN_ALTITUDE, Config.DEFAULT_VIDEO_FRAMERATE, Config.DEFAULT_OUTDOOR, Config.DEFAULT_HULL, Config.DEFAULT_PORTAL_HEIGHT, Config.DEFAULT_CAMERA_CONSTANT, Config.DEFAULT_LOGGER_LEVEL);
                 } catch (IOException e2) {
@@ -33,6 +33,12 @@ public class PropertyHandler
                 }
             }
         }
+        else
+            try {
+                loadProperties();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
     
     /**

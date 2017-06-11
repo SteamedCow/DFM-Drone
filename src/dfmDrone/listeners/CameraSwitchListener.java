@@ -1,7 +1,7 @@
 package dfmDrone.listeners;
 
 import de.yadrone.base.command.VideoChannel;
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,9 +12,9 @@ import java.awt.event.MouseEvent;
  */
 public class CameraSwitchListener extends MouseAdapter
 {
-//    private final GUIController controller;
+//    private final Controller controller;
 
-    public CameraSwitchListener(GUIController controller) {
+    public CameraSwitchListener(Controller controller) {
 //        this.controller = controller;
     }
     

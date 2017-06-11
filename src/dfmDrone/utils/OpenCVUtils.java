@@ -9,7 +9,7 @@ import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import dfmDrone.data.Data;
-import dfmDrone.data.DummyData;
+import dfmDrone.data.HSVHandler;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -70,7 +70,7 @@ public class OpenCVUtils
         return result;
     }
     
-    public synchronized static ImageAnalyticsModel findAndDrawEllipse(Mat sourceImg) {
+    public synchronized static ImageAnalyticsModel findAndDrawEllipse(Mat sourceImg, HSVHandler.HSVSetting hsvSettings) {
         Rect rect = null;
         Mat hsvImg = new Mat();
         Imgproc.cvtColor(sourceImg, hsvImg, Imgproc.COLOR_BGR2HSV);
@@ -78,10 +78,8 @@ public class OpenCVUtils
         Mat upper_hue_range = new Mat();
 //        Core.inRange(hsvImg, new Scalar(0, 100, 45), new Scalar(15, 255, 255), lower_hue_range);
 //        Core.inRange(hsvImg, new Scalar(160, 100, 45), new Scalar(180, 255, 255), upper_hue_range);
-        Core.inRange(hsvImg, new Scalar(DummyData.lowerB1H, DummyData.lowerB1S, DummyData.lowerB1V),
-                new Scalar(DummyData.upperB1H, DummyData.upperB1S, DummyData.upperB1V), lower_hue_range);
-        Core.inRange(hsvImg, new Scalar(DummyData.lowerB2H, DummyData.lowerB2S, DummyData.lowerB2V),
-                new Scalar(DummyData.upperB2H, DummyData.upperB2S, DummyData.upperB2V), upper_hue_range);
+        Core.inRange(hsvImg, hsvSettings.getR1Lower(), hsvSettings.getR1Upper(), lower_hue_range);
+        Core.inRange(hsvImg, hsvSettings.getR2Lower(), hsvSettings.getR2Upper(), upper_hue_range);
         Mat red_hue_image = new Mat();
         Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
        Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10));

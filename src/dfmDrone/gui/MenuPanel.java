@@ -24,7 +24,7 @@ import whiteBalance.tools.Calibrator;
  */
 public class MenuPanel extends javax.swing.JPanel
 {
-    private final GUIController controller;
+    private final Controller controller;
     protected static Integer[] colorOffset = null;
     
     private final HashMap<InfoLabel, Integer> tableMatrix = new HashMap<>();
@@ -32,7 +32,7 @@ public class MenuPanel extends javax.swing.JPanel
     
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH.mm.ss: ");
     
-    public MenuPanel(GUIController controller) {
+    public MenuPanel(Controller controller) {
         this.controller = controller;
         initComponents();
         initTable();
@@ -85,15 +85,11 @@ public class MenuPanel extends javax.swing.JPanel
         jpUI = new javax.swing.JPanel();
         jbKill = new javax.swing.JButton();
         jbStartStop = new javax.swing.JButton();
-        jbWB = new javax.swing.JButton();
         jspInfTable = new javax.swing.JScrollPane();
         jtInfoTable = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jbSettings = new javax.swing.JButton();
-        jbManual = new javax.swing.JButton();
         jpVideo = new javax.swing.JPanel();
-        jbHSV = new javax.swing.JButton();
         jtbBinary = new javax.swing.JToggleButton();
 
         jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -114,13 +110,6 @@ public class MenuPanel extends javax.swing.JPanel
         jbStartStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbStartStopActionPerformed(evt);
-            }
-        });
-
-        jbWB.setText("White Balance");
-        jbWB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbWBActionPerformed(evt);
             }
         });
 
@@ -166,20 +155,6 @@ public class MenuPanel extends javax.swing.JPanel
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jbSettings.setText("Settings");
-        jbSettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSettingsActionPerformed(evt);
-            }
-        });
-
-        jbManual.setText("Manual");
-        jbManual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbManualActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jpUILayout = new javax.swing.GroupLayout(jpUI);
         jpUI.setLayout(jpUILayout);
         jpUILayout.setHorizontalGroup(
@@ -187,18 +162,13 @@ public class MenuPanel extends javax.swing.JPanel
             .addGroup(jpUILayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                     .addGroup(jpUILayout.createSequentialGroup()
                         .addComponent(jbStartStop)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbKill)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbManual))
-                    .addGroup(jpUILayout.createSequentialGroup()
-                        .addComponent(jbWB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbSettings))
-                    .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jpUILayout.setVerticalGroup(
@@ -207,16 +177,11 @@ public class MenuPanel extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbStartStop)
-                    .addComponent(jbKill)
-                    .addComponent(jbManual))
+                    .addComponent(jbKill))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbWB)
-                    .addComponent(jbSettings))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -232,13 +197,6 @@ public class MenuPanel extends javax.swing.JPanel
             jpVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        jbHSV.setText("Adjust HSV");
-        jbHSV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbHSVActionPerformed(evt);
-            }
-        });
 
         jtbBinary.setText("Binary");
         jtbBinary.addActionListener(new java.awt.event.ActionListener() {
@@ -258,10 +216,8 @@ public class MenuPanel extends javax.swing.JPanel
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(95, 95, 95)
                 .addComponent(jtbBinary)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbHSV)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -270,7 +226,6 @@ public class MenuPanel extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTitle)
-                    .addComponent(jbHSV)
                     .addComponent(jtbBinary))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,41 +275,9 @@ public class MenuPanel extends javax.swing.JPanel
         controller.cmdQ.add(Command.Kill, -1, -1, PushType.Block, PushType.Instant, PushType.IgnoreBlock, PushType.IgnoreBusy);
     }//GEN-LAST:event_jbKillActionPerformed
 
-    /**
-     * <b>OBS: Rediger kun i denne metode hvis form filen også redigeres!</b>
-     */
-    private void jbWBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbWBActionPerformed
-        try {
-            Calibrator calib = new Calibrator(controller.getVideoFrame(), true);
-            colorOffset = calib.calibrate(3, 3, 3);
-        } catch (DetectionException e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jbWBActionPerformed
-
-    private void jbSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSettingsActionPerformed
-        new OptionsPanel(controller);
-    }//GEN-LAST:event_jbSettingsActionPerformed
-
-    private void jbHSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHSVActionPerformed
-        JFrame frame = new JFrame("HSV Settings");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setContentPane(new HSVSettingsPanel());
-        frame.pack();
-        frame.setVisible(true);
-    }//GEN-LAST:event_jbHSVActionPerformed
-
     private void jtbBinaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbBinaryActionPerformed
         Data.SHOW_BINARY = jtbBinary.isSelected();
     }//GEN-LAST:event_jtbBinaryActionPerformed
-
-    private void jbManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbManualActionPerformed
-          JFrame frame = new JFrame("Manual control");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setContentPane(new ManualPanel(controller));
-        frame.pack();
-        frame.setVisible(true);
-    }//GEN-LAST:event_jbManualActionPerformed
     
     protected void updateBusy(Boolean busy) {
         setInfoValue(InfoLabel.Busy, busy.toString());
@@ -409,12 +332,8 @@ public class MenuPanel extends javax.swing.JPanel
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JButton jbHSV;
     private javax.swing.JButton jbKill;
-    private javax.swing.JButton jbManual;
-    private javax.swing.JButton jbSettings;
     private javax.swing.JButton jbStartStop;
-    private javax.swing.JButton jbWB;
     private javax.swing.JLabel jlTitle;
     private javax.swing.JPanel jpUI;
     private javax.swing.JPanel jpVideo;

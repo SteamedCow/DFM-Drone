@@ -8,9 +8,10 @@ import de.yadrone.base.navdata.NavDataManager;
 import de.yadrone.base.video.xuggler.XugglerDecoder;
 import dfmDrone.data.Config;
 import dfmDrone.data.Data;
+import dfmDrone.data.HSVHandler;
 import dfmDrone.data.PropertyHandler;
 import dfmDrone.data.PropertyHandler.PropertyLabel;
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 import dfmDrone.listeners.AttitudeListener;
 import dfmDrone.listeners.ErrorListener;
 import dfmDrone.utils.DFMLogger;
@@ -23,7 +24,7 @@ import java.util.logging.Level;
  */
 public class DFMDrone 
 {
-    public static GUIController guiController;
+    public static Controller guiController;
     
     public static void main(String[] args) {
         DFMLogger.logger.log(Level.INFO, "Booting program");
@@ -31,6 +32,9 @@ public class DFMDrone
         DFMLogger.logger.log(Level.CONFIG, "Load properties");
         PropertyHandler propHandler = new PropertyHandler(Data.PROPERTIES_FILEPATH, true);
         DFMLogger.setLevel(Level.parse(propHandler.get(PropertyLabel.LoggerLevel)));
+        //Load HSV settings
+        DFMLogger.logger.log(Level.CONFIG, "Load hsv settings");
+        HSVHandler hsvHandler = new HSVHandler(Data.HSVSETTINGS_FILEPATH, true);
         
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -64,7 +68,7 @@ public class DFMDrone
             
             //Setup Video Listener and controller
             DFMLogger.logger.log(Level.CONFIG, "Setup Video Listener & controller");
-            guiController = new GUIController(drone, propHandler);
+            guiController = new Controller(drone, propHandler, hsvHandler);
             
             //Setup Attitude Listener
             DFMLogger.logger.log(Level.CONFIG, "Setup Attitude Listener");

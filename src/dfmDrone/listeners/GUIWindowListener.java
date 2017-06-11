@@ -1,6 +1,6 @@
 package dfmDrone.listeners;
 
-import dfmDrone.gui.GUIController;
+import dfmDrone.gui.Controller;
 import dfmDrone.utils.DFMLogger;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -13,9 +13,9 @@ import java.util.logging.Level;
  */
 public class GUIWindowListener extends WindowAdapter
 {
-    private final GUIController controller;
+    private final Controller controller;
 
-    public GUIWindowListener(GUIController controller) {
+    public GUIWindowListener(Controller controller) {
         //Setup GUI Window Listener
         DFMLogger.logger.config("Setup GUI Window Listener");
         this.controller = controller;
