@@ -49,6 +49,7 @@ public class MenuItemListener implements ActionListener
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setContentPane(new ManualPanel(controller));
                 frame.pack();
+                frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 break;
             }
