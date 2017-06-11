@@ -1,1 +1,6 @@
-http://www.iconarchive.com/show/windows-8-icons-by-icons8.14.html
+http://www.iconarchive.com/show/windows-8-icons-by-icons8.1.html
+Artist: Icons8
+Iconset Homepage: http://icons8.com/download-huge-windows8-set
+License: Linkware (Backlink to http://icons8.com required)
+Commercial usage: Allowed
+License URL: http://icons8.com/license/

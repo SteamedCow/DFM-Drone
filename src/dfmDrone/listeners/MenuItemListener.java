@@ -1,12 +1,16 @@
 package dfmDrone.listeners;
 
+import de.yadrone.base.command.VideoChannel;
 import dfmDrone.gui.Controller;
 import dfmDrone.gui.GUIMenuBar;
 import dfmDrone.gui.HSVSettingsPanel;
 import dfmDrone.gui.ManualPanel;
 import dfmDrone.gui.OptionsPanel;
+import dfmDrone.utils.DFMLogger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import whiteBalance.exceptions.DetectionException;
 import whiteBalance.tools.Calibrator;
@@ -53,6 +57,13 @@ public class MenuItemListener implements ActionListener
                 frame.setVisible(true);
                 break;
             }
+            case GUIMenuBar.AC_BCAM: {
+                if(((JCheckBoxMenuItem) evt.getSource()).getState())
+                    controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.HORI);
+                else
+                    controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.VERT);
+                break;
+            }
             case GUIMenuBar.AC_SETTINGS: {
                 new OptionsPanel(controller);
                 break;
@@ -64,6 +75,7 @@ public class MenuItemListener implements ActionListener
                 break;
             }
             default: {
+                DFMLogger.logger.log(Level.WARNING, "Unknown command: {0}", evt.getActionCommand());
                 break;
             }
         }

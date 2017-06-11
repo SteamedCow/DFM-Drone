@@ -1,39 +1,52 @@
 package dfmDrone.gui;
 
 import dfmDrone.listeners.MenuItemListener;
-import java.awt.HeadlessException;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.InputEvent;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 /**
  * GUIMenuBar
  * @author SteamedCow
  * @version 10-06-2017
  */
-public class GUIMenuBar extends MenuBar
+public class GUIMenuBar extends JMenuBar
 {
     public static final String AC_WB = "miacWB";
     public static final String AC_HSV = "miacHSV";
     public static final String AC_SETTINGS = "miacSET";
     public static final String AC_MANUAL = "miacMAN";
+    
+    public static final String AC_BCAM = "miacBCAM";
+    
     public static final String AC_HELP = "miacHELP";
     public static final String AC_ABOUT = "miacABOUT";
     
-    public GUIMenuBar(Controller controller) throws HeadlessException {
+    public GUIMenuBar(Controller controller) {
+        setBackground(Color.LIGHT_GRAY);
         MenuItemListener mil = new MenuItemListener(controller);
+        int defaultShortcutKey = Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask();
         
         //Tools menu
-        Menu tools = new Menu("Tools");
+        JMenu tools = new JMenu("Tools");
         
-        MenuItem miHSV = new MenuItem("Adjust HSV filter", new MenuShortcut(KeyEvent.VK_H, true));
-        MenuItem miWB = new MenuItem("White Balance", new MenuShortcut(KeyEvent.VK_W, true));
-        MenuItem miManual = new MenuItem("Manual Control", new MenuShortcut(KeyEvent.VK_M));
+        JMenuItem miHSV = new JMenuItem("Adjust HSV filter");
+        JMenuItem miWB = new JMenuItem("White Balance");
+        JMenuItem miManual = new JMenuItem("Manual Control");
+        
+        miHSV.setAccelerator(KeyStroke.getKeyStroke('H', defaultShortcutKey));
+        miWB.setAccelerator(KeyStroke.getKeyStroke('W', defaultShortcutKey));
+        miManual.setAccelerator(KeyStroke.getKeyStroke('M', defaultShortcutKey));
+        
         miHSV.setActionCommand(AC_HSV);
         miWB.setActionCommand(AC_WB);
         miManual.setActionCommand(AC_MANUAL);
+        
         miHSV.addActionListener(mil);
         miWB.addActionListener(mil);
         miManual.addActionListener(mil);
@@ -43,18 +56,33 @@ public class GUIMenuBar extends MenuBar
         tools.addSeparator();
         tools.add(miManual);
         
-        //Help menu
-        Menu help = new Menu("Help");
+        //Options menu
+        JMenu options = new JMenu("Options");
         
-        MenuItem miSettings = new MenuItem("Settings", new MenuShortcut(KeyEvent.VK_S));
-        MenuItem miHelp = new MenuItem("Help", new MenuShortcut(KeyEvent.VK_H));
-        MenuItem miAbout = new MenuItem("About");
+        JCheckBoxMenuItem cbmiBottomCam = new JCheckBoxMenuItem("Bottom camera", false);
+        cbmiBottomCam.setActionCommand(AC_BCAM);
+        cbmiBottomCam.addActionListener(mil);
+        
+        options.add(cbmiBottomCam);
+        
+        //Help menu
+        JMenu help = new JMenu("Help");
+        
+        JMenuItem miSettings = new JMenuItem("Settings");
+        JMenuItem miHelp = new JMenuItem("Help");
+        JMenuItem miAbout = new JMenuItem("About");
+        
+        miSettings.setAccelerator(KeyStroke.getKeyStroke('S', defaultShortcutKey));
+        miHelp.setAccelerator(KeyStroke.getKeyStroke('H', InputEvent.ALT_DOWN_MASK));
+        
         miSettings.setActionCommand(AC_SETTINGS);
         miHelp.setActionCommand(AC_HELP);
         miAbout.setActionCommand(AC_ABOUT);
+        
         miSettings.addActionListener(mil);
         miHelp.addActionListener(mil);
         miAbout.addActionListener(mil);
+        
         miHelp.setEnabled(false);
         miAbout.setEnabled(false);
         
@@ -65,6 +93,7 @@ public class GUIMenuBar extends MenuBar
         
         //Menu
         add(tools);
-        setHelpMenu(help);
+        add(options);
+        add(help);
     }
 }

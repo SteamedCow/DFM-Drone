@@ -23,9 +23,9 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jlTitle" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
-              <Component id="jtbBinary" min="-2" max="-2" attributes="0"/>
+              <Component id="jlTitle" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jlBattery" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -33,17 +33,17 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jtbBinary" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlTitle" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jlBattery" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jpVideo" max="32767" attributes="0"/>
-                  <Component id="jspUI" pref="426" max="32767" attributes="0"/>
+                  <Component id="jspUI" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -83,7 +83,8 @@
                               <Component id="jbStartStop" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jbKill" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jtbBinary" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -97,6 +98,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jbStartStop" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbKill" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jtbBinary" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jspInfTable" min="-2" pref="159" max="-2" attributes="0"/>
@@ -186,6 +188,14 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JToggleButton" name="jtbBinary">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Binary"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtbBinaryActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
@@ -205,13 +215,12 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JToggleButton" name="jtbBinary">
+    <Component class="javax.swing.JLabel" name="jlBattery">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Binary"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/dfmDrone/gui/symbols/battery_unknown_24.png"/>
+        </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtbBinaryActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

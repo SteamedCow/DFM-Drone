@@ -9,12 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultCaret;
-import whiteBalance.exceptions.DetectionException;
-import whiteBalance.tools.Calibrator;
 
 /**
  * MenuPanel
@@ -31,6 +29,7 @@ public class MenuPanel extends javax.swing.JPanel
     private DefaultTableModel jtModel;
     
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH.mm.ss: ");
+    private int battState = -1;
     
     public MenuPanel(Controller controller) {
         this.controller = controller;
@@ -89,8 +88,9 @@ public class MenuPanel extends javax.swing.JPanel
         jtInfoTable = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jpVideo = new javax.swing.JPanel();
         jtbBinary = new javax.swing.JToggleButton();
+        jpVideo = new javax.swing.JPanel();
+        jlBattery = new javax.swing.JLabel();
 
         jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlTitle.setText("Don Frankos zzKillerDronezz");
@@ -155,6 +155,13 @@ public class MenuPanel extends javax.swing.JPanel
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jtbBinary.setText("Binary");
+        jtbBinary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtbBinaryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpUILayout = new javax.swing.GroupLayout(jpUI);
         jpUI.setLayout(jpUILayout);
         jpUILayout.setHorizontalGroup(
@@ -168,7 +175,8 @@ public class MenuPanel extends javax.swing.JPanel
                         .addComponent(jbStartStop)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbKill)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jtbBinary)))
                 .addContainerGap())
         );
         jpUILayout.setVerticalGroup(
@@ -177,7 +185,8 @@ public class MenuPanel extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(jpUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbStartStop)
-                    .addComponent(jbKill))
+                    .addComponent(jbKill)
+                    .addComponent(jtbBinary))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jspInfTable, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -198,12 +207,7 @@ public class MenuPanel extends javax.swing.JPanel
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jtbBinary.setText("Binary");
-        jtbBinary.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtbBinaryActionPerformed(evt);
-            }
-        });
+        jlBattery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_unknown_24.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -215,9 +219,9 @@ public class MenuPanel extends javax.swing.JPanel
                 .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(95, 95, 95)
-                .addComponent(jtbBinary)
+                .addComponent(jlTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlBattery)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -225,12 +229,12 @@ public class MenuPanel extends javax.swing.JPanel
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlTitle)
-                    .addComponent(jtbBinary))
+                    .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlBattery, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jspUI, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
+                    .addComponent(jspUI))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -285,6 +289,31 @@ public class MenuPanel extends javax.swing.JPanel
     
     protected void updateBatteryDisplay(int batteryLevel) {
         setInfoValue(InfoLabel.Battery, batteryLevel + "%");
+        
+        if(batteryLevel > 90 && battState != 6) {
+            battState = 6;
+            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_100_24.png")));
+        }
+        else if(batteryLevel > 80 && battState != 5) {
+            battState = 5;
+            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_80_24.png")));
+        }
+        else if(batteryLevel > 60 && battState != 4) {
+            battState = 4;
+            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_60_24.png")));
+        }
+        else if(batteryLevel > 40 && battState != 3) {
+            battState = 3;
+            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_40_24.png")));
+        }
+        else if(batteryLevel > 20 && battState != 2) {
+            battState = 2;
+            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_20_24.png")));
+        }
+        else if(batteryLevel <= 20 && battState != 1) {
+            battState = 1;
+            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_0_24.png")));
+        }
     }
     
     protected void updateDistanceDisplay(double distance) {
@@ -334,6 +363,7 @@ public class MenuPanel extends javax.swing.JPanel
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbKill;
     private javax.swing.JButton jbStartStop;
+    private javax.swing.JLabel jlBattery;
     private javax.swing.JLabel jlTitle;
     private javax.swing.JPanel jpUI;
     private javax.swing.JPanel jpVideo;

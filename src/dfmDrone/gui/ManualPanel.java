@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dfmDrone.gui;
 
 import dfmDrone.ai.CommandQueue;
+import java.awt.event.KeyEvent;
 
 /**
- *
  * @author Mathias & Frank
  */
 public class ManualPanel extends javax.swing.JPanel
@@ -23,6 +18,7 @@ public class ManualPanel extends javax.swing.JPanel
         this.controller = controller;
         
         initComponents();
+        this.setFocusable(true);
     }
     
     /**
@@ -42,6 +38,12 @@ public class ManualPanel extends javax.swing.JPanel
         rotateR = new javax.swing.JButton();
         Forward = new javax.swing.JButton();
         Reverse = new javax.swing.JButton();
+
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         Up.setText("Up");
         Up.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +185,35 @@ public class ManualPanel extends javax.swing.JPanel
     private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
         controller.cmdQ.add(CommandQueue.Command.MoveRight, 15, 250, CommandQueue.PushType.Instant);
     }//GEN-LAST:event_RightActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        switch(evt.getKeyCode()) {
+            case KeyEvent.VK_W: { //Forward
+                ForwardActionPerformed(null); break;
+            }
+            case KeyEvent.VK_S: { //Back
+                ReverseActionPerformed(null); break;
+            }
+            case KeyEvent.VK_A: { //Left
+                LeftActionPerformed(null); break;
+            }
+            case KeyEvent.VK_D: { //Right
+                RightActionPerformed(null); break;
+            }
+            case KeyEvent.VK_Q: { //Rotate Left
+                rotateLActionPerformed(null); break;
+            }
+            case KeyEvent.VK_E: { //Rotate Right
+                rotateRActionPerformed(null); break;
+            }
+            case KeyEvent.VK_CONTROL: { //Down
+                DownActionPerformed(null); break;
+            }
+            case KeyEvent.VK_SPACE: { //Up
+                UpActionPerformed(null); break;
+            }
+        }
+    }//GEN-LAST:event_formKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Down;
