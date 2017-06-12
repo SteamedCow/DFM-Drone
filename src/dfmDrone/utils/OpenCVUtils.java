@@ -109,7 +109,7 @@ public class OpenCVUtils
             if (contour.toArray().length > 5) {
                 rotatedrect = Imgproc.fitEllipse(new MatOfPoint2f(contour.toArray()));
                 aspect = rotatedrect.boundingRect().height / rotatedrect.boundingRect().width;
-                if (aspect > 0.9 && aspect < 1.8 && rotatedrect.boundingRect().area() > 20000 &&rotatedrect.boundingRect().area()<300000) {
+                if (aspect > 0.8 && aspect < 1.9 && rotatedrect.boundingRect().area() > 15000 &&rotatedrect.boundingRect().area()<500000) {
                     if (rotatedrectbest == null) {
                         rotatedrectbest = rotatedrect;
                         contour2fbest = new MatOfPoint2f(contour.toArray());

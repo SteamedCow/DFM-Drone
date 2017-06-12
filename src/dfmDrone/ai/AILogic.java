@@ -44,8 +44,8 @@ public class AILogic
                         if(centerHorizontal(imageAnalytics.rect.height, imageAnalytics.rect.width, imageAnalytics.sourceImg.width())) {
                             if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                             controller.updateLogDisplay("-CENTERED-");
-                            if(distance>= 1500){
-                                cmdQ.add(Command.Forward, 300,400) ;
+                            if(distance>= 2200){
+                                cmdQ.add(Command.Forward, 15,500) ;
                             }
                             else {
                                 cmdQ.add(Command.Forward, 500, (int) distance / 500 * 1000/2, CommandQueue.PushType.IgnoreBusy, CommandQueue.PushType.Block);
@@ -56,14 +56,14 @@ public class AILogic
                 }
             }
             else { //If no portal found
-                if(!scan) {
-                    controller.updateLogDisplay("Scanning");
-                    scan = true;
-                    cmdQ.add(Command.SpinLeft, 15, 500);
-                }
-                else {
-                    cmdQ.add(Command.SpinLeft, 7, 300);
-                }
+//                if(!scan) {
+//                    controller.updateLogDisplay("Scanning");
+//                    scan = true;
+//                    cmdQ.add(Command.SpinLeft, 15, 500);
+//                }
+//                else {
+//                    cmdQ.add(Command.SpinLeft, 7, 300);
+//                }
             }
             
             //QR Scan
@@ -136,10 +136,10 @@ public class AILogic
         
         if(objCenterX - centerWidth > 50 || objCenterX - centerWidth < -50) {
             if(objCenterX < centerWidth) {
-                cmdQ.add(Command.SpinLeft, 7, 300);
+                cmdQ.add(Command.SpinLeft, 8, 300);
             }
             else {
-                cmdQ.add(Command.SpinRight, 7, 300);
+                cmdQ.add(Command.SpinRight, 9, 300);
             }
             return false;
         }
