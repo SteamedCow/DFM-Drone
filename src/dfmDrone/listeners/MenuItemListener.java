@@ -23,9 +23,11 @@ import whiteBalance.tools.Calibrator;
 public class MenuItemListener implements ActionListener
 {
     private final Controller controller;
+    private final HSVSettingsPanel hsvPanel;
 
     public MenuItemListener(Controller controller) {
         this.controller = controller;
+        this.hsvPanel = new HSVSettingsPanel(controller.hsvHandler);;
     }
     
     @Override
@@ -34,7 +36,8 @@ public class MenuItemListener implements ActionListener
             case GUIMenuBar.AC_HSV: {
                 JFrame frame = new JFrame("HSV Settings");
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setContentPane(new HSVSettingsPanel(controller.hsvHandler));
+                frame.setContentPane(hsvPanel);
+                hsvPanel.updateTemp(hsvPanel.getHSVSettings());
                 frame.pack();
                 frame.setVisible(true);
                 break;

@@ -14,14 +14,21 @@ import org.opencv.core.Scalar;
 public class HSVSettingsPanel extends javax.swing.JPanel
 {
     private final HSVHandler hsvHandler;
-    private final HSVSetting hsvSettingTmp;
+    private HSVSetting hsvSettingTmp;
     
     public HSVSettingsPanel(HSVHandler hsvHandler) {
         initComponents();
         this.hsvHandler = hsvHandler;
-        hsvSettingTmp = hsvHandler.getSettings();
         
-        updateValues(hsvSettingTmp);
+        updateValues(hsvHandler.getSettings());
+    }
+    
+    public HSVSetting getHSVSettings() {
+        return hsvHandler.getSettings();
+    }
+    
+    public void updateTemp(HSVSetting tempSet) {
+        this.hsvSettingTmp = tempSet;
     }
     
     private void updateValues(HSVSetting settings) {
@@ -666,7 +673,7 @@ public class HSVSettingsPanel extends javax.swing.JPanel
 
     private void jbResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetActionPerformed
         hsvHandler.updateSettings(hsvSettingTmp);
-        updateValues(hsvHandler.getSettings());
+        updateValues(hsvSettingTmp);
     }//GEN-LAST:event_jbResetActionPerformed
 
     private void jbDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDefaultActionPerformed

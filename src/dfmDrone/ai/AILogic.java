@@ -22,6 +22,7 @@ public class AILogic
     private final CommandQueue cmdQ;
     private double OldRatio = -1;
     private boolean movedRight;
+    private boolean scan = false;
 
 
     public AILogic(Controller controller, CommandQueue cmdQ) {
@@ -33,6 +34,7 @@ public class AILogic
 //        if(controller.cmdQ.isDroneFlying()) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
+                scan = false;
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.PORTAL_HEIGHT, Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
                 System.out.println("sourceImg.height(): "+imageAnalytics.sourceImg.height() +", sourceImg.width: " +imageAnalytics.sourceImg.width()+", rect.height: "+imageAnalytics.rect.height + ",portal height: "+ Config.PORTAL_HEIGHT+" Camera Constant: "+Double.parseDouble((controller.getProperty((PropertyLabel.CameraConstant)))));
                 controller.updateDistanceDisplay(distance);
@@ -51,6 +53,16 @@ public class AILogic
                             }
                         }
                     }
+                }
+            }
+            else { //If no portal found
+                if(!scan) {
+                    controller.updateLogDisplay("Scanning");
+                    scan = true;
+                    cmdQ.add(Command.SpinLeft, 15, 500);
+                }
+                else {
+                    cmdQ.add(Command.SpinLeft, 7, 300);
                 }
             }
             
