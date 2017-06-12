@@ -37,8 +37,8 @@
                       <Component id="Forward" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Down" linkSize="1" pref="73" max="32767" attributes="0"/>
                           <Component id="rotateR" linkSize="1" max="32767" attributes="0"/>
+                          <Component id="Down" linkSize="1" min="-2" pref="83" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
