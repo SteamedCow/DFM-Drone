@@ -46,6 +46,7 @@ public class ManualPanel extends javax.swing.JPanel
         });
 
         Up.setText("Up");
+        Up.setFocusable(false);
         Up.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UpActionPerformed(evt);
@@ -54,6 +55,7 @@ public class ManualPanel extends javax.swing.JPanel
 
         Left.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/left_24.png"))); // NOI18N
         Left.setActionCommand("left");
+        Left.setFocusable(false);
         Left.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LeftActionPerformed(evt);
@@ -62,6 +64,7 @@ public class ManualPanel extends javax.swing.JPanel
 
         Down.setText("Down");
         Down.setActionCommand("down");
+        Down.setFocusable(false);
         Down.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DownActionPerformed(evt);
@@ -69,6 +72,7 @@ public class ManualPanel extends javax.swing.JPanel
         });
 
         Right.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/right_24.png"))); // NOI18N
+        Right.setFocusable(false);
         Right.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RightActionPerformed(evt);
@@ -76,6 +80,7 @@ public class ManualPanel extends javax.swing.JPanel
         });
 
         rotateL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/rotate_left_24.png"))); // NOI18N
+        rotateL.setFocusable(false);
         rotateL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rotateLActionPerformed(evt);
@@ -83,6 +88,7 @@ public class ManualPanel extends javax.swing.JPanel
         });
 
         rotateR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/rotate_right_24.png"))); // NOI18N
+        rotateR.setFocusable(false);
         rotateR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rotateRActionPerformed(evt);
@@ -90,6 +96,7 @@ public class ManualPanel extends javax.swing.JPanel
         });
 
         Forward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/up_24.png"))); // NOI18N
+        Forward.setFocusable(false);
         Forward.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ForwardActionPerformed(evt);
@@ -97,6 +104,7 @@ public class ManualPanel extends javax.swing.JPanel
         });
 
         Reverse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/down_24.png"))); // NOI18N
+        Reverse.setFocusable(false);
         Reverse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ReverseActionPerformed(evt);
