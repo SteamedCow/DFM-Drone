@@ -79,7 +79,6 @@ public class MenuPanel extends javax.swing.JPanel
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlTitle = new javax.swing.JLabel();
         jspUI = new javax.swing.JScrollPane();
         jpUI = new javax.swing.JPanel();
         jbKill = new javax.swing.JButton();
@@ -90,10 +89,9 @@ public class MenuPanel extends javax.swing.JPanel
         jTextArea1 = new javax.swing.JTextArea();
         jtbBinary = new javax.swing.JToggleButton();
         jpVideo = new javax.swing.JPanel();
+        jpBanner = new javax.swing.JPanel();
+        jlTitle = new javax.swing.JLabel();
         jlBattery = new javax.swing.JLabel();
-
-        jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jlTitle.setText("Don Frankos zzKillerDronezz");
 
         jspUI.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jspUI.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -207,7 +205,33 @@ public class MenuPanel extends javax.swing.JPanel
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jpBanner.setBackground(new java.awt.Color(153, 255, 153));
+
+        jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jlTitle.setText("Don Frankos zzKillerDronezz");
+
         jlBattery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_unknown_24.png"))); // NOI18N
+
+        javax.swing.GroupLayout jpBannerLayout = new javax.swing.GroupLayout(jpBanner);
+        jpBanner.setLayout(jpBannerLayout);
+        jpBannerLayout.setHorizontalGroup(
+            jpBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBannerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 484, Short.MAX_VALUE)
+                .addComponent(jlBattery)
+                .addContainerGap())
+        );
+        jpBannerLayout.setVerticalGroup(
+            jpBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBannerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlBattery)
+                    .addComponent(jlTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -217,20 +241,12 @@ public class MenuPanel extends javax.swing.JPanel
                 .addComponent(jspUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlBattery)
-                .addContainerGap())
+            .addComponent(jpBanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlBattery, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jpBanner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jpVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -365,6 +381,7 @@ public class MenuPanel extends javax.swing.JPanel
     private javax.swing.JButton jbStartStop;
     private javax.swing.JLabel jlBattery;
     private javax.swing.JLabel jlTitle;
+    private javax.swing.JPanel jpBanner;
     private javax.swing.JPanel jpUI;
     private javax.swing.JPanel jpVideo;
     private javax.swing.JScrollPane jspInfTable;
