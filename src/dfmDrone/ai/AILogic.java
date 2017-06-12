@@ -23,6 +23,7 @@ public class AILogic
     private double OldRatio = -1;
     private boolean movedRight;
 
+
     public AILogic(Controller controller, CommandQueue cmdQ) {
         this.controller = controller;
         this.cmdQ = cmdQ;
@@ -36,16 +37,17 @@ public class AILogic
                 System.out.println("sourceImg.height(): "+imageAnalytics.sourceImg.height() +", sourceImg.width: " +imageAnalytics.sourceImg.width()+", rect.height: "+imageAnalytics.rect.height + ",portal height: "+ Config.PORTAL_HEIGHT+" Camera Constant: "+Double.parseDouble((controller.getProperty((PropertyLabel.CameraConstant)))));
                 controller.updateDistanceDisplay(distance);
                 
-                if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
+
                     if(rotatePlacement(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width())) {
                         if(centerHorizontal(imageAnalytics.rect.height, imageAnalytics.rect.width, imageAnalytics.sourceImg.width())) {
+                            if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                             controller.updateLogDisplay("-CENTERED-");
-                            if(distance>= 2000){
-                                cmdQ.add(Command.Forward, 300,300) ;
+                            if(distance>= 1500){
+                                cmdQ.add(Command.Forward, 300,400) ;
                             }
                             else {
-                                cmdQ.add(Command.Forward, 500, (int) distance / 500 * 1000/2);
-                                cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block);
+                                cmdQ.add(Command.Forward, 500, (int) distance / 500 * 1000/2, CommandQueue.PushType.IgnoreBusy, CommandQueue.PushType.Block);
+                                cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block, CommandQueue.PushType.IgnoreBlock);
                             }
                         }
                     }
@@ -69,7 +71,7 @@ public class AILogic
     private boolean centerVertical(double objCenterY, double imageHeight) {
         double centerHeight = imageHeight/2;
         
-        if(objCenterY - centerHeight > 0 || objCenterY - centerHeight < -75) {
+        if(objCenterY - centerHeight > 25 || objCenterY - centerHeight < -25) {
             if(objCenterY < centerHeight)
                 cmdQ.add(Command.MoveUp, 10, 500);
             else
