@@ -306,29 +306,41 @@ public class MenuPanel extends javax.swing.JPanel
     protected void updateBatteryDisplay(int batteryLevel) {
         setInfoValue(InfoLabel.Battery, batteryLevel + "%");
         
-        if(batteryLevel > 90 && battState != 6) {
-            battState = 6;
-            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_100_24.png")));
+        if(batteryLevel > 90) {
+            if(battState != 6) {
+                battState = 6;
+                jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_100_24.png")));
+            }
         }
-        else if(batteryLevel > 80 && battState != 5) {
-            battState = 5;
-            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_80_24.png")));
+        else if(batteryLevel > 80) {
+            if(battState != 6) {
+                battState = 5;
+                jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_80_24.png")));
+            }
         }
-        else if(batteryLevel > 60 && battState != 4) {
-            battState = 4;
-            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_60_24.png")));
+        else if(batteryLevel > 60) {
+            if(battState != 6) {
+                battState = 4;
+                jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_60_24.png")));
+            }
         }
-        else if(batteryLevel > 40 && battState != 3) {
-            battState = 3;
-            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_40_24.png")));
+        else if(batteryLevel > 40) {
+            if(battState != 6) {
+                battState = 3;
+                jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_40_24.png")));
+            }
         }
-        else if(batteryLevel > 20 && battState != 2) {
-            battState = 2;
-            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_20_24.png")));
+        else if(batteryLevel > 20) {
+            if(battState != 6) {
+                battState = 2;
+                jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_20_24.png")));
+            }
         }
-        else if(batteryLevel <= 20 && battState != 1) {
-            battState = 1;
-            jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_0_24.png")));
+        else if(batteryLevel <= 20) {
+            if(battState != 6) {
+                battState = 1;
+                jlBattery.setIcon(new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_0_24.png")));
+            }
         }
     }
     
