@@ -1,6 +1,7 @@
 package dfmDrone.listeners;
 
 import de.yadrone.base.command.VideoChannel;
+import dfmDrone.gui.AboutPanel;
 import dfmDrone.gui.Controller;
 import dfmDrone.gui.GUIMenuBar;
 import dfmDrone.gui.HSVSettingsPanel;
@@ -75,6 +76,12 @@ public class MenuItemListener implements ActionListener
                 break;
             }
             case GUIMenuBar.AC_ABOUT: {
+                JFrame frame = new JFrame("About");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(new AboutPanel());
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
                 break;
             }
             default: {
