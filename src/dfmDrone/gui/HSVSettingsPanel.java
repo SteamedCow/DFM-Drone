@@ -4,6 +4,7 @@ import dfmDrone.data.HSVHandler;
 import dfmDrone.data.HSVHandler.HSVSetting;
 import dfmDrone.utils.OpenCVUtils;
 import java.awt.Color;
+import javax.swing.event.ChangeEvent;
 import org.opencv.core.Scalar;
 
 /**
@@ -38,36 +39,35 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         Scalar r2Upper = settings.getR2Upper();
         
         LH1Slider.setValue((int) r1Lower.val[0]);
-        LH1Value.setText("" + (int) r1Lower.val[0]);
         LS1Slider.setValue((int) r1Lower.val[1]);
-        LS1Value.setText("" + (int) r1Lower.val[1]);
         LV1Slider.setValue((int) r1Lower.val[2]);
-        LV1Value.setText("" + (int) r1Lower.val[2]);
+        LH1SliderStateChanged(new ChangeEvent(LH1Slider));
+        LS1SliderStateChanged(new ChangeEvent(LS1Slider));
+        LV1SliderStateChanged(new ChangeEvent(LV1Slider));
+        updateColorL1();
         
         UH1Slider.setValue((int) r1Upper.val[0]);
-        UH1Value.setText("" + (int) r1Upper.val[0]);
         US1Slider.setValue((int) r1Upper.val[1]);
-        US1Value.setText("" + (int) r1Upper.val[1]);
         UV1Slider.setValue((int) r1Upper.val[2]);
-        UV1Value.setText("" + (int) r1Upper.val[2]);
+        UH1SliderStateChanged(new ChangeEvent(UH1Slider));
+        US1SliderStateChanged(new ChangeEvent(US1Slider));
+        UV1SliderStateChanged(new ChangeEvent(UV1Slider));
+        updateColorU1();
         
         LH2Slider.setValue((int) r2Lower.val[0]);
-        LH2Value.setText("" + (int) r2Lower.val[0]);
         LS2Slider.setValue((int) r2Lower.val[1]);
-        LS2Value.setText("" + (int) r2Lower.val[1]);
         LV2Slider.setValue((int) r2Lower.val[2]);
-        LV2Value.setText("" + (int) r2Lower.val[2]);
+        LH2SliderStateChanged(new ChangeEvent(LH2Slider));
+        LS2SliderStateChanged(new ChangeEvent(LS2Slider));
+        LV2SliderStateChanged(new ChangeEvent(LV2Slider));
+        updateColorL2();
         
         UH2Slider.setValue((int) r2Upper.val[0]);
-        UH2Value.setText("" + (int) r2Upper.val[0]);
         US2Slider.setValue((int) r2Upper.val[1]);
-        US2Value.setText("" + (int) r2Upper.val[1]);
         UV2Slider.setValue((int) r2Upper.val[2]);
-        UV2Value.setText("" + (int) r2Upper.val[2]);
-        
-        updateColorL1();
-        updateColorU1();
-        updateColorL2();
+        UH2SliderStateChanged(new ChangeEvent(UH2Slider));
+        US2SliderStateChanged(new ChangeEvent(US2Slider));
+        UV2SliderStateChanged(new ChangeEvent(UV2Slider));
         updateColorU2();
     }
     
