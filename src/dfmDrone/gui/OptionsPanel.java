@@ -39,6 +39,10 @@ public class OptionsPanel extends JFrame
 
     }
 
+    public OptionsPanel(HelpPanel helppanel) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public void jsMaxAltitudeStateChange(ChangeEvent evt) {
         JSlider source = (JSlider) evt.getSource();
         if (!source.getValueIsAdjusting()) {

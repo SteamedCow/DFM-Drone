@@ -83,7 +83,7 @@ public class GUIMenuBar extends JMenuBar
         miHelp.addActionListener(mil);
         miAbout.addActionListener(mil);
         
-        miHelp.setEnabled(false);
+        
         
         help.add(miSettings);
         help.addSeparator();

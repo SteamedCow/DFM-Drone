@@ -5,6 +5,7 @@ import dfmDrone.gui.AboutPanel;
 import dfmDrone.gui.Controller;
 import dfmDrone.gui.GUIMenuBar;
 import dfmDrone.gui.HSVSettingsPanel;
+import dfmDrone.gui.HelpPanel;
 import dfmDrone.gui.ManualPanel;
 import dfmDrone.gui.OptionsPanel;
 import dfmDrone.utils.DFMLogger;
@@ -73,6 +74,12 @@ public class MenuItemListener implements ActionListener
                 break;
             }
             case GUIMenuBar.AC_HELP: {
+                JFrame frame = new JFrame("Help");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setContentPane(new HelpPanel());
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
                 break;
             }
             case GUIMenuBar.AC_ABOUT: {
