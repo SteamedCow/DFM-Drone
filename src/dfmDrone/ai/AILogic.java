@@ -31,7 +31,7 @@ public class AILogic
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-//        if(controller.cmdQ.isDroneFlying()) {
+        if(controller.cmdQ.isDroneFlying()) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 scan = false;
@@ -45,11 +45,11 @@ public class AILogic
                             if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                             controller.updateLogDisplay("-CENTERED-");
                             if(distance>= 2200){
-                                cmdQ.add(Command.Forward, 15,500) ;
+                                cmdQ.add(Command.Forward, 40,500) ;
                             }
                             else {
                                 cmdQ.add(Command.Forward, 500, (int) distance / 500 * 1000/2, CommandQueue.PushType.IgnoreBusy, CommandQueue.PushType.Block);
-                                cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block, CommandQueue.PushType.IgnoreBlock);
+//                                cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block, CommandQueue.PushType.IgnoreBlock);
                             }
                         }
                     }
@@ -70,7 +70,7 @@ public class AILogic
             Result qr = QRScan(controller.getVideoFrame());
             if (qr != null)
                 System.out.println(qr.getText() + ": " + new Date().getSeconds());
-//        }
+        }
     }
     
     private Result QRScan(BufferedImage img) {
@@ -136,10 +136,10 @@ public class AILogic
         
         if(objCenterX - centerWidth > 50 || objCenterX - centerWidth < -50) {
             if(objCenterX < centerWidth) {
-                cmdQ.add(Command.SpinLeft, 8, 300);
+                cmdQ.add(Command.SpinLeft, 14, 300);
             }
             else {
-                cmdQ.add(Command.SpinRight, 9, 300);
+                cmdQ.add(Command.SpinRight, 13, 300);
             }
             return false;
         }

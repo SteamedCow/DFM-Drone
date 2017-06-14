@@ -82,14 +82,18 @@ public class OpenCVUtils
         Core.inRange(hsvImg, hsvSettings.getR2Lower(), hsvSettings.getR2Upper(), upper_hue_range);
         Mat red_hue_image = new Mat();
         Core.addWeighted(lower_hue_range, 1.0, upper_hue_range, 1.0, 0, red_hue_image);
-       Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10));
-        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(6, 6));
-        
-//        Imgproc.blur(red_hue_image, red_hue_image, new Size(9, 9));
-        Imgproc.blur(red_hue_image, red_hue_image, new Size(8, 8), new Point(2, 2));
+//       Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2, 2));
+//        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1, 1));
 
-         Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
-         Imgproc.dilate(red_hue_image, red_hue_image, dilateElement);
+        Mat erodeElement2 = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(4, 4));
+
+       // Imgproc.erode(red_hue_image, red_hue_image, erodeElement);
+//        Imgproc.dilate(red_hue_image, red_hue_image, dilateElement);
+//        Imgproc.blur(red_hue_image, red_hue_image, new Size(35, 35));
+//        Imgproc.blur(red_hue_image, red_hue_image, new Size(5, 5), new Point(2, 2));
+        Imgproc.GaussianBlur(red_hue_image, red_hue_image, new Size(45,45),0);
+        Imgproc.erode(red_hue_image,red_hue_image,erodeElement2);
+
         // init
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
@@ -109,7 +113,7 @@ public class OpenCVUtils
             if (contour.toArray().length > 5) {
                 rotatedrect = Imgproc.fitEllipse(new MatOfPoint2f(contour.toArray()));
                 aspect = rotatedrect.boundingRect().height / rotatedrect.boundingRect().width;
-                if (aspect > 0.8 && aspect < 1.9 && rotatedrect.boundingRect().area() > 15000 &&rotatedrect.boundingRect().area()<500000) {
+                if (aspect > 0.9 && aspect < 1.8 && rotatedrect.boundingRect().area() > 50000 &&rotatedrect.boundingRect().area()<600000) {
                     if (rotatedrectbest == null) {
                         rotatedrectbest = rotatedrect;
                         contour2fbest = new MatOfPoint2f(contour.toArray());
@@ -123,7 +127,8 @@ public class OpenCVUtils
         try {
             if (contour2fbest != null && rotatedrectbest != null) {
                 double approxDistance = Imgproc.arcLength(contour2fbest, true) * 0.02;
-                Imgproc.approxPolyDP(contour2fbest, approxCurve, approxDistance, true);
+                Imgproc.approxPolyDP(contour2fbest, approxCurve, approxDistance+20, true);
+                System.out.println(approxDistance);
                 
                 // Convert back to MatOfPoint
                 MatOfPoint points = new MatOfPoint(approxCurve.toArray());
@@ -134,7 +139,7 @@ public class OpenCVUtils
                 // draw enclosing rectangle (all same color, but you could use
                 // variable i to make them unique)
                 Imgproc.rectangle(sourceImg, rect.tl(), rect.br(), new Scalar(255, 0, 0), 1, 8, 0);
-                Imgproc.ellipse(sourceImg, rotatedrectbest, new Scalar(255, 192, 203), 4, 8);
+                Imgproc.ellipse(sourceImg, rotatedrectbest, new Scalar(255, 100, 155), 1, 8);
             }
         }
         catch (CvException e) {

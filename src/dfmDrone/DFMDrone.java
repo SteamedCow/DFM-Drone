@@ -59,6 +59,7 @@ public class DFMDrone
             //Set Configurations
             DFMLogger.logger.log(Level.CONFIG, "Set Configurations");
             drone.getCommandManager().setOutdoor(Boolean.parseBoolean(propHandler.get(PropertyLabel.Outdoor)), Boolean.parseBoolean(propHandler.get(PropertyLabel.Hull)));
+           drone.getCommandManager().cancelRecordingNavData();
             drone.setMaxAltitude(Integer.parseInt(propHandler.get(PropertyLabel.MaxAltitude)));
             drone.setMinAltitude(Integer.parseInt(propHandler.get(PropertyLabel.MinAltitude)));
             drone.getCommandManager().setVideoCodecFps(Integer.parseInt(propHandler.get(PropertyLabel.VideoFrameRate)));
