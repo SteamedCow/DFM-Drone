@@ -208,6 +208,7 @@ public class MenuPanel extends javax.swing.JPanel
         jpBanner.setBackground(new java.awt.Color(153, 255, 153));
 
         jlTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jlTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/dfm_logo_36.png"))); // NOI18N
         jlTitle.setText("Don Frankos zzKillerDronezz");
 
         jlBattery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/battery_unknown_24.png"))); // NOI18N
@@ -218,8 +219,8 @@ public class MenuPanel extends javax.swing.JPanel
             jpBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpBannerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 484, Short.MAX_VALUE)
+                .addComponent(jlTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlBattery)
                 .addContainerGap())
         );
@@ -227,10 +228,9 @@ public class MenuPanel extends javax.swing.JPanel
             jpBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpBannerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlBattery)
-                    .addComponent(jlTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jlBattery)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
