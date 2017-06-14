@@ -15,14 +15,19 @@ import dfmDrone.gui.Controller;
 import dfmDrone.listeners.AttitudeListener;
 import dfmDrone.listeners.ErrorListener;
 import dfmDrone.utils.DFMLogger;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.logging.Level;
+import org.apache.commons.io.FileUtils;
+import org.jcodec.common.IOUtils;
 
 /**
  * DFMDrone
  * @author Lasse
  * @version 16-02-2017
  */
-public class DFMDrone 
+public class DFMDrone
 {
     public static Controller guiController;
     
@@ -38,6 +43,7 @@ public class DFMDrone
         
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//            loadLibrary();
         }
         catch(UnsatisfiedLinkError e) {
             e.printStackTrace();
@@ -82,6 +88,49 @@ public class DFMDrone
         }
         finally {
             DFMLogger.logger.log(Level.CONFIG, "END OF MAIN");
+        }
+    }
+    
+    private static void loadLibrary() {
+        try {
+            InputStream in = null;
+            File fileOut = null;
+            String osName = System.getProperty("os.name");
+            DFMLogger.logger.log(Level.CONFIG, "OS detected: {0}", osName);
+            if(osName.startsWith("Windows")){
+                int bitness = Integer.parseInt(System.getProperty("sun.arch.data.model"));
+                if(bitness == 32){
+                    DFMLogger.logger.config("32 bit detected");
+                    in = DFMDrone.class.getResourceAsStream("libs/opencv support/Windows 8.1/x86/opencv_java320.dll");
+                    fileOut = File.createTempFile("lib", ".dll");
+                }
+                else if (bitness == 64){
+                    DFMLogger.logger.config("64 bit detected");
+                    in = DFMDrone.class.getResourceAsStream("opencv_java320.dll");
+                    fileOut = File.createTempFile("lib", ".dll");
+                }
+                else{
+                    DFMLogger.logger.warning("Unknown bit detected - trying with 32 bit");
+                    in = DFMDrone.class.getResourceAsStream("/opencv/x86/opencv_java245.dll");
+                    fileOut = File.createTempFile("lib", ".dll");
+                }
+            }
+            else if(osName.equals("Mac OS X")){
+                in = DFMDrone.class.getResourceAsStream("/opencv/mac/libopencv_java245.dylib");
+                fileOut = File.createTempFile("lib", ".dylib");
+            }
+            
+            
+            OutputStream out = FileUtils.openOutputStream(fileOut);
+            System.out.println("in=" + in);
+            System.out.println("out=" + out);
+            IOUtils.copy(in, out);
+            in.close();
+            out.close();
+            System.load(fileOut.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to load opencv native library", e);
         }
     }
 }
