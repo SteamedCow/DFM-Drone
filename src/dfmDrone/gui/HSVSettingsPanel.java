@@ -20,7 +20,6 @@ public class HSVSettingsPanel extends javax.swing.JPanel
     public HSVSettingsPanel(HSVHandler hsvHandler) {
         initComponents();
         this.hsvHandler = hsvHandler;
-        
         updateValues(hsvHandler.getSettings());
     }
     
@@ -319,7 +318,6 @@ public class HSVSettingsPanel extends javax.swing.JPanel
         });
 
         jbReset.setText("Reset");
-        jbReset.setEnabled(false);
         jbReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbResetActionPerformed(evt);
@@ -642,7 +640,7 @@ public class HSVSettingsPanel extends javax.swing.JPanel
     private void UH2SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_UH2SliderStateChanged
         UH2Value.setText("" + UH2Slider.getValue());
         double[] oldValue = hsvHandler.getRange2Upper().val;
-        hsvHandler.updateRange1Lower(new Scalar(UH2Slider.getValue(), oldValue[1], oldValue[2]));
+        hsvHandler.updateRange2Upper(new Scalar(UH2Slider.getValue(), oldValue[1], oldValue[2]));
         updateColorU2();
     }//GEN-LAST:event_UH2SliderStateChanged
 

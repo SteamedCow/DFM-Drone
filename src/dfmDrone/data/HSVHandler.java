@@ -26,7 +26,7 @@ public class HSVHandler implements Serializable
     private static final Scalar DEFAULT_R2_UPPER = new Scalar(179, 255, 255); //HSV = 179, 255, 255 (179, 255, 255)
     
     private final String filePath;
-    private HSVSetting hsvSetting;
+    private static HSVSetting hsvSetting;
     
     public HSVHandler(String filePath, boolean loadFile) {
         this.filePath = filePath;
