@@ -28,7 +28,11 @@ public class HSVSettingsPanel extends javax.swing.JPanel
     }
     
     public void updateTemp(HSVSetting tempSet) {
-        this.hsvSettingTmp = tempSet;
+        try {
+            this.hsvSettingTmp = tempSet.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
     
     private void updateValues(HSVSetting settings) {
@@ -671,6 +675,7 @@ public class HSVSettingsPanel extends javax.swing.JPanel
 
     private void jbResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetActionPerformed
         hsvHandler.updateSettings(hsvSettingTmp);
+        System.out.println(hsvSettingTmp);
         updateValues(hsvSettingTmp);
     }//GEN-LAST:event_jbResetActionPerformed
 
