@@ -1,6 +1,7 @@
 package dfmDrone.utils;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import org.opencv.core.Scalar;
 
 /**
@@ -26,5 +27,10 @@ public class DFMScalar implements Serializable
     
     public void toDFMScalar(Scalar scalar) {
         this.val = scalar.val;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(val);
     }
 }

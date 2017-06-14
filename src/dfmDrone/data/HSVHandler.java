@@ -120,12 +120,29 @@ public class HSVHandler implements Serializable
         private DFMScalar r2Lower;
         private DFMScalar r2Upper;
 
+//        public HSVSetting(HSVSetting hsvSetting) {
+//            this.r1Lower = new DFMScalar(hsvSetting.getR1Lower());
+//            this.r1Upper = new DFMScalar(hsvSetting.getR1Upper());
+//            this.r2Lower = new DFMScalar(hsvSetting.getR2Lower());
+//            this.r2Upper = new DFMScalar(hsvSetting.getR2Upper());
+//        }
+
         public HSVSetting(Scalar r1Lower, Scalar r1Upper, Scalar r2Lower, Scalar r2Upper) {
             this.r1Lower = new DFMScalar(r1Lower);
             this.r1Upper = new DFMScalar(r1Upper);
             this.r2Lower = new DFMScalar(r2Lower);
             this.r2Upper = new DFMScalar(r2Upper);
         }
+
+        @Override
+        public HSVSetting clone() throws CloneNotSupportedException {
+            return new HSVSetting(r1Lower.toScalar(), r1Upper.toScalar(), r2Lower.toScalar(), r2Upper.toScalar());
+        }
+
+//        @Override
+//        protected Object clone() throws CloneNotSupportedException {
+//            return super.clone();
+//        }
 
         public Scalar getR1Lower() {
             return r1Lower.toScalar();
