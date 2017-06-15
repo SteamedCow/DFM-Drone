@@ -113,7 +113,7 @@ public class OpenCVUtils
             if (contour.toArray().length > 5) {
                 rotatedrect = Imgproc.fitEllipse(new MatOfPoint2f(contour.toArray()));
                 aspect = rotatedrect.boundingRect().height / rotatedrect.boundingRect().width;
-                if (aspect > 0.9 && aspect < 1.8 && rotatedrect.boundingRect().area() > 50000 &&rotatedrect.boundingRect().area()<600000) {
+                if (aspect > 0.9 && aspect < 1.8 && rotatedrect.boundingRect().area() > 50000 &&rotatedrect.boundingRect().area()<300000) {
                     if (rotatedrectbest == null) {
                         rotatedrectbest = rotatedrect;
                         contour2fbest = new MatOfPoint2f(contour.toArray());
@@ -127,8 +127,8 @@ public class OpenCVUtils
         try {
             if (contour2fbest != null && rotatedrectbest != null) {
                 double approxDistance = Imgproc.arcLength(contour2fbest, true) * 0.02;
-                Imgproc.approxPolyDP(contour2fbest, approxCurve, approxDistance+20, true);
-                System.out.println(approxDistance);
+                Imgproc.approxPolyDP(contour2fbest, approxCurve, approxDistance+80, true);
+//                System.out.println(approxDistance);
                 
                 // Convert back to MatOfPoint
                 MatOfPoint points = new MatOfPoint(approxCurve.toArray());
