@@ -2,13 +2,20 @@ package dfmDrone.gui;
 
 import dfmDrone.utils.DFMLogger;
 import java.awt.Color;
-import static java.awt.TextArea.SCROLLBARS_VERTICAL_ONLY;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Desktop;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.logging.Level;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
+import javax.swing.text.Element;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -20,14 +27,14 @@ import javax.swing.text.StyledDocument;
  * @author magnu
  */
 public class HelpPanel extends javax.swing.JPanel {
-    private static final String URL_ATT_NAME = "URL"; 
+    private static final String URL_ATT_NAME = "URL";
     
-    private StyledDocument doc;
-    private Style labelStyle;
-    private Style urlStyle;
-    private SimpleAttributeSet titleStyle;
-    private SimpleAttributeSet highlightStyle;
-    private SimpleAttributeSet normal;
+    private final StyledDocument doc;
+    private final Style labelStyle;
+    private final Style urlStyle;
+    private final SimpleAttributeSet titleStyle;
+    private final SimpleAttributeSet highlightStyle;
+    private final SimpleAttributeSet normal;
     
     public HelpPanel() {
         initComponents();
@@ -43,12 +50,12 @@ public class HelpPanel extends javax.swing.JPanel {
         StyleContext context = new StyleContext();
         labelStyle = context.getStyle(StyleContext.DEFAULT_STYLE);
         
-        //Set urlStyle
-        urlStyle = doc.addStyle(null, labelStyle); 
-        StyleConstants.setForeground(urlStyle, Color.BLUE); 
+        //Set urlStyle (not clicked)
+        urlStyle = doc.addStyle(null, labelStyle);
+        StyleConstants.setForeground(urlStyle, Color.BLUE);
         StyleConstants.setAlignment(urlStyle, StyleConstants.ALIGN_CENTER);
         StyleConstants.setFontSize(urlStyle, 11);
-        urlStyle.addAttribute(URL_ATT_NAME, new Object()); 
+        urlStyle.addAttribute(URL_ATT_NAME, new Object());
         
         //Set tileStyle
         titleStyle = new SimpleAttributeSet();
@@ -58,12 +65,12 @@ public class HelpPanel extends javax.swing.JPanel {
         
         //Set HighlightStyle
         highlightStyle = new SimpleAttributeSet();
-        StyleConstants.setAlignment(highlightStyle, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setAlignment(highlightStyle, StyleConstants.ALIGN_LEFT);
         StyleConstants.setFontSize(highlightStyle, 12);
         
         //Set normalStyle
         normal = new SimpleAttributeSet();
-        StyleConstants.setAlignment(normal, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setAlignment(normal, StyleConstants.ALIGN_LEFT);
         StyleConstants.setFontSize(normal, 11);
         
         jlNavigation.setModel(new javax.swing.AbstractListModel<String>() {
@@ -77,36 +84,21 @@ public class HelpPanel extends javax.swing.JPanel {
         });
         
         setWelcome();
-        
-        MouseListener mouseListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                jlNavigation = (JList) mouseEvent.getSource();
-                int index = jlNavigation.locationToIndex(mouseEvent.getPoint());
-                switch (index) {
-                    default: case 0:
-                        setWelcome(); break;
-                    case 1:
-                        setInterface(); break;
-                    case 2:
-                        setManual(); break;
-                    case 3:
-                        setHSV(); break;
-                    case 4:
-                        setWhitebalance(); break;
-                    case 5:
-                        setSettings(); break;
-                }
-            }
-        };
-        
-        jlNavigation.addMouseListener(mouseListener);
     }
     
     private void setWelcome() {
         try {
             doc.remove(0, doc.getLength());
-            doc.insertString(doc.getLength(), welcomeText, normal);
+            
+            //Logo
+            Icon logo = new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/dfm_logo_36.png"));
+            JLabel logoLabel = new JLabel(logo);
+            StyleConstants.setComponent(labelStyle, logoLabel);
+            doc.insertString(0, "Logo", labelStyle);
+            
+            addText("\nVelkommen til DFM drone projektet.\n", titleStyle, doc);
+            addText("\nI denne menu vil du finde hjælp og forklaring på diverse emner i interfacet.\n"
+                    + "\nBrug venstremenuen til at navigere mellem emnerne.", highlightStyle, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for welcome");
             e.printStackTrace();
@@ -116,7 +108,13 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setInterface() {
         try {
             doc.remove(0, doc.getLength());
-            doc.insertString(doc.getLength(), interfaceText, normal);
+            addText("Det forventes at der er oprettet forbindelse til dronen inden kørsel af program.\n\n"
+                    + "Når dronen er forbundet og vores program køres, vent da på at kameraet opretter forbindelse, før dronen startes, for bedste resultat\n\n"
+                    + "Start-knap: Starter dronen, den vil lave en take-off, og hover indtil den finder hvad den søger efter\n\n"
+                    + "Kill-knap: Får dronen til at akut lande\n\n"
+                    + "Binary-knap: Viser hvad dronen ser i sort/hvid. Dette giver et godt indblik i hvor meget af de røde ringe den registrere\n\n"
+                    + "Tabel: Her kan du se informationer om dronens status, som fx. hvor meget kapacitet batteriet har tilbage, og hvad den sidste kommando den udførte var\n\n"
+                    + "Tekstfelt: Her kan du se alle kommandoer dronen har udført, i rækkefølge med tidspunkt", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for interface");
             e.printStackTrace();
@@ -126,7 +124,9 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setManual() {
         try {
             doc.remove(0, doc.getLength());
-            doc.insertString(doc.getLength(), manualText, normal);
+            addText("Manual Control er et simpelt panel hvor du kan overwrite dronens nuværende kommandoer.\n\n"
+                    + "tilgængelige kommandoer:"
+                    + "Op\n\nNed\n\nSpin mod højre\n\nSpin mod venstre\n\nFlyv til højre\n\nFlyv til venstre\n\nFlyv frem\n\nFlyv bagud", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for manual");
             e.printStackTrace();
@@ -136,7 +136,7 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setHSV() {
         try {
             doc.remove(0, doc.getLength());
-            doc.insertString(doc.getLength(), hsvText, normal);
+            addText("I HSV menuen kan du indstille dronens kameras HSV (Hue Saturation Value), for bedre at kunne se objekterne du søger", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for HSV");
             e.printStackTrace();
@@ -146,7 +146,12 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setWhitebalance() {
         try {
             doc.remove(0, doc.getLength());
-            doc.insertString(doc.getLength(), whitebalanceText, normal);
+            addText("White balance kører vores whitebalance program.\n\n"
+                    + "Whitebalance bruger dronens kamera justere farverne efter omgivelsernes belysning.\n\n"
+                    + "Når programmet køres skal brugeren holde et udprintet billede* af firkanter med forskellige farver op foran dronens kamera.\n"
+                    + "Brugeren skal holde billedet så præcist som muligt, og tage et billede, hvorefter WhiteBalance programmet vil validere om den kan se alle farver i billedet, og de fire cirkler rundt i kanterne\n"
+                    + "såfremt alt er fundet, vil programmet indstille farverne til passende værdier.\n\n"
+                    + "*Billede findes i \"WhiteBalance\\WhiteBalance\\chart\\White Balance Color Chart (calibaretor)\"", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for white balance");
             e.printStackTrace();
@@ -156,11 +161,27 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setSettings() {
         try {
             doc.remove(0, doc.getLength());
-            doc.insertString(doc.getLength(), settingsText, normal);
+            addText("I settings menuen kan du indstille dronen efter behov\n\n"
+                    + "MaxAltitude: indstiller hvor højt dronen må flyve i mm\n\n"
+                    + "MinAltitude: indstiller hvor lavt dronen må flyve i mm\n\n"
+                    + "Portal Height:\n\n"
+                    + "Camera Constant\n\n"
+                    + "Video Frame Rate: indstiller opdateringshastigheden på dronens kamera", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for settings");
             e.printStackTrace();
         }
+    }
+    
+    private void addLink(String url, Style style, StyledDocument doc) throws BadLocationException {
+        doc.insertString(doc.getLength(), url, style);
+    }
+    
+    private void addText(String text, SimpleAttributeSet style, StyledDocument doc) throws BadLocationException {
+        int start = doc.getLength();
+        int end = start + text.length() + 1;
+        doc.insertString(start, text, style);
+        doc.setParagraphAttributes(start, end, style, true);
     }
     
     /**
@@ -177,6 +198,7 @@ public class HelpPanel extends javax.swing.JPanel {
         jlNavigation = new javax.swing.JList<String>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtpContent = new javax.swing.JTextPane();
+        jlTitle = new javax.swing.JLabel();
 
         textField1.setText("textField1");
 
@@ -185,13 +207,26 @@ public class HelpPanel extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jlNavigation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlNavigationMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jlNavigation);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jtpContent.setEditable(false);
         jtpContent.setBackground(new java.awt.Color(240, 240, 240));
+        jtpContent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtpContentMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jtpContent);
+
+        jlTitle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jlTitle.setText("Help Options");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -199,60 +234,83 @@ public class HelpPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlTitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void jtpContentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtpContentMouseClicked
+        JTextPane textPane = (JTextPane) evt.getComponent();
+        Element elem = doc.getCharacterElement(textPane.viewToModel(evt.getPoint()));
+        
+        if (!elem.getAttributes().isDefined(URL_ATT_NAME))
+            return;
+        
+        int len = elem.getEndOffset() - elem.getStartOffset();
+        final String url;
+        
+        try {
+            url = doc.getText(elem.getStartOffset(), len);
+        } catch (BadLocationException e) {
+            DFMLogger.logger.log(Level.WARNING, "can't get URL", e);
+            return;
+        }
+        
+        Runnable run = () -> {
+            try {
+                URI uri = new URL("http://" + url).toURI();
+                Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+                if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                    try {
+                        desktop.browse(uri);
+                    } catch (Exception e) {
+                        DFMLogger.logger.log(Level.INFO, "Failed to open link: {0}", e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            } catch (URISyntaxException | MalformedURLException e) {
+                DFMLogger.logger.log(Level.INFO, "Failed to open link: {0}", e.getMessage());
+                e.printStackTrace();
+            }
+        };
+        new Thread(run).start();
+    }//GEN-LAST:event_jtpContentMouseClicked
+
+    private void jlNavigationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlNavigationMouseClicked
+        jlNavigation = (JList) evt.getSource();
+        int index = jlNavigation.locationToIndex(evt.getPoint());
+        switch (index) {
+            default: case 0: setWelcome(); break;
+            case 1: setInterface(); break;
+            case 2: setManual(); break;
+            case 3: setHSV(); break;
+            case 4: setWhitebalance(); break;
+            case 5: setSettings(); break;
+        }
+    }//GEN-LAST:event_jlNavigationMouseClicked
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> jlNavigation;
+    private javax.swing.JLabel jlTitle;
     private javax.swing.JTextPane jtpContent;
     private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
-    
-    private final static String welcomeText = "Velkommen til drone projektet.\n"
-            + "I denne menu vil du finde hjælp og forklaring på diverse emner i interfacet.\n"
-            + "Brug venstremenuen til at navigere mellem emnerne.";
-    
-    private final static String interfaceText = "Det forventes at der er oprettet forbindelse til dronen inden kørsel af program.\n\n"
-            + "Når dronen er forbundet og vores program køres, vent da på at kameraet opretter forbindelse, før dronen startes, for bedste resultat\n\n"
-            + "Start-knap: Starter dronen, den vil lave en take-off, og hover indtil den finder hvad den søger efter\n\n"
-            + "Kill-knap: Får dronen til at akut lande\n\n"
-            + "Binary-knap: Viser hvad dronen ser i sort/hvid. Dette giver et godt indblik i hvor meget af de røde ringe den registrere\n\n"
-            + "Tabel: Her kan du se informationer om dronens status, som fx. hvor meget kapacitet batteriet har tilbage, og hvad den sidste kommando den udførte var\n\n"
-            + "Tekstfelt: Her kan du se alle kommandoer dronen har udført, i rækkefølge med tidspunkt";
-    
-    private final static String manualText = "Manual Control er et simpelt panel hvor du kan overwrite dronens nuværende kommandoer.\n\n"
-            + "tilgængelige kommandoer:"
-            + "Op\n\nNed\n\nSpin mod højre\n\nSpin mod venstre\n\nFlyv til højre\n\nFlyv til venstre\n\nFlyv frem\n\nFlyv bagud";
-    
-    private final static String hsvText = "I HSV menuen kan du indstille dronens kameras HSV (Hue Saturation Value), for bedre at kunne se objekterne du søger";
-    
-    private final static String whitebalanceText = "White balance kører vores whitebalance program.\n\n"
-            + "Whitebalance bruger dronens kamera justere farverne efter omgivelsernes belysning.\n\n"
-            + "Når programmet køres skal brugeren holde et udprintet billede* af firkanter med forskellige farver op foran dronens kamera.\n"
-            + "Brugeren skal holde billedet så præcist som muligt, og tage et billede, hvorefter WhiteBalance programmet vil validere om den kan se alle farver i billedet, og de fire cirkler rundt i kanterne\n"
-            + "såfremt alt er fundet, vil programmet indstille farverne til passende værdier.\n\n"
-            + "*Billede findes i \"WhiteBalance\\WhiteBalance\\chart\\White Balance Color Chart (calibaretor)\"";
-    
-    private final static String settingsText = "I settings menuen kan du indstille dronen efter behov\n\n"
-            + "MaxAltitude: indstiller hvor højt dronen må flyve i mm\n\n"
-            + "MinAltitude: indstiller hvor lavt dronen må flyve i mm\n\n"
-            + "Portal Height:\n\n"
-            + "Camera Constant\n\n"
-            + "Video Frame Rate: indstiller opdateringshastigheden på dronens kamera";
-
 }

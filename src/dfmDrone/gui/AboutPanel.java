@@ -262,6 +262,7 @@ public class AboutPanel extends javax.swing.JPanel
                     }
                 }
             } catch (URISyntaxException | MalformedURLException e) {
+                DFMLogger.logger.log(Level.INFO, "Failed to open link: {0}", e.getMessage());
                 e.printStackTrace();
             }
         };
