@@ -36,7 +36,7 @@ public class AILogic
             if(imageAnalytics.rect != null) {
                 scan = false;
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.PORTAL_HEIGHT, Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
-                System.out.println("sourceImg.height(): "+imageAnalytics.sourceImg.height() +", sourceImg.width: " +imageAnalytics.sourceImg.width()+", rect.height: "+imageAnalytics.rect.height + ",portal height: "+ Config.PORTAL_HEIGHT+" Camera Constant: "+Double.parseDouble((controller.getProperty((PropertyLabel.CameraConstant)))));
+//                System.out.println("sourceImg.height(): "+imageAnalytics.sourceImg.height() +", sourceImg.width: " +imageAnalytics.sourceImg.width()+", rect.height: "+imageAnalytics.rect.height + ",portal height: "+ Config.PORTAL_HEIGHT+" Camera Constant: "+Double.parseDouble((controller.getProperty((PropertyLabel.CameraConstant)))));
                 controller.updateDistanceDisplay(distance);
                 
 
@@ -45,10 +45,10 @@ public class AILogic
                             if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                             controller.updateLogDisplay("-CENTERED-");
                             if(distance>= 2200){
-                                cmdQ.add(Command.Forward, 40,500) ;
+                                cmdQ.add(Command.Forward, 30,300) ;
                             }
                             else {
-                                cmdQ.add(Command.Forward, 500, (int) distance / 500 * 1000/2, CommandQueue.PushType.IgnoreBusy, CommandQueue.PushType.Block);
+                                cmdQ.add(Command.Forward, 30, (int) distance / 100 * 1000/3, CommandQueue.PushType.Block);
 //                                cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block, CommandQueue.PushType.IgnoreBlock);
                             }
                         }
@@ -83,7 +83,7 @@ public class AILogic
     private boolean centerVertical(double objCenterY, double imageHeight) {
         double centerHeight = imageHeight/2;
         
-        if(objCenterY - centerHeight > 25 || objCenterY - centerHeight < -25) {
+        if(objCenterY - centerHeight > 20 || objCenterY - centerHeight < -20) {
             if(objCenterY < centerHeight)
                 cmdQ.add(Command.MoveUp, 10, 500);
             else
@@ -136,10 +136,10 @@ public class AILogic
         
         if(objCenterX - centerWidth > 50 || objCenterX - centerWidth < -50) {
             if(objCenterX < centerWidth) {
-                cmdQ.add(Command.SpinLeft, 14, 300);
+                cmdQ.add(Command.SpinLeft, 12, 200);
             }
             else {
-                cmdQ.add(Command.SpinRight, 13, 300);
+                cmdQ.add(Command.SpinRight, 11, 200);
             }
             return false;
         }
