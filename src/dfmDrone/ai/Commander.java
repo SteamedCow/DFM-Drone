@@ -122,7 +122,7 @@ public class Commander
 
         sleep(duration);
         dCmd.hover();
-        
+        sleep(1000);
         controller.setBusy(false);
     }
     
@@ -166,7 +166,8 @@ public class Commander
         
         sleep(duration);
         dCmd.hover();
-        
+        sleep(1000);
+
         controller.setBusy(false);
     }
     
@@ -200,6 +201,7 @@ public class Commander
         
         sleep(duration);
         dCmd.hover();
+        sleep(1000);
         
         controller.setBusy(false);
     }
@@ -228,7 +230,7 @@ public class Commander
         
         sleep(duration);
         dCmd.hover();
-        
+        sleep(1000);
         controller.setBusy(false);
     }
     

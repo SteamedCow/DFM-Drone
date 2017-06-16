@@ -163,23 +163,23 @@ public class ManualPanel extends javax.swing.JPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void ForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardActionPerformed
-        controller.cmdQ.add(CommandQueue.Command.Forward, 15, 250, CommandQueue.PushType.Instant);
+        controller.cmdQ.add(CommandQueue.Command.Forward, 15, 500, CommandQueue.PushType.Instant);
     }//GEN-LAST:event_ForwardActionPerformed
 
     private void ReverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReverseActionPerformed
-       controller.cmdQ.add(CommandQueue.Command.Backward, 15, 250, CommandQueue.PushType.Instant);
+       controller.cmdQ.add(CommandQueue.Command.Backward, 15, 500, CommandQueue.PushType.Instant);
     }//GEN-LAST:event_ReverseActionPerformed
 
     private void rotateLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateLActionPerformed
-        controller.cmdQ.add(CommandQueue.Command.SpinLeft, 30, 500, CommandQueue.PushType.Instant, CommandQueue.PushType.IgnoreBusy);
+        controller.cmdQ.add(CommandQueue.Command.SpinLeft, 20, 500, CommandQueue.PushType.Instant, CommandQueue.PushType.IgnoreBusy);
     }//GEN-LAST:event_rotateLActionPerformed
 
     private void UpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpActionPerformed
-        controller.cmdQ.add(CommandQueue.Command.MoveUp, 15, 250, CommandQueue.PushType.Instant);
+        controller.cmdQ.add(CommandQueue.Command.MoveUp, 15, 500, CommandQueue.PushType.Instant);
     }//GEN-LAST:event_UpActionPerformed
 
     private void rotateRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateRActionPerformed
-        controller.cmdQ.add(CommandQueue.Command.SpinRight, 30, 500, CommandQueue.PushType.Instant, CommandQueue.PushType.IgnoreBusy);
+        controller.cmdQ.add(CommandQueue.Command.SpinRight, 20, 500, CommandQueue.PushType.Instant, CommandQueue.PushType.IgnoreBusy);
     }//GEN-LAST:event_rotateRActionPerformed
 
     private void LeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeftActionPerformed
@@ -187,7 +187,7 @@ public class ManualPanel extends javax.swing.JPanel
     }//GEN-LAST:event_LeftActionPerformed
 
     private void DownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownActionPerformed
-        controller.cmdQ.add(CommandQueue.Command.MoveDown, 15, 250, CommandQueue.PushType.Instant);
+        controller.cmdQ.add(CommandQueue.Command.MoveDown, 15, 500, CommandQueue.PushType.Instant);
     }//GEN-LAST:event_DownActionPerformed
 
     private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed

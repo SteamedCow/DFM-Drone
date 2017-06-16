@@ -31,7 +31,7 @@ public class AILogic
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-        if(controller.cmdQ.isDroneFlying()) {
+//        if(controller.cmdQ.isDroneFlying()) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 scan = false;
@@ -44,12 +44,13 @@ public class AILogic
                         if(centerHorizontal(imageAnalytics.rect.height, imageAnalytics.rect.width, imageAnalytics.sourceImg.width())) {
                             if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
                             controller.updateLogDisplay("-CENTERED-");
-                            if(distance>= 2200){
-                                cmdQ.add(Command.Forward, 30,300) ;
+                            if(distance>= 2500){
+                                cmdQ.add(Command.Forward, 15,600) ;
                             }
                             else {
-                                cmdQ.add(Command.Forward, 30, (int) distance / 100 * 1000/3, CommandQueue.PushType.Block);
-//                                cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block, CommandQueue.PushType.IgnoreBlock);
+                                cmdQ.add(Command.Forward, 15, (int) distance / 550 * 1000/2, CommandQueue.PushType.Block);
+                                System.out.println("Distance: "+distance);
+// cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block, CommandQueue.PushType.IgnoreBlock);
                             }
                         }
                     }
@@ -70,7 +71,7 @@ public class AILogic
             Result qr = QRScan(controller.getVideoFrame());
             if (qr != null)
                 System.out.println(qr.getText() + ": " + new Date().getSeconds());
-        }
+//        }
     }
     
     private Result QRScan(BufferedImage img) {
@@ -83,7 +84,7 @@ public class AILogic
     private boolean centerVertical(double objCenterY, double imageHeight) {
         double centerHeight = imageHeight/2;
         
-        if(objCenterY - centerHeight > 20 || objCenterY - centerHeight < -20) {
+        if(objCenterY - centerHeight > 25 || objCenterY - centerHeight < -25) {
             if(objCenterY < centerHeight)
                 cmdQ.add(Command.MoveUp, 10, 500);
             else
@@ -103,26 +104,26 @@ public class AILogic
 
         if(OldRatio == -1){
             
-            cmdQ.add(Command.MoveRight, 8, 500);
+            cmdQ.add(Command.MoveRight, 8, 300);
             movedRight = true;
         }
         else{
             if(ratio > OldRatio){
                 if(movedRight){
-                    cmdQ.add(Command.MoveRight, 8, 500);
+                    cmdQ.add(Command.MoveRight, 8, 300);
                 }
                 else{
-                    cmdQ.add(Command.MoveLeft, 10, 500);
+                    cmdQ.add(Command.MoveLeft, 7, 300);
                     movedRight = false;
                 }
             }
             else if(ratio < OldRatio){
                 if(movedRight){
-                    cmdQ.add(Command.MoveLeft, 10, 500);
+                    cmdQ.add(Command.MoveLeft, 8, 300);
                     movedRight = false;
                 }
                 else{
-                    cmdQ.add(Command.MoveRight, 10, 500);
+                    cmdQ.add(Command.MoveRight, 7, 300);
                     movedRight = true;
                 }
             }

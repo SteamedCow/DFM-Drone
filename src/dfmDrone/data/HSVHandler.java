@@ -18,12 +18,12 @@ import org.opencv.core.Scalar;
 public class HSVHandler implements Serializable
 {
     //Range 1
-    private static final Scalar DEFAULT_R1_LOWER = new Scalar(0, 100, 110); //HSV = 0, 150, 100 (0, 150, 100)
-    private static final Scalar DEFAULT_R1_UPPER = new Scalar(8, 255, 255); //HSV = 8, 255, 255 (10, 255, 255)
+    private static final Scalar DEFAULT_R1_LOWER = new Scalar(0, 128, 41); //HSV = 0, 128, 41 (0, 128, 41)
+    private static final Scalar DEFAULT_R1_UPPER = new Scalar(6, 255, 219); //HSV = 6, 255, 219 (6, 255, 219)
     
     //Range 2
-    private static final Scalar DEFAULT_R2_LOWER = new Scalar(160, 59, 140); //HSV = 160, 59, 140 (160, 150, 100)
-    private static final Scalar DEFAULT_R2_UPPER = new Scalar(179, 255, 255); //HSV = 179, 255, 255 (179, 255, 255)
+    private static final Scalar DEFAULT_R2_LOWER = new Scalar(169, 128, 41); //HSV = 169, 128, 41 (169, 128, 41)
+    private static final Scalar DEFAULT_R2_UPPER = new Scalar(179, 255, 219); //HSV = 179, 255, 219 (179, 255, 219)
     
     private final String filePath;
     private static HSVSetting hsvSetting;
