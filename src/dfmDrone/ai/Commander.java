@@ -180,12 +180,12 @@ public class Commander
      */
     protected void move(int speed, int duration){
         if(speed > 0){
-        controller.updateLastCMDDisplay("MOVE FORWARD" + speed + " for " + duration);
-        DFMLogger.logger.log(Level.FINE, "cmd - Move forward for {0}ms at {1}mm/s", new Integer[]{duration, speed});
+            controller.updateLastCMDDisplay("MOVE FORWARD" + speed + " for " + duration);
+            DFMLogger.logger.log(Level.FINE, "cmd - Move forward for {0}ms at {1}mm/s", new Integer[]{duration, speed});
         }
         else{
-        controller.updateLastCMDDisplay("MOVE  BACKWARD" + speed + " for " + duration);
-        DFMLogger.logger.log(Level.FINE, "cmd - Move backward for {0}ms at {1}mm/s", new Integer[]{duration, speed});    
+            controller.updateLastCMDDisplay("MOVE  BACKWARD" + speed + " for " + duration);
+            DFMLogger.logger.log(Level.FINE, "cmd - Move backward for {0}ms at {1}mm/s", new Integer[]{duration, speed});    
         }
         controller.setBusy(true);
         

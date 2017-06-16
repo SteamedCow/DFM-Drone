@@ -46,17 +46,6 @@ public class HelpPanel extends javax.swing.JPanel {
         //Load doc
         doc = jtpContent.getStyledDocument();
         
-        //Set labelStyle
-        StyleContext context = new StyleContext();
-        labelStyle = context.getStyle(StyleContext.DEFAULT_STYLE);
-        
-        //Set urlStyle (not clicked)
-        urlStyle = doc.addStyle(null, labelStyle);
-        StyleConstants.setForeground(urlStyle, Color.BLUE);
-        StyleConstants.setAlignment(urlStyle, StyleConstants.ALIGN_CENTER);
-        StyleConstants.setFontSize(urlStyle, 11);
-        urlStyle.addAttribute(URL_ATT_NAME, new Object());
-        
         //Set tileStyle
         titleStyle = new SimpleAttributeSet();
         StyleConstants.setAlignment(titleStyle, StyleConstants.ALIGN_CENTER);
@@ -72,6 +61,17 @@ public class HelpPanel extends javax.swing.JPanel {
         normal = new SimpleAttributeSet();
         StyleConstants.setAlignment(normal, StyleConstants.ALIGN_LEFT);
         StyleConstants.setFontSize(normal, 11);
+        
+        //Set labelStyle/icons
+        StyleContext context = new StyleContext();
+        labelStyle = context.getStyle(StyleContext.DEFAULT_STYLE);
+        
+        //Set urlStyle (not clicked)
+        urlStyle = doc.addStyle(null, labelStyle);
+        StyleConstants.setForeground(urlStyle, Color.BLUE);
+        StyleConstants.setAlignment(urlStyle, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setFontSize(urlStyle, 11);
+        urlStyle.addAttribute(URL_ATT_NAME, new Object());
         
         jlNavigation.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = {"Welcome", "Interface", "Manual Control", "HSV filter", "White balance", "Settings"};
@@ -91,8 +91,8 @@ public class HelpPanel extends javax.swing.JPanel {
             doc.remove(0, doc.getLength());
             
             //Logo
-            Icon logo = new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/dfm_logo_36.png"));
-            JLabel logoLabel = new JLabel(logo);
+            Icon logoIcon = new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/dfm_logo_36.png"));
+            JLabel logoLabel = new JLabel(logoIcon);
             StyleConstants.setComponent(labelStyle, logoLabel);
             doc.insertString(0, "Logo", labelStyle);
             
@@ -107,14 +107,26 @@ public class HelpPanel extends javax.swing.JPanel {
     
     private void setInterface() {
         try {
+            //Menu icon
+            Icon panelIcon = new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/gui_menu_help.jpg"));
+            JLabel panelLabel = new JLabel(panelIcon);
+            StyleConstants.setComponent(labelStyle, panelLabel);
+            
             doc.remove(0, doc.getLength());
-            addText("Det forventes at der er oprettet forbindelse til dronen inden kørsel af program.\n\n"
-                    + "Når dronen er forbundet og vores program køres, vent da på at kameraet opretter forbindelse, før dronen startes, for bedste resultat\n\n"
-                    + "Start-knap: Starter dronen, den vil lave en take-off, og hover indtil den finder hvad den søger efter\n\n"
-                    + "Kill-knap: Får dronen til at akut lande\n\n"
-                    + "Binary-knap: Viser hvad dronen ser i sort/hvid. Dette giver et godt indblik i hvor meget af de røde ringe den registrere\n\n"
-                    + "Tabel: Her kan du se informationer om dronens status, som fx. hvor meget kapacitet batteriet har tilbage, og hvad den sidste kommando den udførte var\n\n"
-                    + "Tekstfelt: Her kan du se alle kommandoer dronen har udført, i rækkefølge med tidspunkt", normal, doc);
+            addText("Interface\n", titleStyle, doc);
+            addText("\n- Opstart -", highlightStyle, doc);
+            addText("\nDet forventes at der er oprettet forbindelse til dronen inden kørsel af program.\n"
+                    + "Når dronen er forbundet og DFM drone programet køres, vent da på at kameraet opretter forbindelse, før dronen startes.\n", normal, doc);
+            addText("\n- Kontrolpanelet -\n", highlightStyle, doc);
+            addText("\n ", titleStyle, doc);
+            doc.insertString(doc.getLength(), "Panel\n", labelStyle);
+            addText("\n1 - Videodisplay: Her vises videostreamen fra dronens kamera. Kameraet kan skiftes til at vise feed fra bundkameraet via menuen i toppen af vinduet\n"
+                    + "\n2 - Tabel: Her kan du se informationer om dronens status, som fx. hvor meget kapacitet batteriet har tilbage, og hvad den sidste kommando den udførte var\n"
+                    + "\n3 - Logfelt: Her kan du se alle kommandoer dronen har udført, i rækkefølge med tidspunkt\n"
+                    + "\n4 - Batteri: Her vises hvor meget strøm der er tilbage på dronen. Dronen kan ikke starte hvis batteri nivauet er under 20% (vises som helt tomt batteri)\n"
+                    + "\n5 - Start-knap: Starter dronen, den vil lave en take-off, og hover indtil den finder hvad den søger efter\n"
+                    + "\n6 - Kill-knap: Får dronen til at akut lande\n"
+                    + "\n7 - Binary-knap: Viser hvad dronen ser i sort/hvid. Dette giver et godt indblik i hvor meget af de røde ringe den registrere\n", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for interface");
             e.printStackTrace();
@@ -123,10 +135,25 @@ public class HelpPanel extends javax.swing.JPanel {
     
     private void setManual() {
         try {
+            //Manual icon
+            Icon panelIcon = new ImageIcon(getClass().getResource("/dfmDrone/gui/symbols/manual_panel_help.jpg"));
+            JLabel panelLabel = new JLabel(panelIcon);
+            StyleConstants.setComponent(labelStyle, panelLabel);
+            
             doc.remove(0, doc.getLength());
-            addText("Manual Control er et simpelt panel hvor du kan overwrite dronens nuværende kommandoer.\n\n"
-                    + "tilgængelige kommandoer:"
-                    + "Op\n\nNed\n\nSpin mod højre\n\nSpin mod venstre\n\nFlyv til højre\n\nFlyv til venstre\n\nFlyv frem\n\nFlyv bagud", normal, doc);
+            addText("Manuel Styring\n", titleStyle, doc);
+            addText("\nManual Control er et simpelt panel hvor du kan overwrite dronens nuværende kommandoer.\n", normal, doc);
+            addText("\n ", titleStyle, doc);
+            doc.insertString(doc.getLength(), "Panel\n", labelStyle);
+            addText("tilgængelige kommandoer med genvejstaster:\n"
+                    + "Op = SPACE\n"
+                    + "Ned = CTRL\n"
+                    + "Drej til højre = E\n"
+                    + "Drej til venstre = Q\n"
+                    + "Flyv til højre = A\n"
+                    + "Flyv til venstre = D\n"
+                    + "Flyv frem = W\n"
+                    + "Flyv tilbage = S", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for manual");
             e.printStackTrace();
@@ -136,7 +163,8 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setHSV() {
         try {
             doc.remove(0, doc.getLength());
-            addText("I HSV menuen kan du indstille dronens kameras HSV (Hue Saturation Value), for bedre at kunne se objekterne du søger", normal, doc);
+            addText("Farve Justering\n", titleStyle, doc);
+            addText("\nI HSV menuen kan du indstille dronens kameras HSV (Hue Saturation Value), for bedre at kunne se objekterne du søger", normal, doc);
         } catch (BadLocationException e) {
             DFMLogger.logger.warning("Could not load help text for HSV");
             e.printStackTrace();
@@ -146,7 +174,8 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setWhitebalance() {
         try {
             doc.remove(0, doc.getLength());
-            addText("White balance kører vores whitebalance program.\n\n"
+            addText("White Balance\n", titleStyle, doc);
+            addText("\nWhite balance kører vores whitebalance program.\n\n"
                     + "Whitebalance bruger dronens kamera justere farverne efter omgivelsernes belysning.\n\n"
                     + "Når programmet køres skal brugeren holde et udprintet billede* af firkanter med forskellige farver op foran dronens kamera.\n"
                     + "Brugeren skal holde billedet så præcist som muligt, og tage et billede, hvorefter WhiteBalance programmet vil validere om den kan se alle farver i billedet, og de fire cirkler rundt i kanterne\n"
@@ -161,7 +190,8 @@ public class HelpPanel extends javax.swing.JPanel {
     private void setSettings() {
         try {
             doc.remove(0, doc.getLength());
-            addText("I settings menuen kan du indstille dronen efter behov\n\n"
+            addText("Indstillinger\n", titleStyle, doc);
+            addText("\nI settings menuen kan du indstille dronen efter behov\n\n"
                     + "MaxAltitude: indstiller hvor højt dronen må flyve i mm\n\n"
                     + "MinAltitude: indstiller hvor lavt dronen må flyve i mm\n\n"
                     + "Portal Height:\n\n"
