@@ -53,12 +53,10 @@ public class MenuCheckItemListener implements ItemListener
                 
                 if(!enabled)
                     cbmiScan.setState(false);
-                System.out.println("AI=" + Config.ai);
                 break;
             }
             case GUIMenuBar.AC_SCAN: {
                 Config.scan = c.getState();
-                System.out.println("Scan=" + Config.scan);
                 break;
             }
             default: {
