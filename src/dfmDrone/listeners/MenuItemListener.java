@@ -1,7 +1,5 @@
 package dfmDrone.listeners;
 
-import de.yadrone.base.command.VideoChannel;
-import dfmDrone.data.Config;
 import dfmDrone.gui.AboutPanel;
 import dfmDrone.gui.Controller;
 import dfmDrone.gui.GUIMenuBar;
@@ -13,7 +11,6 @@ import dfmDrone.utils.DFMLogger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import whiteBalance.exceptions.DetectionException;
 import whiteBalance.tools.Calibrator;
@@ -30,7 +27,7 @@ public class MenuItemListener implements ActionListener
 
     public MenuItemListener(Controller controller) {
         this.controller = controller;
-        this.hsvPanel = new HSVSettingsPanel(controller.hsvHandler);;
+        this.hsvPanel = new HSVSettingsPanel(controller.hsvHandler);
     }
     
     @Override
@@ -61,17 +58,6 @@ public class MenuItemListener implements ActionListener
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
-                break;
-            }
-            case GUIMenuBar.AC_BCAM: {
-                if(((JCheckBoxMenuItem) evt.getSource()).getState())
-                    controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.HORI);
-                else
-                    controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.VERT);
-                break;
-            }
-            case GUIMenuBar.AC_BRIGHT: {
-                Config.colorBrighter = ((JCheckBoxMenuItem) evt.getSource()).getState();
                 break;
             }
             case GUIMenuBar.AC_SETTINGS: {

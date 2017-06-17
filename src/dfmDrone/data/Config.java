@@ -22,7 +22,10 @@ public class Config
     protected final static Level DEFAULT_LOGGER_LEVEL = Level.INFO;
     public static int PORTAL_HEIGHT = DEFAULT_PORTAL_HEIGHT;
     public static double CAMERA_CONSTANT = DEFAULT_CAMERA_CONSTANT;
+    
     public static boolean colorBrighter = true;
+    public static boolean ai = true;
+    public static boolean scan = true;
     
     public final static VideoCodec VIDEO_CODEC = VideoCodec.H264_360P;
     public final static int CMDQ_TIMEOUT = 200; //in ms
