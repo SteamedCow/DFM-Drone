@@ -1,5 +1,6 @@
 package dfmDrone.gui;
 
+import dfmDrone.data.Config;
 import dfmDrone.listeners.MenuItemListener;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -23,6 +24,7 @@ public class GUIMenuBar extends JMenuBar
     public static final String AC_MANUAL = "miacMAN";
     
     public static final String AC_BCAM = "miacBCAM";
+    public static final String AC_BRIGHT = "miacBRIGHT";
     
     public static final String AC_HELP = "miacHELP";
     public static final String AC_ABOUT = "miacABOUT";
@@ -63,7 +65,13 @@ public class GUIMenuBar extends JMenuBar
         cbmiBottomCam.setActionCommand(AC_BCAM);
         cbmiBottomCam.addActionListener(mil);
         
+        JCheckBoxMenuItem cbmiBright = new JCheckBoxMenuItem("Color brighter", Config.colorBrighter);
+        cbmiBright.setAccelerator(KeyStroke.getKeyStroke('B', defaultShortcutKey));
+        cbmiBright.setActionCommand(AC_BRIGHT);
+        cbmiBright.addActionListener(mil);
+        
         options.add(cbmiBottomCam);
+        options.add(cbmiBright);
         
         //Help menu
         JMenu help = new JMenu("Help");

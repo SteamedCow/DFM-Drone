@@ -1,6 +1,7 @@
 package dfmDrone.listeners;
 
 import de.yadrone.base.command.VideoChannel;
+import dfmDrone.data.Config;
 import dfmDrone.gui.AboutPanel;
 import dfmDrone.gui.Controller;
 import dfmDrone.gui.GUIMenuBar;
@@ -67,6 +68,10 @@ public class MenuItemListener implements ActionListener
                     controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.HORI);
                 else
                     controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.VERT);
+                break;
+            }
+            case GUIMenuBar.AC_BRIGHT: {
+                Config.colorBrighter = ((JCheckBoxMenuItem) evt.getSource()).getState();
                 break;
             }
             case GUIMenuBar.AC_SETTINGS: {

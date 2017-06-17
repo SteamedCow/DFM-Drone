@@ -10,6 +10,7 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import dfmDrone.data.Data;
 import dfmDrone.data.HSVHandler;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -178,5 +179,16 @@ public class OpenCVUtils
         rgb[2] *= 255;
         
         return rgb;
+    }
+    
+    public static BufferedImage colorBrighter(BufferedImage image) {
+        Color brighter;
+        for (int x = 0; x < image.getWidth(); x++) {
+            for (int y = 0; y < image.getHeight(); y++) {
+                brighter = new Color(image.getRGB(x, y)).brighter();
+                image.setRGB(x, y, brighter.getRGB());
+            }
+        }
+        return image;
     }
 }

@@ -2,6 +2,7 @@ package dfmDrone.gui;
 
 import dfmDrone.utils.OpenCVUtils;
 import de.yadrone.base.video.ImageListener;
+import dfmDrone.data.Config;
 import dfmDrone.utils.DFMLogger;
 import static dfmDrone.utils.OpenCVUtils.findAndDrawEllipse;
 import java.awt.Graphics;
@@ -58,6 +59,9 @@ public class VideoPanel extends JPanel {
                 Calibrator calib = new Calibrator(imageRaw, true);
                 wb.colorImage(calib.getImage());
             }
+            
+            if(Config.colorBrighter)
+                OpenCVUtils.colorBrighter(imageRaw);
             
             //Analyse imageRaw
             OpenCVUtils.ImageAnalyticsModel imageAnalytics = findAndDrawEllipse(OpenCVUtils.bufferedImageToMat(imageRaw), controller.hsvHandler.getSettings());
