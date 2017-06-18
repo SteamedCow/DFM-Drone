@@ -65,9 +65,9 @@ public class MenuItemListener implements ActionListener
             }
             case GUIMenuBar.AC_BCAM: {
                 if(((JCheckBoxMenuItem) evt.getSource()).getState())
-                    controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.HORI);
-                else
                     controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.VERT);
+                else
+                    controller.getDrone().getCommandManager().setVideoChannel(VideoChannel.HORI);
                 break;
             }
             case GUIMenuBar.AC_BRIGHT: {

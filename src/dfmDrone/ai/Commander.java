@@ -17,6 +17,7 @@ public class Commander
     private final IARDrone drone;
     private final CommandManager dCmd;
     private final Controller controller;
+    int delay= 750;
     
     public Commander(Controller controller) {
         this.controller = controller;
@@ -122,7 +123,7 @@ public class Commander
 
         sleep(duration);
         dCmd.hover();
-        sleep(1000);
+        sleep(delay);
         controller.setBusy(false);
     }
     
@@ -166,7 +167,7 @@ public class Commander
         
         sleep(duration);
         dCmd.hover();
-        sleep(1000);
+        sleep(delay);
 
         controller.setBusy(false);
     }
@@ -201,7 +202,7 @@ public class Commander
         
         sleep(duration);
         dCmd.hover();
-        sleep(1000);
+        sleep(delay);
         
         controller.setBusy(false);
     }
@@ -230,7 +231,7 @@ public class Commander
         
         sleep(duration);
         dCmd.hover();
-        sleep(1000);
+        sleep(delay);
         controller.setBusy(false);
     }
     
