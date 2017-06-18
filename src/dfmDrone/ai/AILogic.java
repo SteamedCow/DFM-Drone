@@ -31,41 +31,38 @@ public class AILogic
     }
     
     public void compute(ImageAnalyticsModel imageAnalytics) {
-        if(controller.cmdQ.isDroneFlying()) {
+        if(controller.cmdQ.isDroneFlying() && Config.ai) {
             //Compute and show distance to portal if a portal is found
             if(imageAnalytics.rect != null) {
                 time = System.currentTimeMillis();
                 double distance = DistanceMeaure.getDistanceToObject(imageAnalytics.sourceImg.height(), imageAnalytics.rect.height, Config.PORTAL_HEIGHT, Double.parseDouble(controller.getProperty(PropertyLabel.CameraConstant)));
-//                System.out.println("sourceImg.height(): "+imageAnalytics.sourceImg.height() +", sourceImg.width: " +imageAnalytics.sourceImg.width()+", rect.height: "+imageAnalytics.rect.height + ",portal height: "+ Config.PORTAL_HEIGHT+" Camera Constant: "+Double.parseDouble((controller.getProperty((PropertyLabel.CameraConstant)))));
                 controller.updateDistanceDisplay(distance);
-
+                
+                //Center height
                 if(centerVertical(imageAnalytics.rect.y + imageAnalytics.rect.height/2, imageAnalytics.sourceImg.height())) {
+                    //Point ro portal
                     if(rotatePlacement(imageAnalytics.rect.x + imageAnalytics.rect.width/2, imageAnalytics.sourceImg.width())) {
+                        //Move infront of portal
                         if(centerHorizontal(imageAnalytics.rect.height, imageAnalytics.rect.width, imageAnalytics.sourceImg.width())) {
                             controller.updateLogDisplay("-CENTERED-");
-                            if(distance>= 2500){
-                                cmdQ.add(Command.Forward, 8,1000) ;
-                            }
-                            else {
+                            //Fly to portal
+                            if(distance > 2500)
+                                cmdQ.add(Command.Forward, 8,1000);
+                            //Fly Through portal
+                            else
                                 cmdQ.add(Command.Forward, 15, (int) distance / 550 * 1000/2, CommandQueue.PushType.IgnoreBusy, CommandQueue.PushType.Instant, CommandQueue.PushType.Block);
-                                System.out.println("Distance: "+distance);
-
-// cmdQ.add(Command.Land,-1,-1, CommandQueue.PushType.IgnoreBusy,CommandQueue.PushType.Block, CommandQueue.PushType.IgnoreBlock);
-                            }
                         }
                     }
                 }
             }
-              else if (time+8000 < System.currentTimeMillis()){ //If no portal found
-
-                    controller.updateLogDisplay("Scanning");
-
-                   cmdQ.add(Command.SpinRight, 15, 600);
-                   cmdQ.add(Command.Hover,-1,500);
-                }
-
-
-
+            //If no portal found
+            else if (time+8000 < System.currentTimeMillis() && Config.scan){
+                //Look for portal
+                controller.updateLogDisplay("Scanning");
+                
+                cmdQ.add(Command.SpinRight, 15, 600);
+                cmdQ.add(Command.Hover,-1,500);
+            }
 
             //QR Scan
             Result qr = QRScan(controller.getVideoFrame());
