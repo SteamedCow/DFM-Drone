@@ -1,6 +1,7 @@
 package dfmDrone.gui;
 
 import dfmDrone.data.Config;
+import dfmDrone.listeners.MenuCheckItemListener;
 import dfmDrone.listeners.MenuItemListener;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -23,8 +24,10 @@ public class GUIMenuBar extends JMenuBar
     public static final String AC_SETTINGS = "miacSET";
     public static final String AC_MANUAL = "miacMAN";
     
-    public static final String AC_BCAM = "miacBCAM";
-    public static final String AC_BRIGHT = "miacBRIGHT";
+    public static final String AC_BCAM = "mciacBCAM";
+    public static final String AC_BRIGHT = "mciacBRIGHT";
+    public static final String AC_AI = "mciacAI";
+    public static final String AC_SCAN = "mciacSCAN";
     
     public static final String AC_HELP = "miacHELP";
     public static final String AC_ABOUT = "miacABOUT";
@@ -62,16 +65,28 @@ public class GUIMenuBar extends JMenuBar
         JMenu options = new JMenu("Options");
         
         JCheckBoxMenuItem cbmiBottomCam = new JCheckBoxMenuItem("Bottom camera", false);
-        cbmiBottomCam.setActionCommand(AC_BCAM);
-        cbmiBottomCam.addActionListener(mil);
-        
         JCheckBoxMenuItem cbmiBright = new JCheckBoxMenuItem("Color brighter", Config.colorBrighter);
+        JCheckBoxMenuItem cbmiAI = new JCheckBoxMenuItem("Enable AI", true);
+        JCheckBoxMenuItem cbmiScan = new JCheckBoxMenuItem("Scan", true);
+        
+        MenuCheckItemListener mcil = new MenuCheckItemListener(controller, cbmiScan);
         cbmiBright.setAccelerator(KeyStroke.getKeyStroke('B', defaultShortcutKey));
+        
+        cbmiBottomCam.setActionCommand(AC_BCAM);
         cbmiBright.setActionCommand(AC_BRIGHT);
-        cbmiBright.addActionListener(mil);
+        cbmiAI.setActionCommand(AC_AI);
+        cbmiScan.setActionCommand(AC_SCAN);
+        
+        cbmiBottomCam.addItemListener(mcil);
+        cbmiBright.addItemListener(mcil);
+        cbmiAI.addItemListener(mcil);
+        cbmiScan.addItemListener(mcil);
         
         options.add(cbmiBottomCam);
         options.add(cbmiBright);
+        options.addSeparator();
+        options.add(cbmiAI);
+        options.add(cbmiScan);
         
         //Help menu
         JMenu help = new JMenu("Help");
@@ -90,8 +105,6 @@ public class GUIMenuBar extends JMenuBar
         miSettings.addActionListener(mil);
         miHelp.addActionListener(mil);
         miAbout.addActionListener(mil);
-        
-        
         
         help.add(miSettings);
         help.addSeparator();
